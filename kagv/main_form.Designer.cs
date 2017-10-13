@@ -314,10 +314,10 @@
             this.settings_menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.aToolStripMenuItem,
-            this.aboutToolStripMenuItem,
             this.gridToolStripMenuItem,
             this.debugToolStripMenuItem,
-            this.antsToolStripMenuItem});
+            this.antsToolStripMenuItem,
+            this.aboutToolStripMenuItem});
             this.settings_menu.Location = new System.Drawing.Point(0, 0);
             this.settings_menu.Name = "settings_menu";
             this.settings_menu.Size = new System.Drawing.Size(804, 24);
@@ -525,7 +525,7 @@
             this.highlightOverCurrentBoxToolStripMenuItem,
             this.aGVIndexToolStripMenuItem});
             this.showToolStripMenuItem.Name = "showToolStripMenuItem";
-            this.showToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.showToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.showToolStripMenuItem.Text = "Show...";
             // 
             // stepsToolStripMenuItem
@@ -573,14 +573,14 @@
             // borderColorToolStripMenuItem
             // 
             this.borderColorToolStripMenuItem.Name = "borderColorToolStripMenuItem";
-            this.borderColorToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.borderColorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.borderColorToolStripMenuItem.Text = "Border Color";
             this.borderColorToolStripMenuItem.Click += new System.EventHandler(this.borderColorToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(138, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(149, 6);
             // 
             // clearToolStripMenuItem
             // 
@@ -590,7 +590,7 @@
             this.borderColorToolStripMenuItem1,
             this.defaultGridSizeToolStripMenuItem});
             this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-            this.clearToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.clearToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.clearToolStripMenuItem.Text = "Clear";
             // 
             // wallsToolStripMenuItem
@@ -641,8 +641,8 @@
             // antsToolStripMenuItem
             // 
             this.antsToolStripMenuItem.Name = "antsToolStripMenuItem";
-            this.antsToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
-            this.antsToolStripMenuItem.Text = "Ants";
+            this.antsToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
+            this.antsToolStripMenuItem.Text = "ACS";
             this.antsToolStripMenuItem.Click += new System.EventHandler(this.antsToolStripMenuItem_Click);
             // 
             // panel_resize
@@ -856,7 +856,7 @@
             this.MainMenuStrip = this.settings_menu;
             this.MaximizeBox = false;
             this.Name = "main_form";
-            this.Text = "kagv Simulation-Industrial";
+            this.Text = "kagv Simulation-ACS Algorithm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.main_form_FormClosing);
             this.Load += new System.EventHandler(this.main_form_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.main_form_Paint);

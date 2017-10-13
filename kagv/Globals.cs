@@ -50,7 +50,7 @@ namespace kagv {
 
         //This value is needed since the application does not allow me to change the Debug menu
         //visibility before form shown
-        public static bool _Debug = true;
+        public static bool _Debug = false;
         public static bool _FirstFormLoad = true;
     }
 }

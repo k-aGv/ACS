@@ -15,51 +15,7 @@ namespace kagv {
             InitializeComponent();
         }
 
-        private void btn_reset_Click(object sender, EventArgs e) {
-
-        }
-
         private void ACS_Click(object sender, EventArgs e) {
-
-            /*
-            double[,] Customers = new double[,] {{1, 11003.611100, 42102.500000},
-{2, 11108.611100, 42373.888900},
-{3, 11133.333300, 42885.833300},
-{4, 11155.833300, 42712.500000},
-{5, 11183.333300, 42933.333300},
-{6, 11297.500000, 42853.333300},
-{7, 11310.277800, 42929.444400},
-{8, 11416.666700, 42983.333300},
-{ 9, 11423.888900, 43000.277800},
-{10, 11438.333300, 42057.222200},
-{11, 11461.111100, 43252.777800},
-{12, 11485.555600, 43187.222200},
-{13, 11503.055600, 42855.277800},
-{14, 11511.388900, 42106.388900},
-{15, 11522.222200, 42841.944400},
-{16, 11569.444400, 43136.666700},
-{17, 11583.333300, 43150.000000},
-{18, 11595.000000, 43148.055600},
-{19, 11600.000000, 43150.000000},
-{20, 11690.555600, 42686.666700},
-{21, 11715.833300, 41836.111100},
-{22, 11751.111100, 42814.444400},
-{23, 11770.277800, 42651.944400},
-{24, 11785.277800, 42884.444400},
-{25, 11822.777800, 42673.611100},
-{26, 11846.944400, 42660.555600},
-{27, 11963.055600, 43290.555600},
-{28, 11973.055600, 43026.111100},
-{29, 12058.333300, 42195.555600},
-{30, 12149.444400, 42477.500000},
-{31, 12286.944400, 43355.555600},
-{32, 12300.000000, 42433.333300},
-{33, 12355.833300, 43156.388900},
-{34, 12363.333300, 43189.166700},
-{35, 12372.777800, 42711.388900},
-{36, 12386.666700, 43334.722200},
-{37, 12421.666700, 42895.555600},
-{38, 12645.000000, 42973.333300}};*/
             string filename = "";
             if (openFileDialog1.ShowDialog() == DialogResult.OK) {
                 filename = openFileDialog1.FileName;
@@ -79,7 +35,43 @@ namespace kagv {
             chart1.Size = new Size(600, (pb.Location.Y + pb.Size.Height) - 25);
             Size = new Size((chart1.Location.X + chart1.Width + 25), pb.Location.Y + pb.Size.Height + 50);
 
-            StreamReader streamReader = new StreamReader(filename);
+            //handle raw files from TCS website
+            bool wasRAW = false;
+            StreamReader _tmpReader = new StreamReader(filename);
+            string filenameRAW = filename.Remove(filename.Length - 4) +"_fromRAW.txt"; //-4 to remove .txt extension
+            if (_tmpReader.ReadLine().Contains("NAME :")) { // check if the file format is same as TCS website
+                MessageBox.Show("RAW file selected...");
+                wasRAW = true;
+                StreamWriter _writer = new StreamWriter(filenameRAW);
+                string curLine = _tmpReader.ReadLine();
+                while (curLine[0] != '1')
+                    curLine = _tmpReader.ReadLine();
+                //start editing ,only when you reach the first coords
+                do {
+                   
+                    string newString = curLine.Remove(0, curLine.IndexOf(' ') + 1);
+                    newString = newString.Replace(' ', ',');
+                    _writer.WriteLine(newString);
+                    curLine = _tmpReader.ReadLine();
+                    if (curLine.Contains("EOF") || curLine == "" || curLine.Contains('\0')  ) {
+                        MessageBox.Show("MISW");
+                        break;
+                    }
+                } while (!_tmpReader.EndOfStream);
+                _writer.Close();
+                _tmpReader.Close();
+                var lines = File.ReadAllLines(filenameRAW);
+                File.WriteAllLines(filenameRAW, lines.Take(lines.Length - 1));
+
+            } 
+            //end of handling
+
+            StreamReader streamReader;
+            if (wasRAW)
+                streamReader = new StreamReader(filenameRAW);
+            else
+                streamReader = new StreamReader(filename);
+
             int SizeCustomers = 0;
             do {
                 if (streamReader.ReadLine() != "")
@@ -88,7 +80,7 @@ namespace kagv {
 
             streamReader = new StreamReader(filename);
             double[,] Customers = new double[SizeCustomers, 3];
-            char[] delim = { ',', ' ' };
+            char delim =  ',';
 
             string[] _line;
             string _line1;
@@ -96,7 +88,7 @@ namespace kagv {
             double mymin = 1000000000000000000;
             do {
                 _line1 = streamReader.ReadLine();
-                if (_line1 != "") {
+                if (_line1 != "" ) {
                     _line = _line1.Split(delim);
                     Customers[k1, 0] = k1;
                     Customers[k1, 1] = Convert.ToDouble(_line[0]) ;
@@ -109,7 +101,7 @@ namespace kagv {
                 }
             } while (!streamReader.EndOfStream);
 
-            streamReader.Dispose();
+            streamReader.Close();
             //fills Customers Array with data from an external txt
             chart1.ChartAreas[0].AxisY.Minimum = mymin;
 
