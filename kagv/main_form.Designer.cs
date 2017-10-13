@@ -113,6 +113,7 @@
             this.defaultGridSizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showGridBlockLocationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.antsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cd_grid = new System.Windows.Forms.ColorDialog();
             this.panel_resize = new System.Windows.Forms.Panel();
             this.lb_blockside = new System.Windows.Forms.Label();
@@ -130,7 +131,6 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tree_stats = new BufferedTreeView();
-            this.antsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPanel.SuspendLayout();
             this.gb_type.SuspendLayout();
             this.gb_settings.SuspendLayout();
@@ -638,6 +638,13 @@
             this.showGridBlockLocationsToolStripMenuItem.MouseEnter += new System.EventHandler(this.showGridBlockLocationsToolStripMenuItem_MouseEnter);
             this.showGridBlockLocationsToolStripMenuItem.MouseLeave += new System.EventHandler(this.showGridBlockLocationsToolStripMenuItem_MouseLeave);
             // 
+            // antsToolStripMenuItem
+            // 
+            this.antsToolStripMenuItem.Name = "antsToolStripMenuItem";
+            this.antsToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
+            this.antsToolStripMenuItem.Text = "Ants";
+            this.antsToolStripMenuItem.Click += new System.EventHandler(this.antsToolStripMenuItem_Click);
+            // 
             // panel_resize
             // 
             this.panel_resize.Controls.Add(this.lb_blockside);
@@ -832,13 +839,6 @@
             treeNode15});
             this.tree_stats.Size = new System.Drawing.Size(150, 280);
             this.tree_stats.TabIndex = 12;
-            // 
-            // antsToolStripMenuItem
-            // 
-            this.antsToolStripMenuItem.Name = "antsToolStripMenuItem";
-            this.antsToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
-            this.antsToolStripMenuItem.Text = "ants";
-            this.antsToolStripMenuItem.Click += new System.EventHandler(this.antsToolStripMenuItem_Click);
             // 
             // main_form
             // 
