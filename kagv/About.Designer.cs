@@ -42,6 +42,8 @@
             this.pb_divider2 = new System.Windows.Forms.PictureBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pb)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_divider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_divider2)).BeginInit();
@@ -124,7 +126,7 @@
             // lb_source
             // 
             this.lb_source.AutoSize = true;
-            this.lb_source.Location = new System.Drawing.Point(1, 271);
+            this.lb_source.Location = new System.Drawing.Point(1, 331);
             this.lb_source.Name = "lb_source";
             this.lb_source.Size = new System.Drawing.Size(120, 13);
             this.lb_source.TabIndex = 46;
@@ -133,7 +135,7 @@
             // linkLabel2
             // 
             this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Location = new System.Drawing.Point(127, 271);
+            this.linkLabel2.Location = new System.Drawing.Point(127, 331);
             this.linkLabel2.Name = "linkLabel2";
             this.linkLabel2.Size = new System.Drawing.Size(120, 13);
             this.linkLabel2.TabIndex = 47;
@@ -143,7 +145,7 @@
             // 
             // pb_divider
             // 
-            this.pb_divider.Location = new System.Drawing.Point(5, 244);
+            this.pb_divider.Location = new System.Drawing.Point(5, 304);
             this.pb_divider.Name = "pb_divider";
             this.pb_divider.Size = new System.Drawing.Size(376, 24);
             this.pb_divider.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -179,11 +181,33 @@
             this.label5.TabIndex = 50;
             this.label5.Text = "Υπεύθυνος καθηγητής:";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.label2.Location = new System.Drawing.Point(2, 252);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(161, 15);
+            this.label2.TabIndex = 52;
+            this.label2.Text = "Υπεύθυνος αλγορίθμου ACS";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.label6.Location = new System.Drawing.Point(2, 267);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(172, 15);
+            this.label6.TabIndex = 53;
+            this.label6.Text = "Πουλημένος Δημήτριος - ΑΠΘ ";
+            // 
             // About
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(392, 291);
+            this.ClientSize = new System.Drawing.Size(392, 349);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.pb_divider2);
@@ -225,5 +249,7 @@
         private System.Windows.Forms.PictureBox pb_divider2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label6;
     }
 }
