@@ -278,7 +278,7 @@
             this.Ants.Size = new System.Drawing.Size(63, 20);
             this.Ants.TabIndex = 23;
             this.Ants.Value = new decimal(new int[] {
-            30,
+            10,
             0,
             0,
             0});
