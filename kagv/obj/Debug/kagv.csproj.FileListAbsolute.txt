@@ -1,0 +1,33 @@
+C:\Users\Ireteth\Desktop\github\industrial\kagv\bin\Debug\kaGv2.exe.config
+C:\Users\Ireteth\Desktop\github\industrial\kagv\bin\Debug\kaGv2.exe
+C:\Users\Ireteth\Desktop\github\industrial\kagv\bin\Debug\kaGv2.pdb
+C:\Users\Ireteth\Desktop\github\industrial\kagv\bin\Debug\C5.dll
+C:\Users\Ireteth\Desktop\github\industrial\kagv\bin\Debug\k-aGv-functions.dll
+C:\Users\Ireteth\Desktop\github\industrial\kagv\bin\Debug\k-aGv-functions.xml
+C:\Users\Ireteth\Desktop\github\industrial\kagv\obj\Debug\kagv.About.resources
+C:\Users\Ireteth\Desktop\github\industrial\kagv\obj\Debug\kagv.main_form.resources
+C:\Users\Ireteth\Desktop\github\industrial\kagv\obj\Debug\kagv.Properties.Resources.resources
+C:\Users\Ireteth\Desktop\github\industrial\kagv\obj\Debug\kagv.csproj.GenerateResource.Cache
+C:\Users\Ireteth\Desktop\github\industrial\kagv\obj\Debug\kagv.csproj.CoreCompileInputs.cache
+C:\Users\Ireteth\Desktop\github\industrial\kagv\obj\Debug\kaGv2.exe
+C:\Users\Ireteth\Desktop\github\industrial\kagv\obj\Debug\kaGv2.pdb
+C:\Users\Ireteth\Desktop\github\industrial\kagv\obj\Debug\kagv.AntsForm.resources
+C:\Users\Ireteth\Desktop\github\industrial\kagv\obj\Debug\kagv.csprojResolveAssemblyReference.cache
+C:\Users\Administrator.Γιάννης-PC\Desktop\github work\industrial\kagv\bin\Debug\kaGv2.exe.config
+C:\Users\Administrator.Γιάννης-PC\Desktop\github work\industrial\kagv\obj\Debug\kaGv2.exe
+C:\Users\Administrator.Γιάννης-PC\Desktop\github work\industrial\kagv\obj\Debug\kaGv2.pdb
+C:\Users\Dimitris\Desktop\New folder\kagv\bin\Debug\kaGv2.exe.config
+C:\Users\Dimitris\Desktop\New folder\kagv\bin\Debug\kaGv2.exe
+C:\Users\Dimitris\Desktop\New folder\kagv\bin\Debug\kaGv2.pdb
+C:\Users\Dimitris\Desktop\New folder\kagv\bin\Debug\C5.dll
+C:\Users\Dimitris\Desktop\New folder\kagv\bin\Debug\k-aGv-functions.dll
+C:\Users\Dimitris\Desktop\New folder\kagv\bin\Debug\k-aGv-functions.xml
+C:\Users\Dimitris\Desktop\New folder\kagv\obj\Debug\kagv.csprojResolveAssemblyReference.cache
+C:\Users\Dimitris\Desktop\New folder\kagv\obj\Debug\kagv.About.resources
+C:\Users\Dimitris\Desktop\New folder\kagv\obj\Debug\kagv.AntsForm.resources
+C:\Users\Dimitris\Desktop\New folder\kagv\obj\Debug\kagv.main_form.resources
+C:\Users\Dimitris\Desktop\New folder\kagv\obj\Debug\kagv.Properties.Resources.resources
+C:\Users\Dimitris\Desktop\New folder\kagv\obj\Debug\kagv.csproj.GenerateResource.Cache
+C:\Users\Dimitris\Desktop\New folder\kagv\obj\Debug\kagv.csproj.CoreCompileInputs.cache
+C:\Users\Dimitris\Desktop\New folder\kagv\obj\Debug\kaGv2.exe
+C:\Users\Dimitris\Desktop\New folder\kagv\obj\Debug\kaGv2.pdb
