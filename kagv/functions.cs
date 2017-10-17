@@ -718,24 +718,22 @@ namespace kagv {
             sfd_exportmap.FileName = "";
             sfd_exportmap.Filter = "kagv Map (*.kmap)|*.kmap";
 
+            if (sfd_exportmap.ShowDialog() == DialogResult.OK) {
+                StreamWriter _writer = new StreamWriter(sfd_exportmap.FileName);
+                for (int i = 0; i < Globals._HeightBlocks; i++)
+                    for (int j = 0; j < Globals._WidthBlocks; j++)
+                        if (m_rectangles[j][i].boxType == BoxType.Load) {
+                            loads++;
+                            _writer.WriteLine(m_rectangles[j][i].x + "," + (this.Size.Height - m_rectangles[j][i].y));
+                        }
+                _writer.Close();
+            } else
+                return;
 
-            if (sfd_exportmap.ShowDialog() == DialogResult.OK)
-            {
-                int countLoads = 0;   
-                StreamWriter streamWriter = new StreamWriter(sfd_exportmap.FileName);
-                for (int i = 0; i < Globals._WidthBlocks; i++)
-                    for (int j = 0; j < Globals._HeightBlocks; j++)
-                    if (m_rectangles[i][j].boxType == BoxType.Load)
-                    {
-                        if (countLoads == loads) return;
-                        if (countLoads + 1 == loads)
-                            streamWriter.Write(m_rectangles[i][j].x + "," + m_rectangles[i][j].y );
-                        else
-                            streamWriter.Write(m_rectangles[i][j].x + "," + m_rectangles[i][j].y + "\r\n");
-                        countLoads++;
-                        
-                    }
-                streamWriter.Close();
+            if (loads == 0) {
+                MessageBox.Show("No loads were found on the Grid.\nExported file was not created.");
+                if (File.Exists(sfd_exportmap.FileName))
+                    File.Delete(sfd_exportmap.FileName);
             }
 
         }
