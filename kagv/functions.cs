@@ -739,6 +739,7 @@ namespace kagv {
         //Function for importing a map 
         private void Import() {
             MessageBox.Show("Not available yet");
+            return;
             ofd_importmap.Filter = "kagv Map (*.kmap)|*.kmap";
             ofd_importmap.FileName = "";
 
