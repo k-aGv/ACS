@@ -707,33 +707,42 @@ namespace kagv {
         }
 
         //Function for exporting the map
-        private void Export() {
+        private void Export()
+        {
+
+            int loads=0;
+            for (int i = 0; i < Globals._WidthBlocks; i++)
+            for (int j = 0; j < Globals._HeightBlocks; j++)
+                if (m_rectangles[i][j].boxType == BoxType.Load)
+                    loads++;
             sfd_exportmap.FileName = "";
             sfd_exportmap.Filter = "kagv Map (*.kmap)|*.kmap";
 
-            if (sfd_exportmap.ShowDialog() == DialogResult.OK) {
-                StreamWriter writer = new StreamWriter(sfd_exportmap.FileName);
-                writer.WriteLine(
-                    "Map info:\r\n"+
-                    "Width blocks: " + Globals._WidthBlocks + 
-                    "  Height blocks: " + Globals._HeightBlocks + 
-                    "  BlockSide: " + Globals._BlockSide + 
-                    "\r\n"
-                    );
-                for (int i = 0; i < Globals._WidthBlocks; i++) {
-                    for (int j = 0; j < Globals._HeightBlocks; j++) {
-                        writer.Write(m_rectangles[i][j].boxType + " ");
+
+            if (sfd_exportmap.ShowDialog() == DialogResult.OK)
+            {
+                int countLoads = 0;   
+                StreamWriter streamWriter = new StreamWriter(sfd_exportmap.FileName);
+                for (int i = 0; i < Globals._WidthBlocks; i++)
+                    for (int j = 0; j < Globals._HeightBlocks; j++)
+                    if (m_rectangles[i][j].boxType == BoxType.Load)
+                    {
+                        if (countLoads == loads) return;
+                        if (countLoads + 1 == loads)
+                            streamWriter.Write(m_rectangles[i][j].x + "," + m_rectangles[i][j].y );
+                        else
+                            streamWriter.Write(m_rectangles[i][j].x + "," + m_rectangles[i][j].y + "\r\n");
+                        countLoads++;
+                        
                     }
-                    writer.Write("\r\n");
-                }
-                writer.Close();
+                streamWriter.Close();
             }
 
         }
 
         //Function for importing a map 
         private void Import() {
-
+            MessageBox.Show("Not available yet");
             ofd_importmap.Filter = "kagv Map (*.kmap)|*.kmap";
             ofd_importmap.FileName = "";
 

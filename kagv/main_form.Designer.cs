@@ -278,14 +278,14 @@
             // exportMapToolStripMenuItem
             // 
             this.exportMapToolStripMenuItem.Name = "exportMapToolStripMenuItem";
-            this.exportMapToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.exportMapToolStripMenuItem.Text = "Export map";
+            this.exportMapToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.exportMapToolStripMenuItem.Text = "Export map to ACS compatible format";
             this.exportMapToolStripMenuItem.Click += new System.EventHandler(this.exportMapToolStripMenuItem_Click);
             // 
             // importMapToolStripMenuItem
             // 
             this.importMapToolStripMenuItem.Name = "importMapToolStripMenuItem";
-            this.importMapToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.importMapToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
             this.importMapToolStripMenuItem.Text = "Import map";
             this.importMapToolStripMenuItem.Click += new System.EventHandler(this.importMapToolStripMenuItem_Click);
             // 
