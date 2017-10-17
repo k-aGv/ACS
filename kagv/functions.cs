@@ -713,7 +713,7 @@ namespace kagv {
             int loads=0;
             for (int i = 0; i < Globals._HeightBlocks; i++)
                 for (int j = 0; j < Globals._WidthBlocks; j++)
-                    if (m_rectangles[i][j].boxType == BoxType.Load)
+                    if (m_rectangles[j][i].boxType == BoxType.Load)
                         loads++;
 
             if (loads == 0) {
