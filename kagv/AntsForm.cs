@@ -118,9 +118,20 @@ namespace kagv {
             double Length;
 
 
-            double[,] h = new double[SizeCustomers, SizeCustomers];
-            double[,] CustomersDistance = new double[SizeCustomers, SizeCustomers];
-            double[,] t = new double[SizeCustomers, SizeCustomers];
+            double[,] h = null;
+            double[,] CustomersDistance=null;
+            double[,] t=null;
+            try {
+                 h = new double[SizeCustomers, SizeCustomers];
+                 CustomersDistance = new double[SizeCustomers, SizeCustomers];
+                 t = new double[SizeCustomers, SizeCustomers];
+            } catch (OutOfMemoryException z) {
+                if (z != null) {
+                    var totalGBRam = Convert.ToInt32((new Microsoft.VisualBasic.Devices.ComputerInfo().TotalPhysicalMemory / (Math.Pow(1024, 3))) + 0.5);
+                    MessageBox.Show("The benchmark file is large for this system.\r\nYour declared arrays cant be declared in "+totalGBRam+" GBs of RAM\r\nOut of memory...Exiting application","ERROR",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    Application.Exit();
+                }
+            }
             double NearNb = 0;
             double t0 = 0;
             int[] BestTour = new int[SizeCustomers + 1];
