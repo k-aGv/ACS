@@ -54,7 +54,6 @@ namespace kagv {
                     _writer.WriteLine(newString);
                     curLine = _tmpReader.ReadLine();
                     if (curLine.Contains("EOF") || curLine == "" || curLine.Contains('\0')  ) {
-                        MessageBox.Show("MISW");
                         break;
                     }
                 } while (!_tmpReader.EndOfStream);
@@ -71,14 +70,15 @@ namespace kagv {
                 streamReader = new StreamReader(filenameRAW);
             else
                 streamReader = new StreamReader(filename);
-
+         
             int SizeCustomers = 0;
             do {
                 if (streamReader.ReadLine() != "")
                     SizeCustomers++;
             } while (!streamReader.EndOfStream);
 
-            streamReader = new StreamReader(filename);
+            streamReader.Close();
+
             double[,] Customers = new double[SizeCustomers, 3];
             char delim =  ',';
 
@@ -86,6 +86,11 @@ namespace kagv {
             string _line1;
             int k1 = 0;
             double mymin = 1000000000000000000;
+
+            if (wasRAW)
+                streamReader = new StreamReader(filenameRAW);
+            else
+                streamReader = new StreamReader(filename);
             do {
                 _line1 = streamReader.ReadLine();
                 if (_line1 != "" ) {
