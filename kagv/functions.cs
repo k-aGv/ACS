@@ -711,10 +711,16 @@ namespace kagv {
         {
 
             int loads=0;
-            for (int i = 0; i < Globals._WidthBlocks; i++)
-            for (int j = 0; j < Globals._HeightBlocks; j++)
-                if (m_rectangles[i][j].boxType == BoxType.Load)
-                    loads++;
+            for (int i = 0; i < Globals._HeightBlocks; i++)
+                for (int j = 0; j < Globals._WidthBlocks; j++)
+                    if (m_rectangles[i][j].boxType == BoxType.Load)
+                        loads++;
+
+            if (loads == 0) {
+                MessageBox.Show("No loads were found on the Grid.\nExported file was not created.");
+                return;
+            }
+
             sfd_exportmap.FileName = "";
             sfd_exportmap.Filter = "kagv Map (*.kmap)|*.kmap";
 
@@ -723,19 +729,11 @@ namespace kagv {
                 for (int i = 0; i < Globals._HeightBlocks; i++)
                     for (int j = 0; j < Globals._WidthBlocks; j++)
                         if (m_rectangles[j][i].boxType == BoxType.Load) {
-                            loads++;
                             _writer.WriteLine(m_rectangles[j][i].x + "," + (this.Size.Height - m_rectangles[j][i].y));
                         }
                 _writer.Close();
             } else
                 return;
-
-            if (loads == 0) {
-                MessageBox.Show("No loads were found on the Grid.\nExported file was not created.");
-                if (File.Exists(sfd_exportmap.FileName))
-                    File.Delete(sfd_exportmap.FileName);
-            }
-
         }
 
         //Function for importing a map 
