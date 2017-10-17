@@ -794,8 +794,7 @@ namespace kagv {
 
         private void antsToolStripMenuItem_Click(object sender, EventArgs e) {
             AntsForm ants_form = new AntsForm();
-            if (ants_form.ShowDialog() == DialogResult.Cancel)
-                ants_form.Close();
+            ants_form.ShowDialog();
         }
     }
     
