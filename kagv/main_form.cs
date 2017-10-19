@@ -59,7 +59,7 @@ namespace kagv {
                 if (importedLayout != null) {
 
                     Rectangle r = new Rectangle(new Point(m_rectangles[0][0].x, m_rectangles[0][0].y)
-                        , new Size((m_rectangles[Globals._WidthBlocks - 1][Globals._HeightBlocks - 1].x) - Globals._LeftBarOffset + Globals._BlockSide
+                        , new Size((m_rectangles[Globals._WidthBlocks - 1][Globals._HeightBlocks - 1].x) + Globals._BlockSide
                             , (m_rectangles[Globals._WidthBlocks - 1][Globals._HeightBlocks - 1].y) - Globals._TopBarOffset + Globals._BlockSide));
                     paper.DrawImage(importedLayout, r);
 
@@ -100,7 +100,7 @@ namespace kagv {
                             paper.DrawString("AGV:" + AGVs[AGVs_list_index].ID,
                                              new Font("Tahoma", 8, FontStyle.Bold),
                                              new SolidBrush(Color.Red),
-                                             new Point((startPos[AGVs_list_index].x * Globals._BlockSide) - 10 + Globals._LeftBarOffset, ((startPos[AGVs_list_index].y * Globals._BlockSide) + Globals._TopBarOffset) - Globals._BlockSide));
+                                             new Point((startPos[AGVs_list_index].x * Globals._BlockSide) - 10 , ((startPos[AGVs_list_index].y * Globals._BlockSide) + Globals._TopBarOffset) - Globals._BlockSide));
                             AGVs_list_index++;
                         }
 
@@ -109,9 +109,6 @@ namespace kagv {
      
         private void main_form_Load(object sender, EventArgs e) {
             
-            
-            ReflectVariables();
-
             //Automatically enable the CPUs for this app.
             var _proc = System.Diagnostics.Process.GetCurrentProcess();
             int coreFlag;
@@ -127,9 +124,7 @@ namespace kagv {
 
         private void main_form_MouseDown(object sender, MouseEventArgs e) {
             //If the simulation is running, do not do anything.leave the function explicitly
-            if (timer0.Enabled || timer1.Enabled || timer2.Enabled || timer3.Enabled || timer4.Enabled)
-                return;
-
+          
             //Supposing that timers are not enabled(that means that the simulation is not running)
             //we have a clicked point.Check if that point is valid.if not explicitly leave
             Point _validationPoint = new Point(e.X, e.Y);
@@ -307,15 +302,7 @@ namespace kagv {
                 }
             }
 
-            if (
-                 timer0.Enabled ||
-                 timer1.Enabled ||
-                 timer2.Enabled ||
-                 timer3.Enabled ||
-                 timer4.Enabled
-               )
-                return;
-
+           
             //if user enable the highlighting over a box while mouse hovering
             if (allowHighlight)
                 for (int widthTrav = 0; widthTrav < Globals._WidthBlocks; widthTrav++)
@@ -341,13 +328,6 @@ namespace kagv {
         //The most important event.When we let our mouse click up,all our changes are
         //shown in the screen
         private void main_form_MouseUp(object sender, MouseEventArgs e) {
-
-
-            if (timer0.Enabled
-                || timer1.Enabled
-                || timer2.Enabled
-                || timer3.Enabled
-                || timer4.Enabled) return;
 
             isMouseDown = false;
 
@@ -382,43 +362,10 @@ namespace kagv {
                 }
             if (removed)
                 Redraw();
-            
 
-            int node_list = 0;
-            do {
-                
-                removed = false;
-                if (tree_stats.Nodes[node_list].Text.Contains("AGV")) {
-                    tree_stats.Nodes[node_list].Remove();
-                    removed = true;
-                }
-
-                if (!removed)
-                    node_list++;
-                
-            } while (node_list < tree_stats.Nodes.Count);
-
-            for (int p = 0; p < nUD_AGVs.Value; p++) {
-                TreeNode n = new TreeNode("AGV:" + (p));
-                n.Name = ("AGV:" + (p));
-                n.Nodes.Add("Loads Delivered");
-                n.Nodes.Add("Load at: ");
-                n.Nodes.Add("Status: ");
-                n.Nodes.Add("Delay: "+Globals._TimerInterval+" ms");
-                tree_stats.Nodes.Add(n);
-            }
-            
-            tree_stats.Refresh();
         }
 
         private void main_form_MouseClick(object sender, MouseEventArgs e) {
-
-            if (timer0.Enabled
-                || timer1.Enabled
-                || timer2.Enabled
-                || timer3.Enabled
-                || timer4.Enabled) return;
-
 
             Point click_coords = new Point(e.X, e.Y);
             if (!Isvalid(click_coords) || e.Button != MouseButtons.Left || nUD_AGVs.Value == 0)
@@ -438,7 +385,6 @@ namespace kagv {
                                     Invalidate();
                                     break;
                                 case BoxType.Load:
-                                    loads--;
                                     m_rectangles[widthTrav][heightTrav].SwitchLoad();
                                     isLoad[widthTrav, heightTrav] = 2;
                                     Invalidate();
@@ -482,7 +428,7 @@ namespace kagv {
                     for (int heightTrav = 0; heightTrav < Globals._HeightBlocks; heightTrav++)
                         if (m_rectangles[widthTrav][heightTrav].boxRec.Contains(click_coords)
                          && m_rectangles[widthTrav][heightTrav].boxType == BoxType.Normal)
-                            m_rectangles[widthTrav][heightTrav] = new GridBox((widthTrav * Globals._BlockSide) + Globals._LeftBarOffset, heightTrav * Globals._BlockSide + Globals._TopBarOffset, BoxType.Start);
+                            m_rectangles[widthTrav][heightTrav] = new GridBox((widthTrav * Globals._BlockSide), heightTrav * Globals._BlockSide + Globals._TopBarOffset, BoxType.Start);
 
 
 
@@ -500,7 +446,7 @@ namespace kagv {
                         if (m_rectangles[widthTrav][heightTrav].boxRec.Contains(click_coords)
                              &&
                             m_rectangles[widthTrav][heightTrav].boxType == BoxType.Normal) {
-                            m_rectangles[widthTrav][heightTrav] = new GridBox(widthTrav * Globals._BlockSide + Globals._LeftBarOffset, heightTrav * Globals._BlockSide + Globals._TopBarOffset, BoxType.End);
+                            m_rectangles[widthTrav][heightTrav] = new GridBox(widthTrav * Globals._BlockSide, heightTrav * Globals._BlockSide + Globals._TopBarOffset, BoxType.End);
                         }
             }
 
@@ -667,180 +613,21 @@ namespace kagv {
         private void importMapToolStripMenuItem_Click(object sender, EventArgs e) {
             Import();
         }
-
-        private void startToolStripMenuItem_Click(object sender, EventArgs e) {
-            //start the animations
-
-
-            //refresh the numeric value regarding the drawn agvs
-            nUD_AGVs.Value = GetNumberOfAGVs();
-
-            for (int i = 0; i < fromstart.Length; i++)
-                fromstart[i] = true;
-
-            beforeStart = false;
-            allowHighlight = false;//do not allow highlight while emulation is active
-
-            for (int i = 0; i < startPos.Count; i++)
-                AGVs[i].MarkedLoad = new Point();
-
-            Redraw();
-
-            labeled_loads = loads;
-            for (int i = 0; i < startPos.Count; i++) {
-                AGVs[i].StartX = m_rectangles[startPos[i].x][startPos[i].y].boxRec.X;
-                AGVs[i].StartY = m_rectangles[startPos[i].x][startPos[i].y].boxRec.Y;
-                AGVs[i].SizeX = Globals._BlockSide - 1;
-                AGVs[i].SizeY = Globals._BlockSide - 1;
-                AGVs[i].Init();
-            }
-
-            on_which_step = new int[startPos.Count];
-            Timers();
-            settings_menu.Enabled = false;
-            gb_settings.Enabled = false;
-            nud_weight.Enabled = false;
-            cb_type.Enabled = false;
-            toolStripStatusLabel1.Text = "Simulation is running...";
-
-            foreach (TreeNode s in tree_stats.Nodes) {
-                if (s.Name.Contains("AGV")) {
-                    if (!s.IsExpanded) {
-                        s.Expand();
-                        s.Nodes[2].Text = "Status: Empty";
-                    }
-                }
-            }
-        }
-
+        
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
             About about = new About();
             about.ShowDialog();
         }
-
-        private void increaseSpeedToolStripMenuItem_Click(object sender, EventArgs e) {
-           
-            Globals._TimerInterval += Globals._TimerStep;
-            timer0.Interval = timer1.Interval = timer2.Interval = timer3.Interval = timer4.Interval = Globals._TimerInterval;
-
-            for (int i = 0; i < nUD_AGVs.Value; i++) {
-                tree_stats.Nodes.Find("AGV:" + (i), false)[0].Expand();
-                tree_stats.Nodes.Find("AGV:" + (i), false)[0].Nodes[3].Text = ("Delay: " + Globals._TimerInterval + " ms");
-                
-            }
-        }
-
-        private void decreaseSpeedToolStripMenuItem_Click(object sender, EventArgs e) {
-            if (Globals._TimerInterval - Globals._TimerStep == 0)
-                return;
-
-            Globals._TimerInterval -= Globals._TimerStep;
-            timer0.Interval = timer1.Interval = timer2.Interval = timer3.Interval = timer4.Interval = Globals._TimerInterval;
-
-            for (int i = 0; i < nUD_AGVs.Value; i++) {
-                tree_stats.Nodes.Find("AGV:" + (i), false)[0].Nodes[3].Text = ("Delay: " + Globals._TimerInterval + " ms");
-                tree_stats.Nodes.Find("AGV:" + (i), false)[0].Expand();
-            }
-        }
-
-
 
         private void borderColorToolStripMenuItem1_Click(object sender, EventArgs e) {
             BackColor = Color.DarkGray;
             borderColorToolStripMenuItem.Checked = false;
         }
 
-
         private void fileToolStripMenuItem_Click(object sender, EventArgs e) {
-
             int c = 0;
             for (int i = 0; i < startPos.Count; i++)
                 c += AGVs[i].JumpPoints.Count;
-
-            if (c > 0)
-                TriggerStartMenu(true);
-            else
-                TriggerStartMenu(false);
-        }
-
-
-        //one timer for each agv.
-        private void timer0_Tick(object sender, EventArgs e) {
-            int mysteps = 0;//init the steps
-            for (int i = 0; i < Globals._MaximumSteps; i++)
-                if (AGVs[0].Steps[i].X == 0 || AGVs[0].Steps[i].Y == 0)
-                    i = Globals._MaximumSteps;
-                else
-                    mysteps++;//really count the steps
-
-            AGVs[0].StepsCounter = mysteps;//add them inside the class
-
-            Animator(on_which_step[0], 0); //animate that class/agv
-
-            on_which_step[0]++;
-        }
-        private void timer1_Tick(object sender, EventArgs e) {
-            int mysteps = 0;
-            for (int i = 0; i < Globals._MaximumSteps; i++)
-                if (AGVs[1].Steps[i].X == 0 || AGVs[1].Steps[i].Y == 0)
-                    i = Globals._MaximumSteps;
-                else
-                    mysteps++;
-
-            AGVs[1].StepsCounter = mysteps;
-
-            Animator(on_which_step[1], 1);
-
-            on_which_step[1]++;
-        }
-
-        private void timer2_Tick(object sender, EventArgs e) {
-            int mysteps = 0;
-            for (int i = 0; i < Globals._MaximumSteps; i++)
-                if (AGVs[2].Steps[i].X == 0 || AGVs[2].Steps[i].Y == 0)
-                    i = Globals._MaximumSteps;
-                else
-                    mysteps++;
-
-            AGVs[2].StepsCounter = mysteps;
-
-            Animator(on_which_step[2], 2);
-
-            on_which_step[2]++;
-        }
-
-        private void timer3_Tick(object sender, EventArgs e) {
-            int mysteps = 0;
-            for (int i = 0; i < Globals._MaximumSteps; i++)
-                if (AGVs[3].Steps[i].X == 0 || AGVs[3].Steps[i].Y == 0)
-                    i = Globals._MaximumSteps;
-                else
-                    mysteps++;
-
-            AGVs[3].StepsCounter = mysteps;
-
-            Animator(on_which_step[3], 3);
-
-            on_which_step[3]++;
-        }
-
-        private void timer4_Tick(object sender, EventArgs e) {
-            int mysteps = 0;
-            for (int i = 0; i < Globals._MaximumSteps; i++)
-                if (AGVs[4].Steps[i].X == 0 || AGVs[4].Steps[i].Y == 0)
-                    i = Globals._MaximumSteps;
-                else
-                    mysteps++;
-
-            AGVs[4].StepsCounter = mysteps;
-
-            Animator(on_which_step[4], 4);
-
-            on_which_step[4]++;
-        }
-
-        private void importImageLayoutToolStripMenuItem_Click(object sender, EventArgs e) {
-            ImportImage();
         }
 
         private void priorityRulesbetaToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -1007,8 +794,7 @@ namespace kagv {
 
         private void antsToolStripMenuItem_Click(object sender, EventArgs e) {
             AntsForm ants_form = new AntsForm();
-            if (ants_form.ShowDialog() == DialogResult.Cancel)
-                ants_form.Close();
+            ants_form.ShowDialog();
         }
     }
     
