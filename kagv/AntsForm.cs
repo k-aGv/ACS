@@ -465,6 +465,8 @@ namespace kagv {
             Controls.Add(pb_calculated);
             pb_calculated.BringToFront();
 
+            openFileDialog1.FileName = "";
+
 
 
         }
