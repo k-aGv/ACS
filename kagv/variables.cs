@@ -29,6 +29,9 @@ namespace kagv {
 
     public partial class main_form {
 
+        double CO2 = 0, CO = 0, NOx = 0, THC = 0, GlobalWarming = 0;
+
+
         //Handle our custom functions
         k_aGv_functions.Functions __f = new k_aGv_functions.Functions();
 
@@ -42,6 +45,9 @@ namespace kagv {
         BoxType[,] importmap;
 
         GridBox[][] m_rectangles;//2d jagged array. Contains grid information (coords of each box, boxtype, etc etc)  
+
+        int[] on_which_step;
+        bool[] fromstart = new bool[Globals._MaximumAGVs];
 
         List<Vehicle> AGVs = new List<Vehicle>();
         List<GridPos> startPos = new List<GridPos>(); //Contains the coords of the Start boxes
@@ -59,11 +65,13 @@ namespace kagv {
         GridBox m_lastBoxSelect;
         BoxType m_lastBoxType = new BoxType();
         ToolTip tp;
-       
+        Point endPointCoords = new Point(-1, -1);
+
         bool holdCTRL;
         bool use_Halt = false;
         bool overImage = false;
         bool imported;
+        bool importedImage = false;
         bool beforeStart = true;
         bool calibrated = false;//flag checking if current point is correctly callibrated in the middle of the rectangle
         bool isMouseDown = false;
@@ -74,10 +82,14 @@ namespace kagv {
         bool atLeastOneObstacle = false;
         bool ifNoObstacles = false;
         bool never = false;
-       
-        Color selectedColor = Color.DarkGray;
-        Color boxDefaultColor = Color.WhiteSmoke;
 
+        int loads = 0; //index for keeping count of how many Loads there are in the Grid
+        int labeled_loads; //index that is used for displaying how many loads have not been picked up
+
+        Color selectedColor = Color.DarkGray;
+        Color boxDefaultColor = (Globals._SemiTransparency) ? Color.FromArgb(Globals._Opacity, Color.WhiteSmoke) : Color.WhiteSmoke;
+
+        Image importedImageFile;
         Image importedLayout = null;
 
 

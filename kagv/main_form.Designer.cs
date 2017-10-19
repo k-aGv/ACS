@@ -24,7 +24,35 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("We will add vars here");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("more var");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("even moar");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("even even moar");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("EVEN MOAR");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("me think itz enuf");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("--------------");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Debug", new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2,
+            treeNode3,
+            treeNode4,
+            treeNode5,
+            treeNode6,
+            treeNode7});
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Node2");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Node3");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Node4");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Node5");
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Node6");
+            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Emissions", new System.Windows.Forms.TreeNode[] {
+            treeNode9,
+            treeNode10,
+            treeNode11,
+            treeNode12,
+            treeNode13});
+            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Remaining loads:");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(main_form));
+            this.timer0 = new System.Windows.Forms.Timer(this.components);
             this.menuPanel = new System.Windows.Forms.Panel();
             this.gb_type = new System.Windows.Forms.GroupBox();
             this.cb_type = new System.Windows.Forms.ComboBox();
@@ -40,11 +68,21 @@
             this.tp_info = new System.Windows.Forms.ToolTip(this.components);
             this.sfd_exportmap = new System.Windows.Forms.SaveFileDialog();
             this.ofd_importmap = new System.Windows.Forms.OpenFileDialog();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
+            this.timer3 = new System.Windows.Forms.Timer(this.components);
+            this.timer4 = new System.Windows.Forms.Timer(this.components);
             this.ofd_importpic = new System.Windows.Forms.OpenFileDialog();
             this.settings_menu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.importImageLayoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.increaseSpeedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.decreaseSpeedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.parametresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.alwaysCrossMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,6 +95,7 @@
             this.manhattanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.euclideanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chebyshevToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stepsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -75,7 +114,6 @@
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showGridBlockLocationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.antsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cd_grid = new System.Windows.Forms.ColorDialog();
             this.panel_resize = new System.Windows.Forms.Panel();
             this.lb_blockside = new System.Windows.Forms.Label();
@@ -92,6 +130,7 @@
             this.btn_right = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tree_stats = new BufferedTreeView();
             this.menuPanel.SuspendLayout();
             this.gb_type.SuspendLayout();
             this.gb_settings.SuspendLayout();
@@ -105,13 +144,17 @@
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
+            // timer0
+            // 
+            this.timer0.Tick += new System.EventHandler(this.timer0_Tick);
+            // 
             // menuPanel
             // 
             this.menuPanel.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.menuPanel.Controls.Add(this.gb_type);
             this.menuPanel.Controls.Add(this.gb_settings);
             this.menuPanel.Controls.Add(this.groupBox1);
-            this.menuPanel.Location = new System.Drawing.Point(12, 36);
+            this.menuPanel.Location = new System.Drawing.Point(191, 27);
             this.menuPanel.Name = "menuPanel";
             this.menuPanel.Size = new System.Drawing.Size(656, 75);
             this.menuPanel.TabIndex = 7;
@@ -246,6 +289,22 @@
             // 
             this.ofd_importmap.FileName = "openFileDialog1";
             // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // timer2
+            // 
+            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
+            // 
+            // timer3
+            // 
+            this.timer3.Tick += new System.EventHandler(this.timer3_Tick);
+            // 
+            // timer4
+            // 
+            this.timer4.Tick += new System.EventHandler(this.timer4_Tick);
+            // 
             // ofd_importpic
             // 
             this.ofd_importpic.FileName = "openFileDialog1";
@@ -255,10 +314,10 @@
             this.settings_menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.aToolStripMenuItem,
+            this.aboutToolStripMenuItem,
             this.gridToolStripMenuItem,
             this.debugToolStripMenuItem,
-            this.antsToolStripMenuItem,
-            this.aboutToolStripMenuItem});
+            this.antsToolStripMenuItem});
             this.settings_menu.Location = new System.Drawing.Point(0, 0);
             this.settings_menu.Name = "settings_menu";
             this.settings_menu.Size = new System.Drawing.Size(804, 24);
@@ -269,25 +328,78 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.exportMapToolStripMenuItem,
-            this.importMapToolStripMenuItem});
+            this.importMapToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.importImageLayoutToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.startToolStripMenuItem,
+            this.increaseSpeedToolStripMenuItem,
+            this.decreaseSpeedToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
-            this.fileToolStripMenuItem.Text = "Map";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
+            this.fileToolStripMenuItem.Text = "Simulation";
             this.fileToolStripMenuItem.Click += new System.EventHandler(this.fileToolStripMenuItem_Click);
             // 
             // exportMapToolStripMenuItem
             // 
             this.exportMapToolStripMenuItem.Name = "exportMapToolStripMenuItem";
-            this.exportMapToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
-            this.exportMapToolStripMenuItem.Text = "Export map to ACS compatible format";
+            this.exportMapToolStripMenuItem.Size = new System.Drawing.Size(296, 22);
+            this.exportMapToolStripMenuItem.Text = "Export map";
             this.exportMapToolStripMenuItem.Click += new System.EventHandler(this.exportMapToolStripMenuItem_Click);
             // 
             // importMapToolStripMenuItem
             // 
             this.importMapToolStripMenuItem.Name = "importMapToolStripMenuItem";
-            this.importMapToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.importMapToolStripMenuItem.Size = new System.Drawing.Size(296, 22);
             this.importMapToolStripMenuItem.Text = "Import map";
             this.importMapToolStripMenuItem.Click += new System.EventHandler(this.importMapToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripMenuItem1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.toolStripMenuItem1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(293, 6);
+            // 
+            // importImageLayoutToolStripMenuItem
+            // 
+            this.importImageLayoutToolStripMenuItem.Name = "importImageLayoutToolStripMenuItem";
+            this.importImageLayoutToolStripMenuItem.Size = new System.Drawing.Size(296, 22);
+            this.importImageLayoutToolStripMenuItem.Text = "Import image layout";
+            this.importImageLayoutToolStripMenuItem.Click += new System.EventHandler(this.importImageLayoutToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripSeparator1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.toolStripSeparator1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(293, 6);
+            // 
+            // startToolStripMenuItem
+            // 
+            this.startToolStripMenuItem.Name = "startToolStripMenuItem";
+            this.startToolStripMenuItem.ShortcutKeyDisplayString = "(Space)";
+            this.startToolStripMenuItem.Size = new System.Drawing.Size(296, 22);
+            this.startToolStripMenuItem.Text = "Start";
+            this.startToolStripMenuItem.Click += new System.EventHandler(this.startToolStripMenuItem_Click);
+            // 
+            // increaseSpeedToolStripMenuItem
+            // 
+            this.increaseSpeedToolStripMenuItem.Name = "increaseSpeedToolStripMenuItem";
+            this.increaseSpeedToolStripMenuItem.ShortcutKeyDisplayString = "(UP Arrow)";
+            this.increaseSpeedToolStripMenuItem.Size = new System.Drawing.Size(296, 22);
+            this.increaseSpeedToolStripMenuItem.Text = "Increase animation delay";
+            this.increaseSpeedToolStripMenuItem.Click += new System.EventHandler(this.increaseSpeedToolStripMenuItem_Click);
+            // 
+            // decreaseSpeedToolStripMenuItem
+            // 
+            this.decreaseSpeedToolStripMenuItem.Name = "decreaseSpeedToolStripMenuItem";
+            this.decreaseSpeedToolStripMenuItem.ShortcutKeyDisplayString = "(DOWN Arrow)";
+            this.decreaseSpeedToolStripMenuItem.Size = new System.Drawing.Size(296, 22);
+            this.decreaseSpeedToolStripMenuItem.Text = "Decrease animation delay";
+            this.decreaseSpeedToolStripMenuItem.Click += new System.EventHandler(this.decreaseSpeedToolStripMenuItem_Click);
             // 
             // aToolStripMenuItem
             // 
@@ -384,6 +496,13 @@
             this.chebyshevToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.chebyshevToolStripMenuItem.Text = "Chebyshev";
             this.chebyshevToolStripMenuItem.Click += new System.EventHandler(this.chebyshevToolStripMenuItem_Click);
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // gridToolStripMenuItem
             // 
@@ -522,16 +641,9 @@
             // antsToolStripMenuItem
             // 
             this.antsToolStripMenuItem.Name = "antsToolStripMenuItem";
-            this.antsToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
-            this.antsToolStripMenuItem.Text = "ACS";
+            this.antsToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
+            this.antsToolStripMenuItem.Text = "Ants";
             this.antsToolStripMenuItem.Click += new System.EventHandler(this.antsToolStripMenuItem_Click);
-            // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
-            this.aboutToolStripMenuItem.Text = "About";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // panel_resize
             // 
@@ -685,6 +797,49 @@
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(190, 17);
             this.toolStripStatusLabel1.Text = "Hold CTRL for grid configuration...";
             // 
+            // tree_stats
+            // 
+            this.tree_stats.Location = new System.Drawing.Point(0, 27);
+            this.tree_stats.Name = "tree_stats";
+            treeNode1.Name = "Node0";
+            treeNode1.Text = "We will add vars here";
+            treeNode2.Name = "Node1";
+            treeNode2.Text = "more var";
+            treeNode3.Name = "Node2";
+            treeNode3.Text = "even moar";
+            treeNode4.Name = "Node3";
+            treeNode4.Text = "even even moar";
+            treeNode5.Name = "Node4";
+            treeNode5.Text = "EVEN MOAR";
+            treeNode6.Name = "Node5";
+            treeNode6.Text = "me think itz enuf";
+            treeNode7.Name = "Node0";
+            treeNode7.Text = "--------------";
+            treeNode8.Checked = true;
+            treeNode8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            treeNode8.Name = "node_debug";
+            treeNode8.Text = "Debug";
+            treeNode9.Name = "Node2";
+            treeNode9.Text = "Node2";
+            treeNode10.Name = "Node3";
+            treeNode10.Text = "Node3";
+            treeNode11.Name = "Node4";
+            treeNode11.Text = "Node4";
+            treeNode12.Name = "Node5";
+            treeNode12.Text = "Node5";
+            treeNode13.Name = "Node6";
+            treeNode13.Text = "Node6";
+            treeNode14.Name = "node_emissions";
+            treeNode14.Text = "Emissions";
+            treeNode15.Name = "Loads";
+            treeNode15.Text = "Remaining loads:";
+            this.tree_stats.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode8,
+            treeNode14,
+            treeNode15});
+            this.tree_stats.Size = new System.Drawing.Size(150, 280);
+            this.tree_stats.TabIndex = 12;
+            // 
             // main_form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -692,6 +847,7 @@
             this.BackColor = System.Drawing.SystemColors.ControlLight;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(804, 466);
+            this.Controls.Add(this.tree_stats);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.panel_resize);
             this.Controls.Add(this.menuPanel);
@@ -700,7 +856,7 @@
             this.MainMenuStrip = this.settings_menu;
             this.MaximizeBox = false;
             this.Name = "main_form";
-            this.Text = "kagv Simulation-ACS Algorithm";
+            this.Text = "kagv Simulation-Industrial";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.main_form_FormClosing);
             this.Load += new System.EventHandler(this.main_form_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.main_form_Paint);
@@ -729,6 +885,8 @@
         }
 
         #endregion
+
+        private System.Windows.Forms.Timer timer0;
         private System.Windows.Forms.Panel menuPanel;
         private System.Windows.Forms.RadioButton rb_stop;
         private System.Windows.Forms.RadioButton rb_start;
@@ -737,6 +895,10 @@
         private System.Windows.Forms.SaveFileDialog sfd_exportmap;
         private System.Windows.Forms.OpenFileDialog ofd_importmap;
         private System.Windows.Forms.NumericUpDown nUD_AGVs;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer timer2;
+        private System.Windows.Forms.Timer timer3;
+        private System.Windows.Forms.Timer timer4;
         private System.Windows.Forms.RadioButton rb_load;
         private System.Windows.Forms.OpenFileDialog ofd_importpic;
         private System.Windows.Forms.MenuStrip settings_menu;
@@ -762,7 +924,11 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportMapToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importMapToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem startToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem increaseSpeedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem decreaseSpeedToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.GroupBox gb_settings;
         private System.Windows.Forms.GroupBox gb_agvs;
@@ -772,6 +938,8 @@
         private System.Windows.Forms.GroupBox gb_type;
         private System.Windows.Forms.ComboBox cb_type;
         private System.Windows.Forms.ToolStripMenuItem aGVIndexToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem importImageLayoutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem priorityRulesbetaToolStripMenuItem;
         private System.Windows.Forms.NumericUpDown nud_weight;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
@@ -794,6 +962,7 @@
         private System.Windows.Forms.NumericUpDown nud_side;
         private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showGridBlockLocationsToolStripMenuItem;
+        private BufferedTreeView tree_stats;
         private System.Windows.Forms.ToolStripMenuItem defaultGridSizeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem antsToolStripMenuItem;
     }
