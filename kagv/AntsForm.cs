@@ -360,7 +360,7 @@ namespace kagv {
                 _writer.Close();
                 _tmpReader.Close();
                 var lines = File.ReadAllLines(filenameRAW);
-                File.WriteAllLines(filenameRAW, lines.Take(lines.Length - 1));
+                File.WriteAllLines(filenameRAW, lines.Take(lines.Length));
 
             }
             //end of handling
