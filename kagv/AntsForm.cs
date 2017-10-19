@@ -162,7 +162,7 @@ namespace kagv {
             double tmax = 0;
             tmax = (1 / (2 * (1 - r))) * (1 / NearNb);
             double tmin = 0;
-            tmin = tmax / 5;
+            tmin = tmax*(1-Math.Pow(0.05,1/SizeCustomers))/((SizeCustomers/2-1)*Math.Pow(0.05,1/SizeCustomers));
 
 
             while (Iteration < NumItsMax) {
@@ -292,7 +292,7 @@ namespace kagv {
 
 
                 tmax = (1 / (2 * (1 - r))) * (1 / BestLength);
-                tmin = tmax / 5;
+                tmin = tmax * (1 - Math.Pow(0.05, 1 / SizeCustomers)) / ((SizeCustomers / 2 - 1) * Math.Pow(0.05, 1 / SizeCustomers));
 
                 chart1.Series["Trip"].Points.Clear();
 
