@@ -160,7 +160,7 @@ namespace kagv {
 
             Iteration = 1;
             double tmax = 0;
-            tmax = (1 / (2 * (1 - r))) * (1 / NearNb);
+            tmax = (1 / ( (1 - r))) * (1 / NearNb);
             double tmin = 0;
             tmin = tmax*(1-Math.Pow(0.05,1/SizeCustomers))/((SizeCustomers/2-1)*Math.Pow(0.05,1/SizeCustomers));
 
@@ -288,16 +288,16 @@ namespace kagv {
 
                 for (int i = 0; i < t.GetLength(0); i++)
                     for (int j = 0; j < t.GetLength(1); j++)
-                        Math.Max(t[i, j] = t[i, j] * (1 - r), tmin);
+                        t[i, j] = Math.Max(t[i, j] * (1 - r), tmin);
 
 
-                tmax = (1 / (2 * (1 - r))) * (1 / BestLength);
+                tmax = (1 / ( (1 - r))) * (1 / BestLength);
                 tmin = tmax * (1 - Math.Pow(0.05, 1 / SizeCustomers)) / ((SizeCustomers / 2 - 1) * Math.Pow(0.05, 1 / SizeCustomers));
 
                 chart1.Series["Trip"].Points.Clear();
 
                 for (int i = 0; i < BestTour.Length - 1; i++)
-                    Math.Min(t[BestTour[i], BestTour[i + 1]] = t[BestTour[i], BestTour[i + 1]] + r * (1 / BestLength), tmax);
+                   t[BestTour[i], BestTour[i + 1]] = Math.Min(t[BestTour[i], BestTour[i + 1]] + r * (1 / BestLength), tmax);
 
                 for (int i = 0; i < BestTour.Length; i++)
                     chart1.Series["Trip"].Points.AddXY(Customers[BestTour[i], 1], Customers[BestTour[i], 2]);
