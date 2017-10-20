@@ -165,6 +165,65 @@ namespace kagv {
             tmin = tmax*(1-Math.Pow(0.05,1/SizeCustomers))/((SizeCustomers/2-1)*Math.Pow(0.05,1/SizeCustomers));
 
 
+            double[] TotalRandomLength = new double[500];
+            for(int g=0;g<500;g++)
+            {
+                double RandomLength = 0;
+                List<int> RandomUnvisited = new List<int>();
+                int Start = RandomNumber.Between(0, SizeCustomers - 1);
+                int[] Randomtour = new int[SizeCustomers + 1];
+                Randomtour[0] = Start;
+                for (int l = 0; l < SizeCustomers; l++)
+                {
+                    RandomUnvisited.Add(l);
+
+                }
+                RandomUnvisited.Remove(Start);
+
+                bool randomlistempty = false;
+                int countrandom = 1;
+                while(randomlistempty==false)
+                {
+                    int Next = RandomNumber.Between(0, RandomUnvisited.Count-1);
+                    Randomtour[countrandom] = RandomUnvisited[Next];
+                    RandomUnvisited.Remove(RandomUnvisited[Next]);
+                    if (RandomUnvisited.Count == 0)
+                        randomlistempty = true;
+
+                    RandomLength = RandomLength + CustomersDistance[Randomtour[countrandom - 1], Randomtour[countrandom]];
+                    countrandom += 1;
+
+                }
+
+                Randomtour[countrandom] = Randomtour[0];
+                RandomLength = RandomLength + CustomersDistance[Randomtour[countrandom - 1], Randomtour[countrandom]];
+
+                TotalRandomLength[g] = RandomLength;
+            }
+
+            double DC = 0;
+            for(int g=0;g<499;g++)
+            {
+                DC = DC + Math.Abs(TotalRandomLength[g]-TotalRandomLength[g+1]);
+            }
+
+            DC = DC / 500;
+
+            double SDC = 0;
+            for (int g = 0; g < 499; g++)
+            {
+                SDC = SDC + Math.Pow((TotalRandomLength[g] - TotalRandomLength[g + 1])-DC,2);
+            }
+
+            SDC = Math.Sqrt((SDC / 499));
+
+
+            double Temperature =0;
+            Temperature = (DC + 3 * SDC) / (Math.Log(1 / 0.1));
+            int[] activesolution = new int[SizeCustomers + 1];
+            activesolution = BestTour;
+            double activeLength = NearNb;
+
             while (Iteration < NumItsMax) {
                 if (stopped)
                     return;
@@ -250,8 +309,8 @@ namespace kagv {
 
 
 
-                int improve = 1;
-                while (improve <= 10000) {
+                int improve = 0;
+                while (improve <= 500*SizeCustomers/3) {
                     double NewDistance = 0;
                     for (int i = 0; i < touriteration.Length - 1; i++)
                         NewDistance = NewDistance + CustomersDistance[touriteration[i], touriteration[i + 1]];
@@ -285,10 +344,28 @@ namespace kagv {
 
                 }
 
+                if(activeLength>LengthIteration)
+                {
+                    activesolution = touriteration;
+                    activeLength = LengthIteration;
+                }
+                else
+                {
+                    double C = (LengthIteration - activeLength);
+                    
+                    if(RandomNumber.DoubleBetween(0, 1)<Math.Exp(-C/Temperature))
+                    {
+                        activesolution = touriteration;
+                        activeLength = LengthIteration;
+                    }
+                }
+
+                Temperature = Temperature * 0.9999;
+
 
                 for (int i = 0; i < t.GetLength(0); i++)
                     for (int j = 0; j < t.GetLength(1); j++)
-                        t[i, j] = Math.Max(t[i, j] * (1 - r), tmin);
+                        t[i, j] = Math.Max(t[i, j] * (1 - t[i,j]/(tmin+tmax)), tmin);
 
 
                 tmax = (1 / ( (1 - r))) * (1 / BestLength);
@@ -296,8 +373,8 @@ namespace kagv {
 
                 chart1.Series["Trip"].Points.Clear();
 
-                for (int i = 0; i < BestTour.Length - 1; i++)
-                   t[BestTour[i], BestTour[i + 1]] = Math.Min(t[BestTour[i], BestTour[i + 1]] + r * (1 / BestLength), tmax);
+                for (int i = 0; i < activesolution.Length - 1; i++)
+                   t[activesolution[i], activesolution[i + 1]] = Math.Min(t[activesolution[i], activesolution[i + 1]] + (t[activesolution[i], activesolution[i + 1]] /(tmax+tmin)) * (1 / activeLength), tmax);
 
                 for (int i = 0; i < BestTour.Length; i++)
                     chart1.Series["Trip"].Points.AddXY(Customers[BestTour[i], 1], Customers[BestTour[i], 2]);
