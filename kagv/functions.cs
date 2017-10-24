@@ -253,6 +253,8 @@ namespace kagv {
             mapHasLoads = 
             overImage = false;
 
+            menuPanel.Enabled = false;
+
             use_Halt = false;
             priorityRulesbetaToolStripMenuItem.Checked = false;
 
@@ -668,6 +670,7 @@ namespace kagv {
                 }
                 Globals._FirstFormLoad = false;
             }
+            
 
             isLoad = new int[Globals._WidthBlocks, Globals._HeightBlocks];
             //m_rectangels is an array of two 1d arrays

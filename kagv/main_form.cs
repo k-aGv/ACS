@@ -232,7 +232,8 @@ namespace kagv {
 
         private void main_form_MouseMove(object sender, MouseEventArgs e) {
             //this event is triggered when the mouse is moving above the form
-
+            if (!overImage)
+                return;
             //if we hold the left click and the Walls setting is selected....
             if (isMouseDown && rb_wall.Checked) {
                 if (e.Button == MouseButtons.Left) {
@@ -800,6 +801,7 @@ namespace kagv {
         private void importImageLayoutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ImportImage();
+            menuPanel.Enabled = true;
         }
     }
     
