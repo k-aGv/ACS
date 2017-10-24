@@ -15,102 +15,15 @@ namespace kagv {
             InitializeComponent();
         }
 
-        private void ACS_Click(object sender, EventArgs e) {
-            string filename = "";
-            if (openFileDialog1.ShowDialog() == DialogResult.OK) {
-                filename = openFileDialog1.FileName;
-            } else
-                return;
 
-            pb.Value = 0;
-            pb.Maximum = Convert.ToInt32(NumIts.Value);
-            stopped = false;
+        ProgressBar pb = new ProgressBar();
+        Label pb_Label = new Label();
+        Label pb_calculated = new Label();
+        int _width;// = Size.Width;
+        int _heigth;// = Size.Height;
+        bool stopped = false;
 
-            pb.Visible = true;
-            pb_calculated.Visible = true;
-            calc_stop_BTN.Enabled = true;
-            ACS.Enabled = false;
-            textBox1.Text = "";
-
-            chart1.Size = new Size(600, (pb.Location.Y + pb.Size.Height) - 25);
-            Size = new Size((chart1.Location.X + chart1.Width + 25), pb.Location.Y + pb.Size.Height + 50);
-
-            //handle raw files from TCS website
-            bool wasRAW = false;
-            StreamReader _tmpReader = new StreamReader(filename);
-            string filenameRAW = filename.Remove(filename.Length - 4) +"_fromRAW.txt"; //-4 to remove .txt extension
-            if (_tmpReader.ReadLine().Contains("NAME :")) { // check if the file format is same as TCS website
-                MessageBox.Show("RAW file selected...");
-                wasRAW = true;
-                StreamWriter _writer = new StreamWriter(filenameRAW);
-                string curLine = _tmpReader.ReadLine();
-                while (curLine[0] != '1')
-                    curLine = _tmpReader.ReadLine();
-                //start editing ,only when you reach the first coords
-                do {
-                   
-                    string newString = curLine.Remove(0, curLine.IndexOf(' ') + 1);
-                    newString = newString.Replace(' ', ',');
-                    _writer.WriteLine(newString);
-                    curLine = _tmpReader.ReadLine();
-                    if (curLine.Contains("EOF") || curLine == "" || curLine.Contains('\0')  ) {
-                        break;
-                    }
-                } while (!_tmpReader.EndOfStream);
-                _writer.Close();
-                _tmpReader.Close();
-                var lines = File.ReadAllLines(filenameRAW);
-                File.WriteAllLines(filenameRAW, lines.Take(lines.Length - 1));
-
-            } 
-            //end of handling
-
-            StreamReader streamReader;
-            if (wasRAW)
-                streamReader = new StreamReader(filenameRAW);
-            else
-                streamReader = new StreamReader(filename);
-         
-            int SizeCustomers = 0;
-            do {
-                if (streamReader.ReadLine() != "")
-                    SizeCustomers++;
-            } while (!streamReader.EndOfStream);
-
-            streamReader.Close();
-
-            double[,] Customers = new double[SizeCustomers, 3];
-            char delim =  ',';
-
-            string[] _line;
-            string _line1;
-            int k1 = 0;
-            double mymin = 1000000000000000000;
-
-            if (wasRAW)
-                streamReader = new StreamReader(filenameRAW);
-            else
-                streamReader = new StreamReader(filename);
-            do {
-                _line1 = streamReader.ReadLine();
-                if (_line1 != "" ) {
-                    _line = _line1.Split(delim);
-                    Customers[k1, 0] = k1;
-                    Customers[k1, 1] = Convert.ToDouble(_line[0]) ;
-                    Customers[k1, 2] = Convert.ToDouble(_line[1]) ;
-                    chart1.Series["Customers"].Points.AddXY(Customers[k1, 1], Customers[k1, 2]);
-                    if (Customers[k1, 2] < mymin)
-                        mymin = Customers[k1, 2];
-                    k1++;
-
-                }
-            } while (!streamReader.EndOfStream);
-
-            streamReader.Close();
-            //fills Customers Array with data from an external txt
-            chart1.ChartAreas[0].AxisY.Minimum = mymin;
-
-
+        private void RunACS(double[,] Customers) {
             double BestLength = 0;
             int Iteration;
             double Sump;
@@ -119,16 +32,19 @@ namespace kagv {
 
 
             double[,] h = null;
-            double[,] CustomersDistance=null;
-            double[,] t=null;
+            double[,] CustomersDistance = null;
+            double[,] t = null;
+
+            int SizeCustomers = Customers.GetLength(0);
+
             try {
-                 h = new double[SizeCustomers, SizeCustomers];
-                 CustomersDistance = new double[SizeCustomers, SizeCustomers];
-                 t = new double[SizeCustomers, SizeCustomers];
+                h = new double[SizeCustomers, SizeCustomers];
+                CustomersDistance = new double[SizeCustomers, SizeCustomers];
+                t = new double[SizeCustomers, SizeCustomers];
             } catch (OutOfMemoryException z) {
                 if (z != null) {
                     var totalGBRam = Convert.ToInt32((new Microsoft.VisualBasic.Devices.ComputerInfo().TotalPhysicalMemory / (Math.Pow(1024, 3))) + 0.5);
-                    MessageBox.Show("The benchmark file is large for this system.\r\nYour declared arrays cant be declared in "+totalGBRam+" GBs of RAM\r\nOut of memory...Exiting application","ERROR",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    MessageBox.Show("The benchmark file is large for this system.\r\nYour declared arrays cant be declared in " + totalGBRam + " GBs of RAM\r\nOut of memory...Exiting application", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Application.Exit();
                 }
             }
@@ -244,16 +160,75 @@ namespace kagv {
 
             Iteration = 1;
             double tmax = 0;
-            tmax = (1 / (2 * (1 - r))) * (1 / NearNb);
+            tmax = (1 / ( (1 - r))) * (1 / NearNb);
             double tmin = 0;
-            tmin = tmax / 5;
+            tmin = tmax*(1-Math.Pow(0.05,1/SizeCustomers))/((SizeCustomers/2-1)*Math.Pow(0.05,1/SizeCustomers));
 
+
+            double[] TotalRandomLength = new double[500];
+            for(int g=0;g<500;g++)
+            {
+                double RandomLength = 0;
+                List<int> RandomUnvisited = new List<int>();
+                int Start = RandomNumber.Between(0, SizeCustomers - 1);
+                int[] Randomtour = new int[SizeCustomers + 1];
+                Randomtour[0] = Start;
+                for (int l = 0; l < SizeCustomers; l++)
+                {
+                    RandomUnvisited.Add(l);
+
+                }
+                RandomUnvisited.Remove(Start);
+
+                bool randomlistempty = false;
+                int countrandom = 1;
+                while(randomlistempty==false)
+                {
+                    int Next = RandomNumber.Between(0, RandomUnvisited.Count-1);
+                    Randomtour[countrandom] = RandomUnvisited[Next];
+                    RandomUnvisited.Remove(RandomUnvisited[Next]);
+                    if (RandomUnvisited.Count == 0)
+                        randomlistempty = true;
+
+                    RandomLength = RandomLength + CustomersDistance[Randomtour[countrandom - 1], Randomtour[countrandom]];
+                    countrandom += 1;
+
+                }
+
+                Randomtour[countrandom] = Randomtour[0];
+                RandomLength = RandomLength + CustomersDistance[Randomtour[countrandom - 1], Randomtour[countrandom]];
+
+                TotalRandomLength[g] = RandomLength;
+            }
+
+            double DC = 0;
+            for(int g=0;g<499;g++)
+            {
+                DC = DC + Math.Abs(TotalRandomLength[g]-TotalRandomLength[g+1]);
+            }
+
+            DC = DC / 500;
+
+            double SDC = 0;
+            for (int g = 0; g < 499; g++)
+            {
+                SDC = SDC + Math.Pow((TotalRandomLength[g] - TotalRandomLength[g + 1])-DC,2);
+            }
+
+            SDC = Math.Sqrt((SDC / 499));
+
+
+            double Temperature =0;
+            Temperature = (DC + 3 * SDC) / (Math.Log(1 / 0.1));
+            int[] activesolution = new int[SizeCustomers + 1];
+            activesolution = BestTour;
+            double activeLength = NearNb;
 
             while (Iteration < NumItsMax) {
                 if (stopped)
                     return;
                 int[] touriteration = new int[SizeCustomers + 1];
-                double LengthIteration = Math.Pow(NearNb,10);
+                double LengthIteration = Math.Pow(NearNb, 10);
                 for (int k = 1; k < m + 1; k++) {
 
                     int moves = 0;
@@ -315,7 +290,7 @@ namespace kagv {
 
 
 
-                        t[c, tour[trip + 1]] = Math.Max(t[c, tour[trip + 1]] * (1 - x) + x * t0,tmin);
+                        t[c, tour[trip + 1]] = Math.Max(t[c, tour[trip + 1]] * (1 - x) + x * t0, tmin);
                     }
 
                     tour[tour.Length - 1] = tour[0];
@@ -324,18 +299,18 @@ namespace kagv {
                     for (int i = 0; i < tour.Length - 1; i++)
                         Length = Length + CustomersDistance[tour[i], tour[i + 1]];
 
-                    if(Length<LengthIteration) {
+                    if (Length < LengthIteration) {
                         touriteration = tour;
                         LengthIteration = Length;
-                            
+
                     }
 
                 }
 
 
 
-                int improve = 1;
-                while (improve <= 10000) {
+                int improve = 0;
+                while (improve <= 500*SizeCustomers/3) {
                     double NewDistance = 0;
                     for (int i = 0; i < touriteration.Length - 1; i++)
                         NewDistance = NewDistance + CustomersDistance[touriteration[i], touriteration[i + 1]];
@@ -369,19 +344,37 @@ namespace kagv {
 
                 }
 
+                if(activeLength>LengthIteration)
+                {
+                    activesolution = touriteration;
+                    activeLength = LengthIteration;
+                }
+                else
+                {
+                    double C = (LengthIteration - activeLength);
+                    
+                    if(RandomNumber.DoubleBetween(0, 1)<Math.Exp(-C/Temperature))
+                    {
+                        activesolution = touriteration;
+                        activeLength = LengthIteration;
+                    }
+                }
+
+                Temperature = Temperature * 0.9999;
+
 
                 for (int i = 0; i < t.GetLength(0); i++)
                     for (int j = 0; j < t.GetLength(1); j++)
-                        Math.Max(t[i, j] = t[i, j] * (1 - r),tmin);
+                        t[i, j] = Math.Max(t[i, j] * (1 - t[i,j]/(tmin+tmax)), tmin);
 
 
-                tmax = (1 / (2 * (1 - r))) * (1 / BestLength);
-                tmin = tmax / 5;
+                tmax = (1 / ( (1 - r))) * (1 / BestLength);
+                tmin = tmax * (1 - Math.Pow(0.05, 1 / SizeCustomers)) / ((SizeCustomers / 2 - 1) * Math.Pow(0.05, 1 / SizeCustomers));
 
                 chart1.Series["Trip"].Points.Clear();
 
-                for (int i = 0; i < BestTour.Length - 1; i++)
-                    Math.Min(t[BestTour[i], BestTour[i + 1]] = t[BestTour[i], BestTour[i + 1]] + r * (1 / BestLength),tmax);
+                for (int i = 0; i < activesolution.Length - 1; i++)
+                   t[activesolution[i], activesolution[i + 1]] = Math.Min(t[activesolution[i], activesolution[i + 1]] + (t[activesolution[i], activesolution[i + 1]] /(tmax+tmin)) * (1 / activeLength), tmax);
 
                 for (int i = 0; i < BestTour.Length; i++)
                     chart1.Series["Trip"].Points.AddXY(Customers[BestTour[i], 1], Customers[BestTour[i], 2]);
@@ -415,17 +408,117 @@ namespace kagv {
                 textBox2.Text = Convert.ToString("No Error found");
             }
 
+        }
+        private double[,] ReadFile(string filename) {
+            double[,] _Customers;
+
+            //handle raw files from TCS website
+            bool wasRAW = false;
+            StreamReader _tmpReader = new StreamReader(filename);
+            string filenameRAW = filename.Remove(filename.Length - 4) + "_fromRAW.txt"; //-4 to remove .txt extension
+            if (_tmpReader.ReadLine().Contains("NAME :")) { // check if the file format is same as TCS website
+                MessageBox.Show("RAW file selected...");
+                wasRAW = true;
+                StreamWriter _writer = new StreamWriter(filenameRAW);
+                string curLine = _tmpReader.ReadLine();
+                while (curLine[0] != '1')
+                    curLine = _tmpReader.ReadLine();
+                //start editing ,only when you reach the first coords
+                do {
+
+                    string newString = curLine.Remove(0, curLine.IndexOf(' ') + 1);
+                    newString = newString.Replace(' ', ',');
+                    _writer.WriteLine(newString);
+                    curLine = _tmpReader.ReadLine();
+                    if (curLine.Contains("EOF") || curLine == "" || curLine.Contains('\0')) {
+                        break;
+                    }
+                } while (!_tmpReader.EndOfStream);
+                _writer.Close();
+                _tmpReader.Close();
+                var lines = File.ReadAllLines(filenameRAW);
+                File.WriteAllLines(filenameRAW, lines.Take(lines.Length));
+
+            }
+            //end of handling
+
+            StreamReader streamReader;
+            if (wasRAW)
+                streamReader = new StreamReader(filenameRAW);
+            else
+                streamReader = new StreamReader(filename);
+
+            int SizeCustomers = 0;
+            do {
+                if (streamReader.ReadLine() != "")
+                    SizeCustomers++;
+            } while (!streamReader.EndOfStream);
+
+            streamReader.Close();
+
+            _Customers = new double[SizeCustomers, 3];
+            char delim = ',';
+
+            string[] _line;
+            string _line1;
+            int k1 = 0;
+            double mymin = 1000000000000000000;
+
+            if (wasRAW)
+                streamReader = new StreamReader(filenameRAW);
+            else
+                streamReader = new StreamReader(filename);
+            do {
+                _line1 = streamReader.ReadLine();
+                if (_line1 != "") {
+                    _line = _line1.Split(delim);
+                    _Customers[k1, 0] = k1;
+                    _Customers[k1, 1] = Convert.ToDouble(_line[0]);
+                    _Customers[k1, 2] = Convert.ToDouble(_line[1]);
+                    chart1.Series["Customers"].Points.AddXY(_Customers[k1, 1], _Customers[k1, 2]);
+                    if (_Customers[k1, 2] < mymin)
+                        mymin = _Customers[k1, 2];
+                    k1++;
+
+                }
+            } while (!streamReader.EndOfStream);
+
+            streamReader.Close();
+            //fills Customers Array with data from an external txt
+            chart1.ChartAreas[0].AxisY.Minimum = mymin;
+
+
+            return _Customers;
+        }
+        
+        private void ACS_Click(object sender, EventArgs e) {
+            string filename = "";
+            if (openFileDialog1.ShowDialog() == DialogResult.OK) {
+                filename = openFileDialog1.FileName;
+            } else
+                return;
+
+
+            pb.Value = 0;
+            pb.Maximum = Convert.ToInt32(NumIts.Value);
+            stopped = false;
+
+            pb.Visible = true;
+            pb_calculated.Visible = true;
+            calc_stop_BTN.Enabled = true;
+            ACS.Enabled = false;
+            textBox1.Text = "";
+            
+            chart1.Size = new Size(600, (pb.Location.Y + pb.Size.Height) - 25);
+            Size = new Size((chart1.Location.X + chart1.Width + 25), pb.Location.Y + pb.Size.Height + 50);
+
+            
+
+
+            RunACS(ReadFile(filename));
+
 
         }
-
-        ProgressBar pb = new ProgressBar();
-        Label pb_Label = new Label();
-        Label pb_calculated = new Label();
-        int _width;// = Size.Width;
-        int _heigth;// = Size.Height;
-        bool stopped = false;
-
-
 
         private void Ants_Load(object sender, EventArgs e) {
             _width = Size.Width;
@@ -448,6 +541,8 @@ namespace kagv {
             pb_calculated.Visible = false;
             Controls.Add(pb_calculated);
             pb_calculated.BringToFront();
+
+            openFileDialog1.FileName = "";
 
 
 
