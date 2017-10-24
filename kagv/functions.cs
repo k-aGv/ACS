@@ -250,7 +250,8 @@ namespace kagv {
             imported =
             calibrated =
             isMouseDown =
-            mapHasLoads = false;
+            mapHasLoads = 
+            overImage = false;
 
             use_Halt = false;
             priorityRulesbetaToolStripMenuItem.Checked = false;

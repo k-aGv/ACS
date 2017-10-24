@@ -62,7 +62,7 @@ namespace kagv {
        
         bool holdCTRL;
         bool use_Halt = false;
-        bool overImage;
+        bool overImage=false;
         bool imported;
         bool beforeStart = true;
         bool calibrated = false;//flag checking if current point is correctly callibrated in the middle of the rectangle
