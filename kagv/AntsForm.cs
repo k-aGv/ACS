@@ -69,7 +69,7 @@ namespace kagv {
 
                         double dX = x1 - x0;
                         double dY = y1 - y0;
-                        double distance = Math.Sqrt(dX * dX + dY * dY);
+                        double distance = Math.Round(Math.Sqrt(dX * dX + dY * dY));
                         CustomersDistance[i, j] = distance;
 
                     }
@@ -201,13 +201,15 @@ namespace kagv {
                 TotalRandomLength[g] = RandomLength;
             }
 
+            int meancount = 0;
             double DC = 0;
             for(int g=0;g<499;g++)
             {
                 DC = DC + Math.Abs(TotalRandomLength[g]-TotalRandomLength[g+1]);
+                meancount += 1;
             }
 
-            DC = DC / 500;
+            DC = DC / meancount;
 
             double SDC = 0;
             for (int g = 0; g < 499; g++)
@@ -215,7 +217,7 @@ namespace kagv {
                 SDC = SDC + Math.Pow((TotalRandomLength[g] - TotalRandomLength[g + 1])-DC,2);
             }
 
-            SDC = Math.Sqrt((SDC / 499));
+            SDC = Math.Sqrt((SDC / meancount));
 
 
             double Temperature =0;
@@ -310,7 +312,7 @@ namespace kagv {
 
 
                 int improve = 0;
-                while (improve <= 500*SizeCustomers/3) {
+                while (improve <= 500) {
                     double NewDistance = 0;
                     for (int i = 0; i < touriteration.Length - 1; i++)
                         NewDistance = NewDistance + CustomersDistance[touriteration[i], touriteration[i + 1]];
@@ -322,13 +324,18 @@ namespace kagv {
                             for (int l = 0; l < touriteration.Length - 1; l++)
                                 NewLength += CustomersDistance[newroute[l], newroute[l + 1]];
 
-                            if (NewLength < NewDistance) {
+                            if (NewLength < NewDistance)
+                            {
                                 touriteration = newroute;
                                 NewDistance = NewLength;
                                 v = touriteration.Length - 1;
                                 i = touriteration.Length - 2;
+                                improve = 0;
                             }
-                            improve++;
+                            else
+                            {
+                                improve++;
+                            }
 
 
                         }
