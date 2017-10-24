@@ -396,7 +396,7 @@ namespace kagv {
                             }
                         }
 
-            if (rb_start.Checked) {
+            if (rb_start.Checked && nUD_AGVs.Value!=0) {
 
                 if (nUD_AGVs.Value == 1)//Saves only the last Click position to place the Start (1 start exists)
                 {
