@@ -309,7 +309,7 @@ namespace kagv {
                         if (m_rectangles[i][j].boxType == BoxType.Normal) {
                             m_rectangles[i][j].BeVisible();
 
-                            boxDefaultColor = Globals._SemiTransparency ? Color.FromArgb(128, 255, 0, 255) : Color.WhiteSmoke;
+                            Globals.boxDefaultColor = Globals._SemiTransparency ? Color.FromArgb(128, 255, 0, 255) : Color.WhiteSmoke;
                         }
                 BackColor = selectedColor;
             }
@@ -395,7 +395,7 @@ namespace kagv {
                         loadPos.Add(new GridPos(i, j)); //inserts the coordinates of the Load inside a list
                     }
                     if (m_rectangles[i][j].boxType == BoxType.Normal)
-                        m_rectangles[i][j].onHover(boxDefaultColor);
+                        m_rectangles[i][j].onHover(Globals.boxDefaultColor);
 
                     if (m_rectangles[i][j].boxType == BoxType.Start) {
 

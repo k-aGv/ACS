@@ -46,6 +46,8 @@ namespace kagv {
         public static byte _Opacity = (byte) ( (BitConverter.GetBytes(Color.WhiteSmoke.ToArgb()).Reverse().ToArray())[0] - (100) );
         public static double _AStarWeight = 0.5;
         public static Color _SemiTransparent;
+        public static Color boxDefaultColor = _SemiTransparency ? Color.FromArgb(64, 255, 255, 255) : Color.WhiteSmoke;
+
 
         //This value is needed since the application does not allow me to change the Debug menu
         //visibility before form shown

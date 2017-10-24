@@ -320,7 +320,7 @@ namespace kagv {
 
                             Invalidate();
                         } else if (m_rectangles[widthTrav][heightTrav].boxType == BoxType.Normal) {
-                            m_rectangles[widthTrav][heightTrav].onHover(boxDefaultColor);
+                            m_rectangles[widthTrav][heightTrav].onHover(Globals.boxDefaultColor);
                             Invalidate();
                         }
         }

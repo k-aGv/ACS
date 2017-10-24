@@ -76,8 +76,7 @@ namespace kagv {
         bool never = false;
        
         Color selectedColor = Color.DarkGray;
-        Color boxDefaultColor = Color.WhiteSmoke;
-
+        
         Image importedLayout = null;
         Image importedImageFile;
         
