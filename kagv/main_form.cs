@@ -128,7 +128,7 @@ namespace kagv {
             //Supposing that timers are not enabled(that means that the simulation is not running)
             //we have a clicked point.Check if that point is valid.if not explicitly leave
             Point _validationPoint = new Point(e.X, e.Y);
-            if (!Isvalid(_validationPoint))
+            if (!Isvalid(_validationPoint) || !overImage)
                 return;
             //if the clicked point is inside a rectangle...
             isMouseDown = true;
@@ -368,7 +368,7 @@ namespace kagv {
         private void main_form_MouseClick(object sender, MouseEventArgs e) {
 
             Point click_coords = new Point(e.X, e.Y);
-            if (!Isvalid(click_coords) || e.Button != MouseButtons.Left)
+            if (!Isvalid(click_coords) || e.Button != MouseButtons.Left || !overImage)
                 return;
 
             if (rb_load.Checked)
