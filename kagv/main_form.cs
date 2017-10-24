@@ -368,7 +368,7 @@ namespace kagv {
         private void main_form_MouseClick(object sender, MouseEventArgs e) {
 
             Point click_coords = new Point(e.X, e.Y);
-            if (!Isvalid(click_coords) || e.Button != MouseButtons.Left || nUD_AGVs.Value == 0)
+            if (!Isvalid(click_coords) || e.Button != MouseButtons.Left)
                 return;
 
             if (rb_load.Checked)
