@@ -92,6 +92,7 @@
             this.btn_right = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.importImageLayoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPanel.SuspendLayout();
             this.gb_type.SuspendLayout();
             this.gb_settings.SuspendLayout();
@@ -269,7 +270,8 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.exportMapToolStripMenuItem,
-            this.importMapToolStripMenuItem});
+            this.importMapToolStripMenuItem,
+            this.importImageLayoutToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.fileToolStripMenuItem.Text = "Map";
@@ -685,6 +687,13 @@
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(190, 17);
             this.toolStripStatusLabel1.Text = "Hold CTRL for grid configuration...";
             // 
+            // importImageLayoutToolStripMenuItem
+            // 
+            this.importImageLayoutToolStripMenuItem.Name = "importImageLayoutToolStripMenuItem";
+            this.importImageLayoutToolStripMenuItem.Size = new System.Drawing.Size(275, 22);
+            this.importImageLayoutToolStripMenuItem.Text = "Import image layout";
+            this.importImageLayoutToolStripMenuItem.Click += new System.EventHandler(this.importImageLayoutToolStripMenuItem_Click);
+            // 
             // main_form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -796,6 +805,7 @@
         private System.Windows.Forms.ToolStripMenuItem showGridBlockLocationsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem defaultGridSizeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem antsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem importImageLayoutToolStripMenuItem;
     }
 }
 

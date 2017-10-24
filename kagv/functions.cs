@@ -706,6 +706,17 @@ namespace kagv {
             ConfigUI();
         }
 
+        private void ImportImage()
+        {
+            ofd_importmap.Filter = "PNG (*.png)|*.png|JPEG (*.jpg)|(*.jpg)";
+            ofd_importmap.FileName = "";
+
+            if (ofd_importmap.ShowDialog() == DialogResult.OK) {
+                importedLayout = Image.FromFile(ofd_importmap.FileName);
+                importedImageFile = Image.FromFile(ofd_importmap.FileName);
+                overImage = true;
+            }
+        }
         //Function for exporting the map
         private void Export()
         {

@@ -62,7 +62,7 @@ namespace kagv {
        
         bool holdCTRL;
         bool use_Halt = false;
-        bool overImage = false;
+        bool overImage;
         bool imported;
         bool beforeStart = true;
         bool calibrated = false;//flag checking if current point is correctly callibrated in the middle of the rectangle
@@ -79,6 +79,8 @@ namespace kagv {
         Color boxDefaultColor = Color.WhiteSmoke;
 
         Image importedLayout = null;
+        Image importedImageFile;
+        
 
 
     }

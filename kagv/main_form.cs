@@ -797,6 +797,11 @@ namespace kagv {
             if (ants_form.ShowDialog() == DialogResult.Cancel)
                 ants_form.Close();
         }
+
+        private void importImageLayoutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ImportImage();
+        }
     }
     
 }
