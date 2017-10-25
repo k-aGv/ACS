@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace kagv {
+﻿namespace kagv {
     public static class TwoOptSwap {
         public static int[] OptSwap(int[] TempTour, int i, int v) {
             int size = TempTour.Length;
