@@ -808,6 +808,11 @@ namespace kagv {
             ImportImage();
             menuPanel.Enabled = true;
         }
+
+        private void implementGoogleMapsToolStripMenuItem_Click(object sender, EventArgs e) {
+            gmaps maps = new gmaps();
+            maps.ShowDialog();
+        }
     }
     
 }
