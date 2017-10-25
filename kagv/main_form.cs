@@ -124,9 +124,11 @@ namespace kagv {
 
         private void main_form_MouseDown(object sender, MouseEventArgs e) {
             //If the simulation is running, do not do anything.leave the function explicitly
-          
+
             //Supposing that timers are not enabled(that means that the simulation is not running)
             //we have a clicked point.Check if that point is valid.if not explicitly leave
+            if (!menuPanel.Enabled)
+                return;
             Point _validationPoint = new Point(e.X, e.Y);
             if (!Isvalid(_validationPoint) || !overImage)
                 return;
@@ -368,6 +370,8 @@ namespace kagv {
 
         private void main_form_MouseClick(object sender, MouseEventArgs e) {
 
+            if (!menuPanel.Enabled)
+                return;
             Point click_coords = new Point(e.X, e.Y);
             if (!Isvalid(click_coords) || e.Button != MouseButtons.Left || !overImage)
                 return;
