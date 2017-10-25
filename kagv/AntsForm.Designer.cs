@@ -27,6 +27,7 @@
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AntsForm));
             this.calc_stop_BTN = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.ACS = new System.Windows.Forms.Button();
@@ -365,9 +366,10 @@
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.gb_parameters);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "AntsForm";
-            this.Text = "Ants";
+            this.Text = "kagv ACS Algorithm";
             this.Load += new System.EventHandler(this.Ants_Load);
             ((System.ComponentModel.ISupportInitialize)(this.avalue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bvalue)).EndInit();

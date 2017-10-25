@@ -710,7 +710,7 @@
             this.MainMenuStrip = this.settings_menu;
             this.MaximizeBox = false;
             this.Name = "main_form";
-            this.Text = "kagv Simulation-ACS Algorithm";
+            this.Text = "kagv Simulation-Logistics";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.main_form_FormClosing);
             this.Load += new System.EventHandler(this.main_form_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.main_form_Paint);
