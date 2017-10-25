@@ -35,7 +35,7 @@
             this.rb_start = new System.Windows.Forms.RadioButton();
             this.rb_stop = new System.Windows.Forms.RadioButton();
             this.rb_load = new System.Windows.Forms.RadioButton();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gb_AStar = new System.Windows.Forms.GroupBox();
             this.nud_weight = new System.Windows.Forms.NumericUpDown();
             this.tp_info = new System.Windows.Forms.ToolTip(this.components);
             this.sfd_exportmap = new System.Windows.Forms.SaveFileDialog();
@@ -98,7 +98,7 @@
             this.gb_settings.SuspendLayout();
             this.gb_agvs.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nUD_AGVs)).BeginInit();
-            this.groupBox1.SuspendLayout();
+            this.gb_AStar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nud_weight)).BeginInit();
             this.settings_menu.SuspendLayout();
             this.panel_resize.SuspendLayout();
@@ -111,7 +111,7 @@
             this.menuPanel.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.menuPanel.Controls.Add(this.gb_type);
             this.menuPanel.Controls.Add(this.gb_settings);
-            this.menuPanel.Controls.Add(this.groupBox1);
+            this.menuPanel.Controls.Add(this.gb_AStar);
             this.menuPanel.Enabled = false;
             this.menuPanel.Location = new System.Drawing.Point(12, 36);
             this.menuPanel.Name = "menuPanel";
@@ -220,15 +220,15 @@
             this.rb_load.Text = "Load";
             this.rb_load.UseVisualStyleBackColor = true;
             // 
-            // groupBox1
+            // gb_AStar
             // 
-            this.groupBox1.Controls.Add(this.nud_weight);
-            this.groupBox1.Location = new System.Drawing.Point(301, 5);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(69, 45);
-            this.groupBox1.TabIndex = 29;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "A* Weight";
+            this.gb_AStar.Controls.Add(this.nud_weight);
+            this.gb_AStar.Location = new System.Drawing.Point(301, 5);
+            this.gb_AStar.Name = "gb_AStar";
+            this.gb_AStar.Size = new System.Drawing.Size(69, 45);
+            this.gb_AStar.TabIndex = 29;
+            this.gb_AStar.TabStop = false;
+            this.gb_AStar.Text = "A* Weight";
             // 
             // nud_weight
             // 
@@ -724,7 +724,7 @@
             this.gb_settings.PerformLayout();
             this.gb_agvs.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.nUD_AGVs)).EndInit();
-            this.groupBox1.ResumeLayout(false);
+            this.gb_AStar.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.nud_weight)).EndInit();
             this.settings_menu.ResumeLayout(false);
             this.settings_menu.PerformLayout();
@@ -786,7 +786,7 @@
         private System.Windows.Forms.NumericUpDown nud_weight;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem noObstaclesMenu;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox gb_AStar;
         private System.Windows.Forms.Panel panel_resize;
         private System.Windows.Forms.Button btn_down;
         private System.Windows.Forms.Button btn_up;
