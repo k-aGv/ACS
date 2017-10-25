@@ -332,13 +332,14 @@ namespace kagv {
         //shown in the screen
         private void main_form_MouseUp(object sender, MouseEventArgs e) {
 
+            if (e.Button == MouseButtons.Right) {
+                tp.Hide(this);
+                return;
+            }
             isMouseDown = false;
 
             for (int i = 0; i < startPos.Count; i++)
                 AGVs[i].StepsCounter = 0;
-
-            if (e.Button == MouseButtons.Right)
-                tp.Hide(this);
 
             Redraw();//The main function of this executable.Contains almost every drawing and calculating stuff
             Invalidate();
