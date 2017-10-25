@@ -10,8 +10,8 @@ using System.Windows.Forms;
 using System.IO;
 
 namespace kagv {
-    public partial class AntsForm : Form {
-        public AntsForm() {
+    public partial class ACSAlgorithm : Form {
+        public ACSAlgorithm() {
             InitializeComponent();
         }
 

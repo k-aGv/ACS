@@ -798,8 +798,8 @@ namespace kagv {
         }
 
         private void antsToolStripMenuItem_Click(object sender, EventArgs e) {
-            AntsForm ants_form = new AntsForm();
-            ants_form.ShowDialog();
+            ACSAlgorithm AcsAlgorithm = new ACSAlgorithm();
+            AcsAlgorithm.ShowDialog();
         }
 
         private void importImageLayoutToolStripMenuItem_Click(object sender, EventArgs e)

@@ -116,11 +116,11 @@
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
     <Compile Include="Ants.cs" />
-    <Compile Include="AntsForm.cs">
+    <Compile Include="ACSAlgorithm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AntsForm.Designer.cs">
-      <DependentUpon>AntsForm.cs</DependentUpon>
+    <Compile Include="ACSAlgorithm.Designer.cs">
+      <DependentUpon>ACSAlgorithm.cs</DependentUpon>
     </Compile>
     <Compile Include="DLL source\StaticGrid.cs" />
     <Compile Include="Globals.cs" />
@@ -160,8 +160,8 @@
       <DependentUpon>About.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="AntsForm.resx">
-      <DependentUpon>AntsForm.cs</DependentUpon>
+    <EmbeddedResource Include="ACSAlgorithm.resx">
+      <DependentUpon>ACSAlgorithm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="main_form.resx">
       <DependentUpon>main_form.cs</DependentUpon>
