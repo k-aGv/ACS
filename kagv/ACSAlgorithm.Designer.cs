@@ -352,7 +352,7 @@
             this.chart1.TabIndex = 45;
             this.chart1.Text = "chart2";
             // 
-            // AntsForm
+            // ACSAlgorithm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -368,8 +368,8 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.Name = "AntsForm";
-            this.Text = "kagv ACS Algorithm";
+            this.Name = "ACSAlgorithm";
+            this.Text = "K-aGv ACS Algorithm";
             this.Load += new System.EventHandler(this.Ants_Load);
             ((System.ComponentModel.ISupportInitialize)(this.avalue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bvalue)).EndInit();

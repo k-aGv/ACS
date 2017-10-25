@@ -605,8 +605,6 @@ namespace kagv {
             aGVIndexToolStripMenuItem.Checked =
             highlightOverCurrentBoxToolStripMenuItem.Checked = true;
 
-            Text = "K-aGv2 Simulator (ACS branch)";
-
             rb_start.Checked = true;
             BackColor = Color.DarkGray;
 
