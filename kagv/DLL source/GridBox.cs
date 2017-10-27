@@ -68,7 +68,7 @@ namespace kagv {
                     break;
 
             }
-            width = height = Globals._BlockSide - 1;
+            width = height = Globals._BlockSide -1;
 
             boxRec = new Rectangle(x, y, width, height);
         }

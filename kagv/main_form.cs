@@ -69,18 +69,18 @@ namespace kagv {
                     for (int heightTrav = 0; heightTrav < Globals._HeightBlocks; heightTrav++) {
                         //show the relative box color regarding the box type we have chose
                         m_rectangles[widthTrav][heightTrav].DrawBox(paper, BoxType.Normal);
-                        m_rectangles[widthTrav][heightTrav].DrawBox(paper, BoxType.Start);
-                        m_rectangles[widthTrav][heightTrav].DrawBox(paper, BoxType.End);
-                        m_rectangles[widthTrav][heightTrav].DrawBox(paper, BoxType.Wall);
+                        //m_rectangles[widthTrav][heightTrav].DrawBox(paper, BoxType.Start);
+                        //m_rectangles[widthTrav][heightTrav].DrawBox(paper, BoxType.End);
+                       // m_rectangles[widthTrav][heightTrav].DrawBox(paper, BoxType.Wall);
                         m_rectangles[widthTrav][heightTrav].DrawBox(paper, BoxType.Load);
 
-                        if (m_rectangles[widthTrav][heightTrav].boxType == BoxType.Load
-                            && isLoad[widthTrav, heightTrav] == 3)
-                            m_rectangles[widthTrav][heightTrav].SetAsTargetted(paper);
+                       // if (m_rectangles[widthTrav][heightTrav].boxType == BoxType.Load
+                       //     && isLoad[widthTrav, heightTrav] == 3)
+                       //     m_rectangles[widthTrav][heightTrav].SetAsTargetted(paper);
 
                     }
                 }
-
+                /*
                 for (int i = 0; i < startPos.Count; i++) {
                     AGVs[i].StepsCounter = 0;
                     for (int resultTrav = 0; resultTrav < AGVs[i].JumpPoints.Count; resultTrav++)
@@ -91,7 +91,7 @@ namespace kagv {
                                 DrawPoints(AGVs[i].Paths[resultTrav], i);//show points
                         } catch { }
                 }
-
+                
                 //handle the red message above every agv
                 int AGVs_list_index = 0;
                 if (aGVIndexToolStripMenuItem.Checked)
@@ -103,7 +103,7 @@ namespace kagv {
                                              new Point((startPos[AGVs_list_index].x * Globals._BlockSide) - 10 , ((startPos[AGVs_list_index].y * Globals._BlockSide) + Globals._TopBarOffset) - Globals._BlockSide));
                             AGVs_list_index++;
                         }
-
+               */
             } catch { }
         }
      
@@ -143,6 +143,7 @@ namespace kagv {
         }
 
         private void main_form_MouseDown(object sender, MouseEventArgs e) {
+            return;
             //If the simulation is running, do not do anything.leave the function explicitly
 
             //Supposing that timers are not enabled(that means that the simulation is not running)
@@ -257,6 +258,7 @@ namespace kagv {
             if (!overImage)
                 return;
             //if we hold the left click and the Walls setting is selected....
+            /*
             if (isMouseDown && rb_wall.Checked) {
                 if (e.Button == MouseButtons.Left) {
                     if (m_lastBoxSelect.boxType == BoxType.Start ||
@@ -324,7 +326,7 @@ namespace kagv {
                     }
                 }
             }
-
+            */
            
             //if user enable the highlighting over a box while mouse hovering
             if (allowHighlight)
@@ -352,17 +354,17 @@ namespace kagv {
         //shown in the screen
         private void main_form_MouseUp(object sender, MouseEventArgs e) {
 
-            if (e.Button == MouseButtons.Right) {
-                tp.Hide(this);
-                return;
-            }
+           // if (e.Button == MouseButtons.Right) {
+           //     tp.Hide(this);
+           //     return;
+           // }
             isMouseDown = false;
 
-            for (int i = 0; i < startPos.Count; i++)
-                AGVs[i].StepsCounter = 0;
+           // for (int i = 0; i < startPos.Count; i++)
+           //     AGVs[i].StepsCounter = 0;
 
             Redraw();//The main function of this executable.Contains almost every drawing and calculating stuff
-            Invalidate();
+           // Invalidate();
         }
 
         
@@ -390,7 +392,7 @@ namespace kagv {
         }
 
         private void main_form_MouseClick(object sender, MouseEventArgs e) {
-
+            
             if (!menuPanel.Enabled)
                 return;
             Point click_coords = new Point(e.X, e.Y);
@@ -407,21 +409,22 @@ namespace kagv {
                                 case BoxType.Normal:
                                     //loads++;
                                     m_rectangles[widthTrav][heightTrav].SwitchLoad();
-                                    isLoad[widthTrav, heightTrav] = 1;
-                                    Invalidate();
-                                    break;
+                                    //isLoad[widthTrav, heightTrav] = 1;
+                                    //Invalidate();
+                                    break; 
                                 case BoxType.Load:
                                     m_rectangles[widthTrav][heightTrav].SwitchLoad();
-                                    isLoad[widthTrav, heightTrav] = 2;
-                                    Invalidate();
+                                    //isLoad[widthTrav, heightTrav] = 2;
+                                    //Invalidate();
                                     break;
-                                case BoxType.Wall:
+                                /*case BoxType.Wall:
                                 case BoxType.Start:
                                 case BoxType.End:
                                     break;
+                                    */
                             }
                         }
-
+            return;
             if (rb_start.Checked && nUD_AGVs.Value!=0) {
 
                 if (nUD_AGVs.Value == 1)//Saves only the last Click position to place the Start (1 start exists)

@@ -67,7 +67,7 @@
             this.calc_stop_BTN.Location = new System.Drawing.Point(140, 12);
             this.calc_stop_BTN.Name = "calc_stop_BTN";
             this.calc_stop_BTN.Size = new System.Drawing.Size(72, 23);
-            this.calc_stop_BTN.TabIndex = 41;
+            this.calc_stop_BTN.TabIndex = 2;
             this.calc_stop_BTN.Text = "Stop calculactions";
             this.calc_stop_BTN.UseVisualStyleBackColor = true;
             this.calc_stop_BTN.Click += new System.EventHandler(this.calc_stop_BTN_Click);
