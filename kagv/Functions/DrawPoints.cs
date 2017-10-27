@@ -1,5 +1,5 @@
 ﻿/*!
-The MIT License (MIT)
+The Apache License 2.0 License
 
 Copyright (c) 2017 Dimitris Katikaridis <dkatikaridis@gmail.com>,Giannis Menekses <johnmenex@hotmail.com>
 
