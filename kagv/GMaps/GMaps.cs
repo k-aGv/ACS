@@ -37,8 +37,11 @@ namespace kagv {
             InitializeComponent();
         }
 
+        public void ReloadMap() {
+            gmaps_Load(new object(), new EventArgs());
+        }
         private void gmaps_Load(object sender, EventArgs e) {
-
+            btn_refresh.Enabled = false;
             //calculate margin
             int margin = mymap.Location.X + SystemInformation.Border3DSize.Width;
 
@@ -95,13 +98,17 @@ namespace kagv {
         }
 
 
-
+        
         private void cb_cross_CheckedChanged(object sender, EventArgs e) {
             mymap.ShowCenter = cb_cross.Checked;
             mymap.Refresh();
         }
 
         private void btn_marker_Click(object sender, EventArgs e) {
+            if (btn_rec.Enabled) {
+                btn_rec.Enabled = false;
+                btn_refresh.Enabled = true;
+            }
             Screenshot st = new Screenshot(this);
             st.Owner = this;
             st.Show();
@@ -162,6 +169,14 @@ namespace kagv {
 
         private void refreshURL_Tick(object sender, EventArgs e) {
 
+        }
+
+        private void btn_refresh_Click(object sender, EventArgs e) {
+            mymap.Refresh();
+            if (!btn_rec.Enabled) {
+                btn_rec.Enabled = true;
+                btn_refresh.Enabled = false ;
+            }
         }
     }
 }
