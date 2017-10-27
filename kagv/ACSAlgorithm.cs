@@ -426,12 +426,12 @@ namespace kagv {
                 chart1.Series["Trip"].Points.AddXY(Customers[BestTour[i], 1], Customers[BestTour[i], 2]);
 
             }
-            textBox1.Text = Convert.ToString(BestLength);
+            tb_length.Text = Convert.ToString(BestLength);
             Application.DoEvents();
             if ((BestTour.Length - 1) != BestTour.Distinct().Count()) {
-                textBox2.Text = Convert.ToString("Dublicates found");
+                tb_error.Text = Convert.ToString("Dublicates found");
             } else {
-                textBox2.Text = Convert.ToString("No Error found");
+                tb_error.Text = Convert.ToString("No Error found");
             }
 
         }
@@ -537,7 +537,7 @@ namespace kagv {
             pb_calculated.Visible = true;
             calc_stop_BTN.Enabled = true;
             ACS.Enabled = false;
-            textBox1.Text = "";
+            tb_length.Text = "";
             
             chart1.Size = new Size(600, (pb.Location.Y + pb.Size.Height) - 25);
             Size = new Size((chart1.Location.X + chart1.Width + 25), pb.Location.Y + pb.Size.Height + 50);
@@ -575,7 +575,8 @@ namespace kagv {
 
             openFileDialog1.FileName = "";
 
-
+            int offset = gb_parameters.Left;
+            Width = gb_parameters.Location.X + gb_parameters.Size.Width + offset+offset; // we need the LEFT offset and the RIGHT offset to be the same
 
         }
         private void calc_stop_BTN_Click(object sender, EventArgs e) {

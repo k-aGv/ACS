@@ -274,9 +274,9 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.importImageLayoutToolStripMenuItem,
             this.exportMapToolStripMenuItem,
-            this.importMapToolStripMenuItem,
-            this.importImageLayoutToolStripMenuItem});
+            this.importMapToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.fileToolStripMenuItem.Text = "Map";
@@ -402,12 +402,12 @@
             // gridToolStripMenuItem
             // 
             this.gridToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.showToolStripMenuItem,
+            this.implementGoogleMapsToolStripMenuItem,
             this.borderColorToolStripMenuItem,
             this.toolStripMenuItem2,
             this.clearToolStripMenuItem,
             this.toolStripSeparator1,
-            this.implementGoogleMapsToolStripMenuItem});
+            this.showToolStripMenuItem});
             this.gridToolStripMenuItem.Name = "gridToolStripMenuItem";
             this.gridToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
             this.gridToolStripMenuItem.Text = "Grid";
@@ -550,8 +550,8 @@
             // antsToolStripMenuItem
             // 
             this.antsToolStripMenuItem.Name = "antsToolStripMenuItem";
-            this.antsToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
-            this.antsToolStripMenuItem.Text = "ACS";
+            this.antsToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
+            this.antsToolStripMenuItem.Text = "Run ACS";
             this.antsToolStripMenuItem.Click += new System.EventHandler(this.antsToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem

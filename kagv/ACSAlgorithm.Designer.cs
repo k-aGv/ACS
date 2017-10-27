@@ -32,17 +32,17 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.ACS = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
+            this.tb_error = new System.Windows.Forms.TextBox();
+            this.lb_a = new System.Windows.Forms.Label();
             this.avalue = new System.Windows.Forms.NumericUpDown();
             this.Length = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.tb_length = new System.Windows.Forms.TextBox();
+            this.lb_rate = new System.Windows.Forms.Label();
+            this.lb_rateLocal = new System.Windows.Forms.Label();
+            this.lb_b = new System.Windows.Forms.Label();
+            this.lb_q0 = new System.Windows.Forms.Label();
+            this.lb_ants = new System.Windows.Forms.Label();
+            this.lb_iterations = new System.Windows.Forms.Label();
             this.bvalue = new System.Windows.Forms.NumericUpDown();
             this.xvalue = new System.Windows.Forms.NumericUpDown();
             this.rvalue = new System.Windows.Forms.NumericUpDown();
@@ -64,9 +64,9 @@
             // 
             // calc_stop_BTN
             // 
-            this.calc_stop_BTN.Location = new System.Drawing.Point(117, 12);
+            this.calc_stop_BTN.Location = new System.Drawing.Point(140, 12);
             this.calc_stop_BTN.Name = "calc_stop_BTN";
-            this.calc_stop_BTN.Size = new System.Drawing.Size(112, 23);
+            this.calc_stop_BTN.Size = new System.Drawing.Size(72, 23);
             this.calc_stop_BTN.TabIndex = 41;
             this.calc_stop_BTN.Text = "Stop calculactions";
             this.calc_stop_BTN.UseVisualStyleBackColor = true;
@@ -78,9 +78,9 @@
             // 
             // ACS
             // 
-            this.ACS.Location = new System.Drawing.Point(2, 12);
+            this.ACS.Location = new System.Drawing.Point(12, 12);
             this.ACS.Name = "ACS";
-            this.ACS.Size = new System.Drawing.Size(109, 23);
+            this.ACS.Size = new System.Drawing.Size(122, 23);
             this.ACS.TabIndex = 1;
             this.ACS.Text = "Ant Colony System";
             this.ACS.UseVisualStyleBackColor = true;
@@ -95,22 +95,22 @@
             this.label8.TabIndex = 39;
             this.label8.Text = "Error";
             // 
-            // textBox2
+            // tb_error
             // 
-            this.textBox2.Location = new System.Drawing.Point(76, 282);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 38;
+            this.tb_error.Location = new System.Drawing.Point(76, 282);
+            this.tb_error.Name = "tb_error";
+            this.tb_error.ReadOnly = true;
+            this.tb_error.Size = new System.Drawing.Size(100, 20);
+            this.tb_error.TabIndex = 38;
             // 
-            // label7
+            // lb_a
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 174);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(13, 13);
-            this.label7.TabIndex = 37;
-            this.label7.Text = "a";
+            this.lb_a.AutoSize = true;
+            this.lb_a.Location = new System.Drawing.Point(6, 174);
+            this.lb_a.Name = "lb_a";
+            this.lb_a.Size = new System.Drawing.Size(13, 13);
+            this.lb_a.TabIndex = 37;
+            this.lb_a.Text = "a";
             // 
             // avalue
             // 
@@ -134,67 +134,67 @@
             this.Length.TabIndex = 35;
             this.Length.Text = "Length";
             // 
-            // textBox1
+            // tb_length
             // 
-            this.textBox1.Location = new System.Drawing.Point(76, 256);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 34;
+            this.tb_length.Location = new System.Drawing.Point(76, 256);
+            this.tb_length.Name = "tb_length";
+            this.tb_length.ReadOnly = true;
+            this.tb_length.Size = new System.Drawing.Size(100, 20);
+            this.tb_length.TabIndex = 34;
             // 
-            // label6
+            // lb_rate
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 148);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(93, 13);
-            this.label6.TabIndex = 33;
-            this.label6.Text = "Evaporation Rate ";
+            this.lb_rate.AutoSize = true;
+            this.lb_rate.Location = new System.Drawing.Point(6, 148);
+            this.lb_rate.Name = "lb_rate";
+            this.lb_rate.Size = new System.Drawing.Size(93, 13);
+            this.lb_rate.TabIndex = 33;
+            this.lb_rate.Text = "Evaporation Rate ";
             // 
-            // label5
+            // lb_rateLocal
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 122);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(119, 13);
-            this.label5.TabIndex = 32;
-            this.label5.Text = "Evaporation Rate Local";
+            this.lb_rateLocal.AutoSize = true;
+            this.lb_rateLocal.Location = new System.Drawing.Point(6, 122);
+            this.lb_rateLocal.Name = "lb_rateLocal";
+            this.lb_rateLocal.Size = new System.Drawing.Size(119, 13);
+            this.lb_rateLocal.TabIndex = 32;
+            this.lb_rateLocal.Text = "Evaporation Rate Local";
             // 
-            // label4
+            // lb_b
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 96);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(13, 13);
-            this.label4.TabIndex = 31;
-            this.label4.Text = "b";
+            this.lb_b.AutoSize = true;
+            this.lb_b.Location = new System.Drawing.Point(6, 96);
+            this.lb_b.Name = "lb_b";
+            this.lb_b.Size = new System.Drawing.Size(13, 13);
+            this.lb_b.TabIndex = 31;
+            this.lb_b.Text = "b";
             // 
-            // label3
+            // lb_q0
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 70);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(19, 13);
-            this.label3.TabIndex = 30;
-            this.label3.Text = "q0";
+            this.lb_q0.AutoSize = true;
+            this.lb_q0.Location = new System.Drawing.Point(6, 70);
+            this.lb_q0.Name = "lb_q0";
+            this.lb_q0.Size = new System.Drawing.Size(19, 13);
+            this.lb_q0.TabIndex = 30;
+            this.lb_q0.Text = "q0";
             // 
-            // label2
+            // lb_ants
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 42);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(28, 13);
-            this.label2.TabIndex = 29;
-            this.label2.Text = "Ants";
+            this.lb_ants.AutoSize = true;
+            this.lb_ants.Location = new System.Drawing.Point(6, 42);
+            this.lb_ants.Name = "lb_ants";
+            this.lb_ants.Size = new System.Drawing.Size(28, 13);
+            this.lb_ants.TabIndex = 29;
+            this.lb_ants.Text = "Ants";
             // 
-            // label1
+            // lb_iterations
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 16);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(102, 13);
-            this.label1.TabIndex = 28;
-            this.label1.Text = "Number of Iterations";
+            this.lb_iterations.AutoSize = true;
+            this.lb_iterations.Location = new System.Drawing.Point(6, 16);
+            this.lb_iterations.Name = "lb_iterations";
+            this.lb_iterations.Size = new System.Drawing.Size(102, 13);
+            this.lb_iterations.TabIndex = 28;
+            this.lb_iterations.Text = "Number of Iterations";
             // 
             // bvalue
             // 
@@ -311,20 +311,20 @@
             // 
             // gb_parameters
             // 
-            this.gb_parameters.Controls.Add(this.label1);
+            this.gb_parameters.Controls.Add(this.lb_iterations);
             this.gb_parameters.Controls.Add(this.NumIts);
             this.gb_parameters.Controls.Add(this.Ants);
             this.gb_parameters.Controls.Add(this.q0value);
-            this.gb_parameters.Controls.Add(this.label7);
+            this.gb_parameters.Controls.Add(this.lb_a);
             this.gb_parameters.Controls.Add(this.rvalue);
             this.gb_parameters.Controls.Add(this.avalue);
             this.gb_parameters.Controls.Add(this.xvalue);
             this.gb_parameters.Controls.Add(this.bvalue);
-            this.gb_parameters.Controls.Add(this.label2);
-            this.gb_parameters.Controls.Add(this.label6);
-            this.gb_parameters.Controls.Add(this.label3);
-            this.gb_parameters.Controls.Add(this.label5);
-            this.gb_parameters.Controls.Add(this.label4);
+            this.gb_parameters.Controls.Add(this.lb_ants);
+            this.gb_parameters.Controls.Add(this.lb_rate);
+            this.gb_parameters.Controls.Add(this.lb_q0);
+            this.gb_parameters.Controls.Add(this.lb_rateLocal);
+            this.gb_parameters.Controls.Add(this.lb_b);
             this.gb_parameters.Location = new System.Drawing.Point(12, 41);
             this.gb_parameters.Name = "gb_parameters";
             this.gb_parameters.Size = new System.Drawing.Size(200, 202);
@@ -358,20 +358,20 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(235, 316);
+            this.ClientSize = new System.Drawing.Size(675, 365);
             this.Controls.Add(this.chart1);
             this.Controls.Add(this.calc_stop_BTN);
             this.Controls.Add(this.ACS);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.tb_error);
             this.Controls.Add(this.Length);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.tb_length);
             this.Controls.Add(this.gb_parameters);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "ACSAlgorithm";
-            this.Text = "K-aGv ACS Algorithm";
+            this.Text = "ACS Algorithm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ACSAlgorithm_FormClosing);
             this.Load += new System.EventHandler(this.Ants_Load);
             ((System.ComponentModel.ISupportInitialize)(this.avalue)).EndInit();
@@ -395,17 +395,17 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Button ACS;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox tb_error;
+        private System.Windows.Forms.Label lb_a;
         private System.Windows.Forms.NumericUpDown avalue;
         private System.Windows.Forms.Label Length;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox tb_length;
+        private System.Windows.Forms.Label lb_rate;
+        private System.Windows.Forms.Label lb_rateLocal;
+        private System.Windows.Forms.Label lb_b;
+        private System.Windows.Forms.Label lb_q0;
+        private System.Windows.Forms.Label lb_ants;
+        private System.Windows.Forms.Label lb_iterations;
         private System.Windows.Forms.NumericUpDown bvalue;
         private System.Windows.Forms.NumericUpDown xvalue;
         private System.Windows.Forms.NumericUpDown rvalue;
