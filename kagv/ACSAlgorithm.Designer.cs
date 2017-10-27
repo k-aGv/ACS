@@ -350,7 +350,7 @@
             series2.Name = "Trip";
             this.chart1.Series.Add(series1);
             this.chart1.Series.Add(series2);
-            this.chart1.Size = new System.Drawing.Size(372, 327);
+            this.chart1.Size = new System.Drawing.Size(416, 327);
             this.chart1.TabIndex = 45;
             this.chart1.Text = "chart2";
             // 

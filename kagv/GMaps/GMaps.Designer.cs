@@ -46,7 +46,6 @@
             this.sfd = new System.Windows.Forms.SaveFileDialog();
             this.label1 = new System.Windows.Forms.Label();
             this.cd = new System.Windows.Forms.ColorDialog();
-            this.btn_refresh = new System.Windows.Forms.Button();
             this.gb_settings.SuspendLayout();
             this.gb_preferences.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nud_opacity)).BeginInit();
@@ -91,11 +90,10 @@
             this.gb_settings.Controls.Add(this.gb_preferences);
             this.gb_settings.Controls.Add(this.gb_coords);
             this.gb_settings.Controls.Add(this.gb_provider);
-            this.gb_settings.Controls.Add(this.btn_refresh);
             this.gb_settings.Controls.Add(this.btn_rec);
             this.gb_settings.Location = new System.Drawing.Point(895, 12);
             this.gb_settings.Name = "gb_settings";
-            this.gb_settings.Size = new System.Drawing.Size(167, 591);
+            this.gb_settings.Size = new System.Drawing.Size(167, 562);
             this.gb_settings.TabIndex = 4;
             this.gb_settings.TabStop = false;
             this.gb_settings.Text = "Settings";
@@ -107,7 +105,7 @@
             this.gb_preferences.Controls.Add(this.btn_color);
             this.gb_preferences.Controls.Add(this.cb_wheel);
             this.gb_preferences.Controls.Add(this.cb_cross);
-            this.gb_preferences.Location = new System.Drawing.Point(6, 460);
+            this.gb_preferences.Location = new System.Drawing.Point(6, 423);
             this.gb_preferences.Name = "gb_preferences";
             this.gb_preferences.Size = new System.Drawing.Size(148, 125);
             this.gb_preferences.TabIndex = 7;
@@ -174,7 +172,7 @@
             this.gb_coords.Controls.Add(this.label4);
             this.gb_coords.Controls.Add(this.label3);
             this.gb_coords.Controls.Add(this.label2);
-            this.gb_coords.Location = new System.Drawing.Point(7, 178);
+            this.gb_coords.Location = new System.Drawing.Point(6, 141);
             this.gb_coords.Name = "gb_coords";
             this.gb_coords.Size = new System.Drawing.Size(148, 276);
             this.gb_coords.TabIndex = 6;
@@ -229,7 +227,7 @@
             // gb_provider
             // 
             this.gb_provider.Controls.Add(this.cb_provider);
-            this.gb_provider.Location = new System.Drawing.Point(7, 115);
+            this.gb_provider.Location = new System.Drawing.Point(6, 78);
             this.gb_provider.Name = "gb_provider";
             this.gb_provider.Size = new System.Drawing.Size(154, 57);
             this.gb_provider.TabIndex = 5;
@@ -249,7 +247,7 @@
             // 
             this.btn_rec.Location = new System.Drawing.Point(6, 19);
             this.btn_rec.Name = "btn_rec";
-            this.btn_rec.Size = new System.Drawing.Size(154, 39);
+            this.btn_rec.Size = new System.Drawing.Size(154, 53);
             this.btn_rec.TabIndex = 3;
             this.btn_rec.Text = "Mark rectangle";
             this.btn_rec.UseVisualStyleBackColor = true;
@@ -263,16 +261,6 @@
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 6;
             this.label1.Text = "label1";
-            // 
-            // btn_refresh
-            // 
-            this.btn_refresh.Location = new System.Drawing.Point(7, 64);
-            this.btn_refresh.Name = "btn_refresh";
-            this.btn_refresh.Size = new System.Drawing.Size(154, 39);
-            this.btn_refresh.TabIndex = 3;
-            this.btn_refresh.Text = "Refresh";
-            this.btn_refresh.UseVisualStyleBackColor = true;
-            this.btn_refresh.Click += new System.EventHandler(this.btn_refresh_Click);
             // 
             // gmaps
             // 
@@ -322,6 +310,5 @@
         private System.Windows.Forms.ColorDialog cd;
         private System.Windows.Forms.NumericUpDown nud_opacity;
         private System.Windows.Forms.Label lb_opacity;
-        private System.Windows.Forms.Button btn_refresh;
     }
 }

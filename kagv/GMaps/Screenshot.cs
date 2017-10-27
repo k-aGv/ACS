@@ -72,7 +72,7 @@ namespace kagv {
             bg.ProgressChanged += new ProgressChangedEventHandler(bg_ProgressChanged);
             bg.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bg_RunWorkerCompleted);
         }
-
+        Graphics gfx;
         void bg_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
             if (!e.Cancelled) {
                 if (e.Error != null) 
@@ -83,7 +83,8 @@ namespace kagv {
             btn_save.Enabled = true;
             nud_zoom.Enabled = true;
             gmap.mymap.Refresh();
-            this.Dispose();
+            gmap.Dispose();
+
         }
 
         void bg_ProgressChanged(object sender, ProgressChangedEventArgs e) {
@@ -106,95 +107,96 @@ namespace kagv {
 
                 int padding = info.MakeWorldFile || info.MakeKmz ? 0 : 22;
                 {
-                    using (Bitmap bmpDestination = new Bitmap((int)(pxDelta.X + padding * 2), (int)(pxDelta.Y + padding * 2))) {
-                        using (Graphics gfx = Graphics.FromImage(bmpDestination)) {
-                            gfx.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                            gfx.SmoothingMode = SmoothingMode.HighQuality;
+                    //gfx = Graphics.FromImage(bmpDe)
+                    Bitmap bmpDestination = new Bitmap((int)(pxDelta.X + padding * 2), (int)(pxDelta.Y + padding * 2));
+                    gfx = Graphics.FromImage(bmpDestination);
 
-                            int i = 0;
+                    gfx.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    gfx.SmoothingMode = SmoothingMode.HighQuality;
 
-                            // get tiles & combine into one
-                            lock (tileArea) {
-                                foreach (var p in tileArea) {
-                                    if (bg.CancellationPending) {
-                                        e.Cancel = true;
-                                        return;
-                                    }
+                    int i = 0;
 
-                                    int pc = (int)(((double)++i / tileArea.Count) * 100);
-                                    bg.ReportProgress(pc, p);
-
-                                    foreach (var tp in info.Type.Overlays) {
-                                        Exception ex;
-                                        GMapImage tile;
-
-                                        // tile number inversion(BottomLeft -> TopLeft) for pergo maps
-                                        if (tp.InvertedAxisY) {
-                                            tile = GMaps.Instance.GetImageFrom(tp, new GPoint(p.X, maxOfTiles.Height - p.Y), info.Zoom, out ex) as GMapImage;
-                                        } else // ok
-                                        {
-                                            tile = GMaps.Instance.GetImageFrom(tp, p, info.Zoom, out ex) as GMapImage;
-                                        }
-
-                                        if (tile != null) {
-                                            using (tile) {
-                                                long x = p.X * info.Type.Projection.TileSize.Width - topLeftPx.X + padding;
-                                                long y = p.Y * info.Type.Projection.TileSize.Width - topLeftPx.Y + padding;
-                                                {
-                                                    gfx.DrawImage(tile.Img, x, y, info.Type.Projection.TileSize.Width, info.Type.Projection.TileSize.Height);
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
+                    // get tiles & combine into one
+                    lock (tileArea) {
+                        foreach (var p in tileArea) {
+                            if (bg.CancellationPending) {
+                                e.Cancel = true;
+                                return;
                             }
 
-                            // draw info
-                            if (!info.MakeWorldFile) {
-                                System.Drawing.Rectangle rect = new System.Drawing.Rectangle();
+                            int pc = (int)(((double)++i / tileArea.Count) * 100);
+                            bg.ReportProgress(pc, p);
+
+                            foreach (var tp in info.Type.Overlays) {
+                                Exception ex;
+                                GMapImage tile;
+
+                                // tile number inversion(BottomLeft -> TopLeft) for pergo maps
+                                if (tp.InvertedAxisY) {
+                                    tile = GMaps.Instance.GetImageFrom(tp, new GPoint(p.X, maxOfTiles.Height - p.Y), info.Zoom, out ex) as GMapImage;
+                                } else // ok
                                 {
-                                    rect.Location = new System.Drawing.Point(padding, padding);
-                                    rect.Size = new System.Drawing.Size((int)pxDelta.X, (int)pxDelta.Y);
+                                    tile = GMaps.Instance.GetImageFrom(tp, p, info.Zoom, out ex) as GMapImage;
                                 }
 
-                                using (Font f = new Font(FontFamily.GenericSansSerif, 9, FontStyle.Bold)) {
-                                    if (cb_drawinfo.Checked) {
-                                        // draw bounds & coordinates
-                                        using (Pen p = new Pen(Brushes.DimGray, 3)) {
-                                            p.DashStyle = DashStyle.DashDot;
-
-                                            gfx.DrawRectangle(p, rect);
-
-                                            string topleft = info.Area.LocationTopLeft.ToString();
-                                            SizeF s = gfx.MeasureString(topleft, f);
-
-                                            gfx.DrawString(topleft, f, p.Brush, rect.X + s.Height / 2, rect.Y + s.Height / 2);
-
-                                            string rightBottom = new PointLatLng(info.Area.Bottom, info.Area.Right).ToString();
-                                            SizeF s2 = gfx.MeasureString(rightBottom, f);
-
-                                            gfx.DrawString(rightBottom, f, p.Brush, rect.Right - s2.Width - s2.Height / 2, rect.Bottom - s2.Height - s2.Height / 2);
-                                        }
-                                    }
-
-                                    if (cb_drawscale.Checked) {
-                                        // draw scale
-                                        using (Pen p = new Pen(Brushes.Blue, 1)) {
-                                            double rez = info.Type.Projection.GetGroundResolution(info.Zoom, info.Area.Bottom);
-                                            int px100 = (int)(100.0 / rez); // 100 meters
-                                            int px1000 = (int)(1000.0 / rez); // 1km   
-
-                                            gfx.DrawRectangle(p, rect.X + 10, rect.Bottom - 20, px1000, 10);
-                                            gfx.DrawRectangle(p, rect.X + 10, rect.Bottom - 20, px100, 10);
-
-                                            string leftBottom = "scale: 100m | 1Km";
-                                            SizeF s = gfx.MeasureString(leftBottom, f);
-                                            gfx.DrawString(leftBottom, f, p.Brush, rect.X + 10, rect.Bottom - s.Height - 20);
+                                if (tile != null) {
+                                    using (tile) {
+                                        long x = p.X * info.Type.Projection.TileSize.Width - topLeftPx.X + padding;
+                                        long y = p.Y * info.Type.Projection.TileSize.Width - topLeftPx.Y + padding;
+                                        {
+                                            gfx.DrawImage(tile.Img, x, y, info.Type.Projection.TileSize.Width, info.Type.Projection.TileSize.Height);
                                         }
                                     }
                                 }
                             }
                         }
+                    }
+
+                    // draw info
+                    if (!info.MakeWorldFile) {
+                        System.Drawing.Rectangle rect = new System.Drawing.Rectangle();
+                        {
+                            rect.Location = new System.Drawing.Point(padding, padding);
+                            rect.Size = new System.Drawing.Size((int)pxDelta.X, (int)pxDelta.Y);
+                        }
+
+                        using (Font f = new Font(FontFamily.GenericSansSerif, 9, FontStyle.Bold)) {
+                            if (cb_drawinfo.Checked) {
+                                // draw bounds & coordinates
+                                using (Pen p = new Pen(Brushes.DimGray, 3)) {
+                                    p.DashStyle = DashStyle.DashDot;
+
+                                    gfx.DrawRectangle(p, rect);
+
+                                    string topleft = info.Area.LocationTopLeft.ToString();
+                                    SizeF s = gfx.MeasureString(topleft, f);
+
+                                    gfx.DrawString(topleft, f, p.Brush, rect.X + s.Height / 2, rect.Y + s.Height / 2);
+
+                                    string rightBottom = new PointLatLng(info.Area.Bottom, info.Area.Right).ToString();
+                                    SizeF s2 = gfx.MeasureString(rightBottom, f);
+
+                                    gfx.DrawString(rightBottom, f, p.Brush, rect.Right - s2.Width - s2.Height / 2, rect.Bottom - s2.Height - s2.Height / 2);
+                                }
+                            }
+
+                            if (cb_drawscale.Checked) {
+                                // draw scale
+                                using (Pen p = new Pen(Brushes.Blue, 1)) {
+                                    double rez = info.Type.Projection.GetGroundResolution(info.Zoom, info.Area.Bottom);
+                                    int px100 = (int)(100.0 / rez); // 100 meters
+                                    int px1000 = (int)(1000.0 / rez); // 1km   
+
+                                    gfx.DrawRectangle(p, rect.X + 10, rect.Bottom - 20, px1000, 10);
+                                    gfx.DrawRectangle(p, rect.X + 10, rect.Bottom - 20, px100, 10);
+
+                                    string leftBottom = "scale: 100m | 1Km";
+                                    SizeF s = gfx.MeasureString(leftBottom, f);
+                                    gfx.DrawString(leftBottom, f, p.Brush, rect.X + 10, rect.Bottom - s.Height - 20);
+                                }
+                            }
+                        }
+
 
                         bmpDestination.Save(bigImage, ImageFormat.Jpeg);
                     }
@@ -205,8 +207,10 @@ namespace kagv {
 
 
         private void btn_save_Click(object sender, EventArgs e) {
-            RectLatLng? area = null; //abstract structure
+            DialogResult save =  MessageBox.Show("Save?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (save == DialogResult.No) return;
 
+            RectLatLng? area = null; //abstract structure
 
             area = gmap.mymap.SelectedArea;
             if (area.Value.IsEmpty) {
@@ -230,7 +234,7 @@ namespace kagv {
                 bg.RunWorkerAsync(new MapInfo(area.Value, (int)nud_zoom.Value, gmap.mymap.MapProvider, false, false));
                 gmap.mymap.Refresh();
             }
-
+            
         }
 
         private void btn_cancel_Click(object sender, EventArgs e) {
