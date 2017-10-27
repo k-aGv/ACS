@@ -71,7 +71,7 @@ namespace kagv {
             cb_provider.Items.Add("GoogleMapProvider");
             cb_provider.Items.Add("GoogleTerrainMapProvider");
             cb_provider.Items.Add("BingSatelliteMapProvider");
-            cb_provider.Text = "BingSatelliteMapProvider";
+            cb_provider.Text = "GoogleMapProvider";
 
             mymap.SetPositionByKeywords("greece,thessaloniki");
             mymap.MinZoom = 0;
