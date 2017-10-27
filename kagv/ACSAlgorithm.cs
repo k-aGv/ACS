@@ -523,6 +523,7 @@ namespace kagv {
             if (File.Exists("_tmpMap.txt"))
                 filename = "_tmpMap.txt";
             else {
+                openFileDialog1.Filter = "Text Files(*.txt)|*.txt";
                 if (openFileDialog1.ShowDialog() == DialogResult.OK) {
                     filename = openFileDialog1.FileName;
                 } else
