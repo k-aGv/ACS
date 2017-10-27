@@ -23,7 +23,6 @@ THE SOFTWARE.
 */
 using System.Drawing;
 using System.Windows.Forms;
-using System.IO;
 using System.Collections.Generic;
 
 namespace kagv {
