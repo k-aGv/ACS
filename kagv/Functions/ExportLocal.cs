@@ -11,7 +11,7 @@ namespace kagv {
                         loads++;
 
             if (loads == 0) {
-                MessageBox.Show("No loads were found on the Grid.\nExported file was not created.\nYou will have to select a predefined benchmark file","",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                MessageBox.Show("No loads were found on the Grid.\nExported file was not created.\nYou will have to select a locally saved benchmark file.","",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                 return;
             }
 
