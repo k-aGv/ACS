@@ -50,7 +50,7 @@ namespace kagv {
             aGVIndexToolStripMenuItem.Checked =
             highlightOverCurrentBoxToolStripMenuItem.Checked = true;
 
-            rb_start.Checked = true;
+            rb_load.Checked = true;
             BackColor = Color.DarkGray;
 
             CenterToScreen();
