@@ -95,7 +95,7 @@
             this.btn_right = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lb_noSettings = new System.Windows.Forms.Label();
             this.menuPanel.SuspendLayout();
             this.gb_type.SuspendLayout();
             this.gb_settings.SuspendLayout();
@@ -112,11 +112,10 @@
             // menuPanel
             // 
             this.menuPanel.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.menuPanel.Controls.Add(this.label1);
+            this.menuPanel.Controls.Add(this.lb_noSettings);
             this.menuPanel.Controls.Add(this.gb_type);
             this.menuPanel.Controls.Add(this.gb_settings);
             this.menuPanel.Controls.Add(this.gb_AStar);
-            this.menuPanel.Enabled = false;
             this.menuPanel.Location = new System.Drawing.Point(12, 36);
             this.menuPanel.Name = "menuPanel";
             this.menuPanel.Size = new System.Drawing.Size(656, 75);
@@ -259,11 +258,11 @@
             // settings_menu
             // 
             this.settings_menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.aToolStripMenuItem,
             this.gridToolStripMenuItem,
-            this.debugToolStripMenuItem,
+            this.fileToolStripMenuItem,
             this.antsToolStripMenuItem,
+            this.aToolStripMenuItem,
+            this.debugToolStripMenuItem,
             this.aboutToolStripMenuItem});
             this.settings_menu.Location = new System.Drawing.Point(0, 0);
             this.settings_menu.Name = "settings_menu";
@@ -713,14 +712,14 @@
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(190, 17);
             this.toolStripStatusLabel1.Text = "Hold CTRL for grid configuration...";
             // 
-            // label1
+            // lb_noSettings
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(409, 24);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 30;
-            this.label1.Text = "label1";
+            this.lb_noSettings.AutoSize = true;
+            this.lb_noSettings.Location = new System.Drawing.Point(409, 24);
+            this.lb_noSettings.Name = "lb_noSettings";
+            this.lb_noSettings.Size = new System.Drawing.Size(35, 13);
+            this.lb_noSettings.TabIndex = 30;
+            this.lb_noSettings.Text = "label1";
             // 
             // main_form
             // 
@@ -838,7 +837,7 @@
         private System.Windows.Forms.ToolStripMenuItem importImageLayoutToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem implementGoogleMapsToolStripMenuItem;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lb_noSettings;
     }
 }
 

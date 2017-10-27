@@ -124,8 +124,10 @@ namespace kagv {
             borderColorToolStripMenuItem.Visible = false;
             bordersToolStripMenuItem.Visible = false;
             gb_AStar.Visible = gb_agvs.Visible = gb_settings.Visible = gb_type.Visible= false;
-            label1.Text = "No settings available in Logistics branch";
-            label1.Location = new Point((menuPanel.Width / 2) - label1.Size.Width/2, menuPanel.Height /2);
+            lb_noSettings.Text = "No settings available in Logistics branch";
+            lb_noSettings.ForeColor = Color.Red;
+            lb_noSettings.Font = new Font(FontFamily.GenericSansSerif, 10, FontStyle.Bold);
+            lb_noSettings.Location = new Point((menuPanel.Width / 2) - lb_noSettings.Size.Width/2, menuPanel.Height /2);
 #endregion
             //Automatically enable the CPUs for this app.
             var _proc = System.Diagnostics.Process.GetCurrentProcess();
