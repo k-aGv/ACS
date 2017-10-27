@@ -819,6 +819,7 @@ namespace kagv {
         private void antsToolStripMenuItem_Click(object sender, EventArgs e) {
             ExportLocal();
             ACSAlgorithm AcsAlgorithm = new ACSAlgorithm();
+            AcsAlgorithm.StartPosition = FormStartPosition.CenterParent;
             AcsAlgorithm.ShowDialog();
         }
 
