@@ -112,8 +112,18 @@ namespace kagv {
             if (File.Exists("_tmpMap.txt"))
                 File.Delete("_tmpMap.txt");
 
+            //Hide industrial-dedicated stuff for now
+#region industrial-dedicated
             importMapToolStripMenuItem.Visible = false;
-
+            debugToolStripMenuItem.Visible = false;
+            aToolStripMenuItem.Visible = false;
+            stepsToolStripMenuItem.Visible = false;
+            linesToolStripMenuItem.Visible = false;
+            dotsToolStripMenuItem.Visible = false;
+            aGVIndexToolStripMenuItem.Visible = false;
+            borderColorToolStripMenuItem.Visible = false;
+            bordersToolStripMenuItem.Visible = false;
+#endregion
             //Automatically enable the CPUs for this app.
             var _proc = System.Diagnostics.Process.GetCurrentProcess();
             int coreFlag;
