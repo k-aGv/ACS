@@ -109,6 +109,9 @@ namespace kagv {
      
         private void main_form_Load(object sender, EventArgs e) {
 
+            if (File.Exists("_tmpMap.txt"))
+                File.Delete("_tmpMap.txt");
+
             importMapToolStripMenuItem.Visible = false;
 
             //Automatically enable the CPUs for this app.

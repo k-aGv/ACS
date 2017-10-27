@@ -519,7 +519,15 @@ namespace kagv {
         
         private void ACS_Click(object sender, EventArgs e) {
 
-            string filename = "_tmpMap.txt";
+            string filename = "";
+            if (File.Exists("_tmpMap.txt"))
+                filename = "_tmpMap.txt";
+            else {
+                if (openFileDialog1.ShowDialog() == DialogResult.OK) {
+                    filename = openFileDialog1.FileName;
+                } else
+                    return;
+            }
             pb.Value = 0;
             pb.Maximum = Convert.ToInt32(NumIts.Value);
             stopped = false;
@@ -587,6 +595,11 @@ namespace kagv {
                     series.Points.Clear();
                 }
             }
+        }
+
+        private void ACSAlgorithm_FormClosing(object sender, FormClosingEventArgs e) {
+            if (File.Exists("_tmpMap.txt"))
+                File.Delete("_tmpMap.txt");
         }
     }
 }

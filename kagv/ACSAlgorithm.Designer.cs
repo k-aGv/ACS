@@ -370,6 +370,7 @@
             this.MaximizeBox = false;
             this.Name = "ACSAlgorithm";
             this.Text = "K-aGv ACS Algorithm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ACSAlgorithm_FormClosing);
             this.Load += new System.EventHandler(this.Ants_Load);
             ((System.ComponentModel.ISupportInitialize)(this.avalue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bvalue)).EndInit();
