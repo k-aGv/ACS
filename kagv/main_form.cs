@@ -108,7 +108,8 @@ namespace kagv {
         }
      
         private void main_form_Load(object sender, EventArgs e) {
-            
+            importMapToolStripMenuItem.Visible = false;
+
             //Automatically enable the CPUs for this app.
             var _proc = System.Diagnostics.Process.GetCurrentProcess();
             int coreFlag;
