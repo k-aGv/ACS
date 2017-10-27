@@ -83,6 +83,7 @@ namespace kagv {
             btn_save.Enabled = true;
             nud_zoom.Enabled = true;
             gmap.mymap.Refresh();
+            this.Dispose();
         }
 
         void bg_ProgressChanged(object sender, ProgressChangedEventArgs e) {
