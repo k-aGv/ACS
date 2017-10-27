@@ -75,14 +75,8 @@ namespace kagv {
 
         void bg_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
             if (!e.Cancelled) {
-                if (e.Error != null) {
+                if (e.Error != null) 
                     MessageBox.Show("Error:" + e.Error.ToString(), "GMap.NET", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                } else if (e.Result != null) {
-                    try {
-                        Process.Start(e.Result as string);
-                    } catch {
-                    }
-                }
             }
 
             pb_save.Value = 0;
