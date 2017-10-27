@@ -30,7 +30,7 @@ namespace kagv {
     public partial class main_form {
 
         private void ImportImage() {
-            ofd_importmap.Filter = "PNG (*.png)|*.png|JPEG (*.jpg)|(*.jpg)";
+            ofd_importmap.Filter = "Image Files(*.BMP;*.JPG;*.GIF)|*.BMP;*.JPG;*.GIF|All files (*.*)|*.*";
             ofd_importmap.FileName = "";
 
             if (ofd_importmap.ShowDialog() == DialogResult.OK) {
