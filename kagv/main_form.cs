@@ -108,6 +108,7 @@ namespace kagv {
         }
      
         private void main_form_Load(object sender, EventArgs e) {
+
             importMapToolStripMenuItem.Visible = false;
 
             //Automatically enable the CPUs for this app.
@@ -813,6 +814,10 @@ namespace kagv {
         private void implementGoogleMapsToolStripMenuItem_Click(object sender, EventArgs e) {
             gmaps maps = new gmaps();
             maps.ShowDialog();
+        }
+
+        private void main_form_Click(object sender, EventArgs e) {
+            if (importedImageFile == null) MessageBox.Show("Did you import a Google Maps layout?\r\nPlease select Grid/Implement Google Maps to create an image layout","",MessageBoxButtons.OK,MessageBoxIcon.Question);
         }
     }
     
