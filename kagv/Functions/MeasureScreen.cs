@@ -23,20 +23,24 @@ THE SOFTWARE.
 */
 
 using System.Windows.Forms;
-
+using System.Drawing;
 
 namespace kagv {
 
     public partial class main_form {
 
         private void MeasureScreen() {
-            Location = Screen.PrimaryScreen.Bounds.Location;
+            Screen s = Screen.FromPoint(new Point(Cursor.Position.X, Cursor.Position.Y));
+            int BoardersWidth = 2 * SystemInformation.Border3DSize.Width;
 
-            int usableSize = Screen.PrimaryScreen.Bounds.Height - menuPanel.Height - Globals._BottomBarOffset - Globals._TopBarOffset;
+            Location = s.Bounds.Location;
+
+            int usableSize = s.WorkingArea.Height - menuPanel.Height - Globals._BottomBarOffset - Globals._TopBarOffset;
             Globals._HeightBlocks = usableSize / Globals._BlockSide;
 
-            usableSize = Screen.PrimaryScreen.Bounds.Width;
+            usableSize = s.WorkingArea.Width - BoardersWidth;
             Globals._WidthBlocks = usableSize / Globals._BlockSide;
+
 
         }
 

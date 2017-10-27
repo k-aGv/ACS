@@ -31,6 +31,9 @@ namespace kagv {
 
         //Initializes all the objects in main_form
         private void Initialization() {
+
+            int BoardersWidth = 2 * SystemInformation.Border3DSize.Width;
+
             if (Globals._FirstFormLoad) {
                 if (File.Exists("info.txt")) {
                     StreamReader reader = new StreamReader("info.txt");
@@ -60,12 +63,12 @@ namespace kagv {
                     //size of the m_rectangels is constantly increasing (while adding
                     //the gridbox values) until size=height or size = width.
                     if (imported) { //this IF is executed as long as the user has imported a map of his choice
-                        m_rectangles[widthTrav][heightTrav] = new GridBox((widthTrav * Globals._BlockSide), heightTrav * Globals._BlockSide + Globals._TopBarOffset, importmap[widthTrav, heightTrav]);
+                        m_rectangles[widthTrav][heightTrav] = new GridBox((widthTrav * Globals._BlockSide)-BoardersWidth, heightTrav * Globals._BlockSide + Globals._TopBarOffset, importmap[widthTrav, heightTrav]);
                         if (importmap[widthTrav, heightTrav] == BoxType.Load) {
                             isLoad[widthTrav, heightTrav] = 1;
                         }
                     } else {
-                        m_rectangles[widthTrav][heightTrav] = new GridBox((widthTrav * Globals._BlockSide), heightTrav * Globals._BlockSide + Globals._TopBarOffset, BoxType.Normal);
+                        m_rectangles[widthTrav][heightTrav] = new GridBox((widthTrav * Globals._BlockSide)-BoardersWidth, heightTrav * Globals._BlockSide + Globals._TopBarOffset, BoxType.Normal);
                         isLoad[widthTrav, heightTrav] = 2;
                     }
 
