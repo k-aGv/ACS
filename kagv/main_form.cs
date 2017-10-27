@@ -801,6 +801,7 @@ namespace kagv {
         }
 
         private void antsToolStripMenuItem_Click(object sender, EventArgs e) {
+            ExportLocal();
             ACSAlgorithm AcsAlgorithm = new ACSAlgorithm();
             AcsAlgorithm.ShowDialog();
         }

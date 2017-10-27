@@ -121,6 +121,9 @@
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
+    <Compile Include="Functions\ExportLocal.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="RandomGenerator.cs" />
     <Compile Include="ACSAlgorithm.cs">
       <SubType>Form</SubType>

@@ -518,13 +518,8 @@ namespace kagv {
         }
         
         private void ACS_Click(object sender, EventArgs e) {
-            string filename = "";
-            if (openFileDialog1.ShowDialog() == DialogResult.OK) {
-                filename = openFileDialog1.FileName;
-            } else
-                return;
 
-
+            string filename = "_tmpMap.txt";
             pb.Value = 0;
             pb.Maximum = Convert.ToInt32(NumIts.Value);
             stopped = false;
@@ -545,8 +540,9 @@ namespace kagv {
 
 
         }
-
+   
         private void Ants_Load(object sender, EventArgs e) {
+
             _width = Size.Width;
             _heigth = Size.Height;
             foreach (var leg in chart1.Legends)
