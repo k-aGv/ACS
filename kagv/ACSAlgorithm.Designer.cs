@@ -97,6 +97,7 @@
             // 
             // tb_error
             // 
+            this.tb_error.Enabled = false;
             this.tb_error.Location = new System.Drawing.Point(76, 282);
             this.tb_error.Name = "tb_error";
             this.tb_error.ReadOnly = true;
@@ -136,6 +137,7 @@
             // 
             // tb_length
             // 
+            this.tb_length.Enabled = false;
             this.tb_length.Location = new System.Drawing.Point(76, 256);
             this.tb_length.Name = "tb_length";
             this.tb_length.ReadOnly = true;
@@ -358,7 +360,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(675, 365);
+            this.ClientSize = new System.Drawing.Size(675, 308);
             this.Controls.Add(this.chart1);
             this.Controls.Add(this.calc_stop_BTN);
             this.Controls.Add(this.ACS);

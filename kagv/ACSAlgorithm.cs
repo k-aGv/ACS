@@ -409,6 +409,10 @@ namespace kagv {
                 Iteration = Iteration + 1;
 
                 tb_length.Text = Convert.ToString(BestLength);
+                if ((BestTour.Length - 1) != BestTour.Distinct().Count())
+                    tb_error.Text = Convert.ToString("Dublicates found");
+                else
+                    tb_error.Text = Convert.ToString("No Error found");
                 pb_calculated.Text = "Current progress... " + ((100 * Iteration) / NumItsMax) + "%\nIterations occured: " + Iteration + "/" + NumItsMax;
                 pb.PerformStep();
                 Application.DoEvents();
@@ -429,11 +433,7 @@ namespace kagv {
             }
             
             Application.DoEvents();
-            if ((BestTour.Length - 1) != BestTour.Distinct().Count()) {
-                tb_error.Text = Convert.ToString("Dublicates found");
-            } else {
-                tb_error.Text = Convert.ToString("No Error found");
-            }
+            
 
         }
         private double[,] ReadFile(string filename) {
@@ -553,8 +553,7 @@ namespace kagv {
    
         private void Ants_Load(object sender, EventArgs e) {
 
-            _width = Size.Width;
-            _heigth = Size.Height;
+            
             foreach (var leg in chart1.Legends)
                 leg.Enabled = false;
 
@@ -578,7 +577,8 @@ namespace kagv {
 
             int offset = gb_parameters.Left;
             Width = gb_parameters.Location.X + gb_parameters.Size.Width + offset+offset; // we need the LEFT offset and the RIGHT offset to be the same
-
+            _width = Size.Width;
+            _heigth = Size.Height;
         }
         private void calc_stop_BTN_Click(object sender, EventArgs e) {
             var result = MessageBox.Show("Stop the calculations?",
