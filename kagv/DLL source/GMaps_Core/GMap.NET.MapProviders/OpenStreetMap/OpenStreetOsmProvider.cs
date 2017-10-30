@@ -1,7 +1,6 @@
 ﻿
-namespace GMap.NET.MapProviders
-{
-   using System;
+namespace GMap.NET.MapProviders {
+    using System;
 
 #if OpenStreetOsm
    /// <summary>
@@ -26,7 +25,7 @@ namespace GMap.NET.MapProviders
          Instance = new OpenStreetOsmProvider();
       }
 
-   #region GMapProvider Members
+    #region GMapProvider Members
 
       readonly Guid id = new Guid("07EF8CBC-A91D-4B2F-8B2D-70DBE384EF18");
       public override Guid Id
@@ -66,7 +65,7 @@ namespace GMap.NET.MapProviders
          return GetTileImageUsingHttp(url);
       }
 
-   #endregion
+    #endregion
 
       string MakeTileImageUrl(GPoint pos, int zoom, string language)
       {

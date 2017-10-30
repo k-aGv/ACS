@@ -179,21 +179,19 @@ namespace kagv {
 
             Iteration = 1;
             double tmax = 0;
-            tmax = (1 / ( (1 - r))) * (1 / NearNb);
+            tmax = (1 / ((1 - r))) * (1 / NearNb);
             double tmin = 0;
-            tmin = tmax*(1-Math.Pow(0.05,1/SizeCustomers))/((SizeCustomers/2-1)*Math.Pow(0.05,1/SizeCustomers));
+            tmin = tmax * (1 - Math.Pow(0.05, 1 / SizeCustomers)) / ((SizeCustomers / 2 - 1) * Math.Pow(0.05, 1 / SizeCustomers));
 
 
             double[] TotalRandomLength = new double[500];
-            for(int g=0;g<500;g++)
-            {
+            for (int g = 0; g < 500; g++) {
                 double RandomLength = 0;
                 List<int> RandomUnvisited = new List<int>();
                 int Start = RandomNumber.Between(0, SizeCustomers - 1);
                 int[] Randomtour = new int[SizeCustomers + 1];
                 Randomtour[0] = Start;
-                for (int l = 0; l < SizeCustomers; l++)
-                {
+                for (int l = 0; l < SizeCustomers; l++) {
                     RandomUnvisited.Add(l);
 
                 }
@@ -201,9 +199,8 @@ namespace kagv {
 
                 bool randomlistempty = false;
                 int countrandom = 1;
-                while(randomlistempty==false)
-                {
-                    int Next = RandomNumber.Between(0, RandomUnvisited.Count-1);
+                while (randomlistempty == false) {
+                    int Next = RandomNumber.Between(0, RandomUnvisited.Count - 1);
                     Randomtour[countrandom] = RandomUnvisited[Next];
                     RandomUnvisited.Remove(RandomUnvisited[Next]);
                     if (RandomUnvisited.Count == 0)
@@ -222,24 +219,22 @@ namespace kagv {
 
             int meancount = 0;
             double DC = 0;
-            for(int g=0;g<499;g++)
-            {
-                DC = DC + Math.Abs(TotalRandomLength[g]-TotalRandomLength[g+1]);
+            for (int g = 0; g < 499; g++) {
+                DC = DC + Math.Abs(TotalRandomLength[g] - TotalRandomLength[g + 1]);
                 meancount += 1;
             }
 
             DC = DC / meancount;
 
             double SDC = 0;
-            for (int g = 0; g < 499; g++)
-            {
-                SDC = SDC + Math.Pow((TotalRandomLength[g] - TotalRandomLength[g + 1])-DC,2);
+            for (int g = 0; g < 499; g++) {
+                SDC = SDC + Math.Pow((TotalRandomLength[g] - TotalRandomLength[g + 1]) - DC, 2);
             }
 
             SDC = Math.Sqrt((SDC / meancount));
 
 
-            double Temperature =0;
+            double Temperature = 0;
             Temperature = (DC + 3 * SDC) / (Math.Log(1 / 0.1));
             int[] activesolution = new int[SizeCustomers + 1];
             activesolution = BestTour;
@@ -343,16 +338,13 @@ namespace kagv {
                             for (int l = 0; l < touriteration.Length - 1; l++)
                                 NewLength += CustomersDistance[newroute[l], newroute[l + 1]];
 
-                            if (NewLength < NewDistance)
-                            {
+                            if (NewLength < NewDistance) {
                                 touriteration = newroute;
                                 NewDistance = NewLength;
                                 v = touriteration.Length - 1;
                                 i = touriteration.Length - 2;
                                 improve = 0;
-                            }
-                            else
-                            {
+                            } else {
                                 improve++;
                             }
 
@@ -370,17 +362,13 @@ namespace kagv {
 
                 }
 
-                if(activeLength>LengthIteration)
-                {
+                if (activeLength > LengthIteration) {
                     activesolution = touriteration;
                     activeLength = LengthIteration;
-                }
-                else
-                {
+                } else {
                     double C = (LengthIteration - activeLength);
-                    
-                    if(RandomNumber.DoubleBetween(0, 1)<Math.Exp(-C/Temperature))
-                    {
+
+                    if (RandomNumber.DoubleBetween(0, 1) < Math.Exp(-C / Temperature)) {
                         activesolution = touriteration;
                         activeLength = LengthIteration;
                     }
@@ -391,16 +379,16 @@ namespace kagv {
 
                 for (int i = 0; i < t.GetLength(0); i++)
                     for (int j = 0; j < t.GetLength(1); j++)
-                        t[i, j] = Math.Max(t[i, j] * (1 - t[i,j]/(tmin+tmax)), tmin);
+                        t[i, j] = Math.Max(t[i, j] * (1 - t[i, j] / (tmin + tmax)), tmin);
 
 
-                tmax = (1 / ( (1 - r))) * (1 / BestLength);
+                tmax = (1 / ((1 - r))) * (1 / BestLength);
                 tmin = tmax * (1 - Math.Pow(0.05, 1 / SizeCustomers)) / ((SizeCustomers / 2 - 1) * Math.Pow(0.05, 1 / SizeCustomers));
 
                 chart1.Series["Trip"].Points.Clear();
 
                 for (int i = 0; i < activesolution.Length - 1; i++)
-                   t[activesolution[i], activesolution[i + 1]] = Math.Min(t[activesolution[i], activesolution[i + 1]] + (t[activesolution[i], activesolution[i + 1]] /(tmax+tmin)) * (1 / activeLength), tmax);
+                    t[activesolution[i], activesolution[i + 1]] = Math.Min(t[activesolution[i], activesolution[i + 1]] + (t[activesolution[i], activesolution[i + 1]] / (tmax + tmin)) * (1 / activeLength), tmax);
 
                 for (int i = 0; i < BestTour.Length; i++)
                     chart1.Series["Trip"].Points.AddXY(Customers[BestTour[i], 1], Customers[BestTour[i], 2]);
@@ -431,9 +419,9 @@ namespace kagv {
                 chart1.Series["Trip"].Points.AddXY(Customers[BestTour[i], 1], Customers[BestTour[i], 2]);
 
             }
-            
+
             Application.DoEvents();
-            
+
 
         }
         private double[,] ReadFile(string filename) {
@@ -517,7 +505,7 @@ namespace kagv {
 
             return _Customers;
         }
-        
+
         private void ACS_Click(object sender, EventArgs e) {
 
             string filename = "";
@@ -539,21 +527,21 @@ namespace kagv {
             calc_stop_BTN.Enabled = true;
             ACS.Enabled = false;
             tb_length.Text = "";
-            
+
             chart1.Size = new Size(600, (pb.Location.Y + pb.Size.Height) - 25);
             Size = new Size((chart1.Location.X + chart1.Width + 25), pb.Location.Y + pb.Size.Height + 50);
 
-            
+
 
 
             RunACS(ReadFile(filename));
 
 
         }
-   
+
         private void Ants_Load(object sender, EventArgs e) {
 
-            
+
             foreach (var leg in chart1.Legends)
                 leg.Enabled = false;
 
@@ -576,7 +564,7 @@ namespace kagv {
             openFileDialog1.FileName = "";
 
             int offset = gb_parameters.Left;
-            Width = gb_parameters.Location.X + gb_parameters.Size.Width + offset+offset; // we need the LEFT offset and the RIGHT offset to be the same
+            Width = gb_parameters.Location.X + gb_parameters.Size.Width + offset + offset; // we need the LEFT offset and the RIGHT offset to be the same
             _width = Size.Width;
             _heigth = Size.Height;
         }

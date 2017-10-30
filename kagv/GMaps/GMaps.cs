@@ -29,7 +29,7 @@ using GMap.NET;
 using GMap.NET.WindowsForms;
 
 
-namespace kagv { 
+namespace kagv {
     public partial class gmaps : Form {
         internal readonly GMapOverlay myobjects = new GMapOverlay("objects");
 
@@ -57,7 +57,7 @@ namespace kagv {
 
             gb_settings.Location = new Point(Size.Width - gb_settings.Width - BoardersWidth - margin, gb_settings.Location.Y);
 
-           
+
 
             //map implementation
             //get title's bar size
@@ -81,16 +81,16 @@ namespace kagv {
             mymap.Overlays.Add(myobjects);
             mymap.DragButton = MouseButtons.Left;
             mymap.InvertedMouseWheelZooming = false;
-            
+
 
             //its not a joke ->
             //____________________________________________________________________opacity______________R___________________________G_______________________B
             mymap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
-           
+
             //resize GB ...just A E S T H I T I C 
             gb_settings.Size = new Size(gb_settings.Size.Width, mymap.Height);
             //set the label to the bottom
-            label1.Location = new Point(10,  mymap.Location.Y + mymap.Height + 1 );
+            label1.Location = new Point(10, mymap.Location.Y + mymap.Height + 1);
         }
 
         private void mymap_MouseClick(object sender, MouseEventArgs e) {
@@ -103,8 +103,8 @@ namespace kagv {
                 PointLatLng initial = new PointLatLng(mymap.Position.Lat, mymap.Position.Lng);
                 PointLatLng final = new PointLatLng(remoteLat, remoteLng);
 
-                GDirections dir=null;
-                var route= new DirectionsStatusCode();
+                GDirections dir = null;
+                var route = new DirectionsStatusCode();
                 try {
                     route = GMap.NET.MapProviders.GMapProviders.GoogleMap.GetDirections(out dir, initial, final, false, false, true, false, false);
                     GMapRoute maproute = new GMapRoute(dir.Route, "My route");
@@ -119,7 +119,7 @@ namespace kagv {
                     MessageBox.Show("Cannot create route to an unwalkable position.");
                     return;
                 }
-                
+
             }
         }
 

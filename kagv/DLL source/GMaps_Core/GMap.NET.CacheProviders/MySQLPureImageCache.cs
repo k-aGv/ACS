@@ -1,6 +1,5 @@
 ﻿
-namespace GMap.NET.CacheProviders
-{
+namespace GMap.NET.CacheProviders {
 #if MySQL
    using System;
    using System.Data;
@@ -75,7 +74,7 @@ namespace GMap.NET.CacheProviders
          {
             if(!initialized)
             {
-               #region prepare mssql & cache table
+    #region prepare mssql & cache table
                try
                {
                   // different connections so the multi-thread inserts and selects don't collide on open readers.
@@ -121,13 +120,13 @@ namespace GMap.NET.CacheProviders
                   this.initialized = false;
                   Debug.WriteLine(ex.Message);
                }
-               #endregion
+    #endregion
             }
             return initialized;
          }
       }
 
-      #region IDisposable Members
+    #region IDisposable Members
 
       public void Dispose()
       {
@@ -162,9 +161,9 @@ namespace GMap.NET.CacheProviders
          }
          Initialized = false;
       }
-      #endregion
+    #endregion
 
-      #region PureImageCache Members
+    #region PureImageCache Members
       public bool PutImageToCache(byte[] tile, int type, GPoint pos, int zoom)
       {
          bool ret = true;
@@ -254,7 +253,7 @@ namespace GMap.NET.CacheProviders
       {
          throw new NotImplementedException();
       }
-      #endregion
+    #endregion
    }
 #endif
 }

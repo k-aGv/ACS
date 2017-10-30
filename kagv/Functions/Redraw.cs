@@ -46,7 +46,7 @@ namespace kagv {
             AGVs = new List<Vehicle>();  //list that will be filled with objects of the class Vehicle
             loadPos = new List<GridPos>(); //list that will be filled with the points of every Load
 
-            
+
             //Double FOR-loops to scan the whole Grid and perform the needed actions
             for (int i = 0; i < Globals._WidthBlocks; i++)
                 for (int j = 0; j < Globals._HeightBlocks; j++) {
@@ -95,7 +95,7 @@ namespace kagv {
                         endPos.y = j;
                     }
                 }
-                
+
 
 
             if (!start_found || !end_found)

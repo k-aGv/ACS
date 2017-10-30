@@ -1,6 +1,5 @@
 ﻿
-namespace GMap.NET.CacheProviders
-{
+namespace GMap.NET.CacheProviders {
 #if SQLite
 
    using System.Collections.Generic;
@@ -13,24 +12,15 @@ namespace GMap.NET.CacheProviders
    using GMap.NET.MapProviders;
    using System.Threading;
 
-#if !MONO
    using System.Data.SQLite;
    using GMap.NET.Internals;
-#else
-   using SQLiteConnection = Mono.Data.Sqlite.SqliteConnection;
-   using SQLiteTransaction = Mono.Data.Sqlite.SqliteTransaction;
-   using SQLiteCommand = Mono.Data.Sqlite.SqliteCommand;
-   using SQLiteDataReader = Mono.Data.Sqlite.SqliteDataReader;
-   using SQLiteParameter = Mono.Data.Sqlite.SqliteParameter;
-#endif
+
 
    /// <summary>
    /// ultra fast cache system for tiles
    /// </summary>
    public class SQLitePureImageCache : PureImageCache
    {
-#if !PocketPC
-#if !MONO
       static SQLitePureImageCache()
       {
          AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
@@ -117,8 +107,7 @@ namespace GMap.NET.CacheProviders
               Trace.WriteLine("SQLiteVersion: " + SQLiteConnection.SQLiteVersion + " | " + SQLiteConnection.SQLiteSourceId + " | " + SQLiteConnection.DefineConstants);
           }
       }
-#endif
-#endif
+
 
       string cache;
       string gtileCache;
@@ -182,7 +171,7 @@ namespace GMap.NET.CacheProviders
                //connBuilder.JournalMode = SQLiteJournalModeEnum.Wal;
                //connBuilder.Pooling = true;
                //var x = connBuilder.ToString();
-#if !MONO                                      
+#if !MONO
                ConnectionString = string.Format("Data Source=\"{0}\";Page Size=32768;Pooling=True", db); //;Journal Mode=Wal
 #else
                ConnectionString = string.Format("Version=3,URI=file://{0},FailIfMissing=True,Page Size=32768,Pooling=True", db);
@@ -194,11 +183,7 @@ namespace GMap.NET.CacheProviders
             RebuildFinnalSelect();
 
             // attach all databases from main cache location
-#if !PocketPC
             var dbs = Directory.GetFiles(dir, "*.gmdb", SearchOption.AllDirectories);
-#else
-            var dbs = Directory.GetFiles(dir, "*.gmdb");
-#endif
             foreach(var d in dbs)
             {
                if(d != db)
@@ -225,7 +210,6 @@ namespace GMap.NET.CacheProviders
                {
                   dbf.Seek(16, SeekOrigin.Begin);
 
-#if (!PocketPC && !MONO)
                   dbf.Lock(16, 2);
                   dbf.Read(pageSizeBytes, 0, 2);
                   dbf.Unlock(16, 2);
@@ -235,11 +219,7 @@ namespace GMap.NET.CacheProviders
                   dbf.Lock(36, 4);
                   dbf.Read(freePagesBytes, 0, 4);
                   dbf.Unlock(36, 4);
-#else
-                  dbf.Read(pageSizeBytes, 0, 2);
-                  dbf.Seek(36, SeekOrigin.Begin);
-                  dbf.Read(freePagesBytes, 0, 4);
-#endif
+
 
                   dbf.Close();
                }
@@ -255,13 +235,8 @@ namespace GMap.NET.CacheProviders
 
             var freeMB = (pageSize * freePages) / (1024.0 * 1024.0);
 
-#if !PocketPC
             int addSizeMB = 32;
             int waitUntilMB = 4;
-#else
-            int addSizeMB = 4; // reduce due to test in emulator
-            int waitUntilMB = 2;
-#endif
 
             Debug.WriteLine("FreePageSpace in cache: " + freeMB + "MB | " + freePages + " pages");
 
@@ -272,7 +247,7 @@ namespace GMap.NET.CacheProviders
          }
       }
 
-      #region -- import / export --
+    #region -- import / export --
       public static bool CreateEmptyDB(string file)
       {
          bool ret = true;
@@ -301,11 +276,8 @@ namespace GMap.NET.CacheProviders
                         using(DbCommand cmd = cn.CreateCommand())
                         {
                            cmd.Transaction = tr;
-#if !PocketPC
                            cmd.CommandText = Properties.Resources.CreateTileDb;
-#else
-                           cmd.CommandText = GMap.NET.WindowsMobile.Properties.Resources.CreateTileDb;
-#endif
+
                            cmd.ExecuteNonQuery();
                         }
                         tr.Commit();
@@ -618,7 +590,7 @@ namespace GMap.NET.CacheProviders
          }
          return ret;
       }
-      #endregion
+    #endregion
 
       static readonly string singleSqlSelect = "SELECT Tile FROM main.TilesData WHERE id = (SELECT id FROM main.Tiles WHERE X={0} AND Y={1} AND Zoom={2} AND Type={3})";
       static readonly string singleSqlInsert = "INSERT INTO main.Tiles(X, Y, Zoom, Type, CacheTime) VALUES(@p1, @p2, @p3, @p4, @p5)";
@@ -671,7 +643,7 @@ namespace GMap.NET.CacheProviders
          }
       }
 
-      #region PureImageCache Members
+    #region PureImageCache Members
 
       int preAllocationPing = 0;
 
@@ -850,7 +822,7 @@ namespace GMap.NET.CacheProviders
          return affectedRows;
       }
 
-      #endregion
+    #endregion
    }
 #endif
 }

@@ -1,11 +1,10 @@
 ﻿
-namespace GMap.NET.MapProviders
-{
+namespace GMap.NET.MapProviders {
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.IO;
-    using System.Net;    
+    using System.Net;
     using GMap.NET.Internals;
     using GMap.NET.Projections;
     using System.Text;
@@ -14,37 +13,30 @@ namespace GMap.NET.MapProviders
     /// <summary>
     /// providers that are already build in
     /// </summary>
-    public class GMapProviders
-    {
-        static GMapProviders()
-        {
+    public class GMapProviders {
+        static GMapProviders() {
             list = new List<GMapProvider>();
 
             Type type = typeof(GMapProviders);
-            foreach (var p in type.GetFields())
-            {
+            foreach (var p in type.GetFields()) {
                 var v = p.GetValue(null) as GMapProvider; // static classes cannot be instanced, so use null...
-                if (v != null)
-                {
+                if (v != null) {
                     list.Add(v);
                 }
             }
 
             Hash = new Dictionary<Guid, GMapProvider>();
-            foreach (var p in list)
-            {
+            foreach (var p in list) {
                 Hash.Add(p.Id, p);
             }
 
             DbHash = new Dictionary<int, GMapProvider>();
-            foreach (var p in list)
-            {
+            foreach (var p in list) {
                 DbHash.Add(p.DbId, p);
             }
         }
 
-        GMapProviders()
-        {
+        GMapProviders() {
         }
 
         public static readonly EmptyProvider EmptyProvider = EmptyProvider.Instance;
@@ -140,7 +132,7 @@ namespace GMap.NET.MapProviders
         public static readonly CzechTuristWinterMapProvider CzechTuristWinterMap = CzechTuristWinterMapProvider.Instance;
         public static readonly CzechHistoryMapProvider CzechHistoryMap = CzechHistoryMapProvider.Instance;
         public static readonly CzechGeographicMapProvider CzechGeographicMap = CzechGeographicMapProvider.Instance;
-        
+
         public static readonly ArcGIS_Imagery_World_2D_MapProvider ArcGIS_Imagery_World_2D_Map = ArcGIS_Imagery_World_2D_MapProvider.Instance;
         public static readonly ArcGIS_ShadedRelief_World_2D_MapProvider ArcGIS_ShadedRelief_World_2D_Map = ArcGIS_ShadedRelief_World_2D_MapProvider.Instance;
         public static readonly ArcGIS_StreetMap_World_2D_MapProvider ArcGIS_StreetMap_World_2D_Map = ArcGIS_StreetMap_World_2D_MapProvider.Instance;
@@ -163,19 +155,16 @@ namespace GMap.NET.MapProviders
         /// </summary>
         public static List<GMapProvider> List
         {
-            get
-            {
+            get {
                 return list;
             }
         }
 
         static Dictionary<Guid, GMapProvider> Hash;
 
-        public static GMapProvider TryGetProvider(Guid id)
-        {
+        public static GMapProvider TryGetProvider(Guid id) {
             GMapProvider ret;
-            if (Hash.TryGetValue(id, out ret))
-            {
+            if (Hash.TryGetValue(id, out ret)) {
                 return ret;
             }
             return null;
@@ -183,11 +172,9 @@ namespace GMap.NET.MapProviders
 
         static Dictionary<int, GMapProvider> DbHash;
 
-        public static GMapProvider TryGetProvider(int DbId)
-        {
+        public static GMapProvider TryGetProvider(int DbId) {
             GMapProvider ret;
-            if (DbHash.TryGetValue(DbId, out ret))
-            {
+            if (DbHash.TryGetValue(DbId, out ret)) {
                 return ret;
             }
             return null;
@@ -197,8 +184,7 @@ namespace GMap.NET.MapProviders
     /// <summary>
     /// base class for each map provider
     /// </summary>
-    public abstract class GMapProvider
-    {
+    public abstract class GMapProvider {
         /// <summary>
         /// unique provider id
         /// </summary>
@@ -241,22 +227,18 @@ namespace GMap.NET.MapProviders
 
         static readonly List<GMapProvider> MapProviders = new List<GMapProvider>();
 
-        protected GMapProvider()
-        {
-            using (var HashProvider = new SHA1CryptoServiceProvider())
-            {
+        protected GMapProvider() {
+            using (var HashProvider = new SHA1CryptoServiceProvider()) {
                 DbId = Math.Abs(BitConverter.ToInt32(HashProvider.ComputeHash(Id.ToByteArray()), 0));
             }
 
-            if (MapProviders.Exists(p => p.Id == Id || p.DbId == DbId))
-            {
+            if (MapProviders.Exists(p => p.Id == Id || p.DbId == DbId)) {
                 throw new Exception("such provider id already exsists, try regenerate your provider guid...");
             }
             MapProviders.Add(this);
         }
 
-        static GMapProvider()
-        {
+        static GMapProvider() {
             WebProxy = EmptyWebProxy.Instance;
         }
 
@@ -267,12 +249,10 @@ namespace GMap.NET.MapProviders
         /// </summary>
         public bool IsInitialized
         {
-            get
-            {
+            get {
                 return isInitialized;
             }
-            internal set
-            {
+            internal set {
                 isInitialized = value;
             }
         }
@@ -280,8 +260,7 @@ namespace GMap.NET.MapProviders
         /// <summary>
         /// called before first use
         /// </summary>
-        public virtual void OnInitialized()
-        {
+        public virtual void OnInitialized() {
             // nice place to detect current provider version
         }
 
@@ -327,16 +306,12 @@ namespace GMap.NET.MapProviders
         public static string UserAgent = string.Format("Mozilla/5.0 (Windows NT {1}.0; {2}rv:{0}.0) Gecko/20100101 Firefox/{0}.0",
             Stuff.random.Next(DateTime.Today.Year - 1969 - 5, DateTime.Today.Year - 1969),
             Stuff.random.Next(0, 10) % 2 == 0 ? 10 : 6,
-            Stuff.random.Next(0, 10) % 2 == 1 ? string.Empty : "WOW64; ");         
+            Stuff.random.Next(0, 10) % 2 == 1 ? string.Empty : "WOW64; ");
 
         /// <summary>
         /// timeout for provider connections
         /// </summary>
-#if !PocketPC
         public static int TimeoutMs = 5 * 1000;
-#else
-      public static int TimeoutMs = 44 * 1000; 
-#endif
         /// <summary>
         /// Gets or sets the value of the Referer HTTP header.
         /// </summary>
@@ -352,8 +327,7 @@ namespace GMap.NET.MapProviders
         static string languageStr = "en";
         public static string LanguageStr
         {
-            get
-            {
+            get {
                 return languageStr;
             }
         }
@@ -364,12 +338,10 @@ namespace GMap.NET.MapProviders
         /// </summary>
         public static LanguageType Language
         {
-            get
-            {
+            get {
                 return language;
             }
-            set
-            {
+            set {
                 language = value;
                 languageStr = Stuff.EnumToString(Language);
             }
@@ -388,247 +360,187 @@ namespace GMap.NET.MapProviders
         static readonly string requestAccept = "*/*";
         static readonly string responseContentType = "image";
 
-        protected virtual bool CheckTileImageHttpResponse(WebResponse response)
-        {
+        protected virtual bool CheckTileImageHttpResponse(WebResponse response) {
             //Debug.WriteLine(response.StatusCode + "/" + response.StatusDescription + "/" + response.ContentType + " -> " + response.ResponseUri);
             return response.ContentType.Contains(responseContentType);
         }
-        
+
         string Authorization = string.Empty;
-        
+
         /// <summary>
         /// http://blog.kowalczyk.info/article/at3/Forcing-basic-http-authentication-for-HttpWebReq.html
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="userPassword"></param>
-        public void ForceBasicHttpAuthentication(string userName, string userPassword)
-        {
+        public void ForceBasicHttpAuthentication(string userName, string userPassword) {
             Authorization = "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(userName + ":" + userPassword));
         }
 
-        protected PureImage GetTileImageUsingHttp(string url)
-        {
+        protected PureImage GetTileImageUsingHttp(string url) {
             PureImage ret = null;
 
-#if !PocketPC
             WebRequest request = IsSocksProxy ? SocksHttpWebRequest.Create(url) : WebRequest.Create(url);
-#else
-            WebRequest request = WebRequest.Create(url);
-#endif
-            if (WebProxy != null)
-            {
+
+            if (WebProxy != null) {
                 request.Proxy = WebProxy;
             }
 
-            if (Credential != null)
-            {
+            if (Credential != null) {
                 request.PreAuthenticate = true;
                 request.Credentials = Credential;
             }
-            
-            if(!string.IsNullOrEmpty(Authorization))
-            {
+
+            if (!string.IsNullOrEmpty(Authorization)) {
                 request.Headers.Set("Authorization", Authorization);
             }
-            
-            if (request is HttpWebRequest)
-            {
+
+            if (request is HttpWebRequest) {
                 var r = request as HttpWebRequest;
                 r.UserAgent = UserAgent;
                 r.ReadWriteTimeout = TimeoutMs * 6;
                 r.Accept = requestAccept;
                 r.Referer = RefererUrl;
                 r.Timeout = TimeoutMs;
-            }
-#if !PocketPC
-            else if (request is SocksHttpWebRequest)
-            {
+            } else if (request is SocksHttpWebRequest) {
                 var r = request as SocksHttpWebRequest;
 
-                if (!string.IsNullOrEmpty(UserAgent))
-                {
+                if (!string.IsNullOrEmpty(UserAgent)) {
                     r.Headers.Add("User-Agent", UserAgent);
                 }
 
-                if (!string.IsNullOrEmpty(requestAccept))
-                {
+                if (!string.IsNullOrEmpty(requestAccept)) {
                     r.Headers.Add("Accept", requestAccept);
                 }
 
-                if (!string.IsNullOrEmpty(RefererUrl))
-                {
+                if (!string.IsNullOrEmpty(RefererUrl)) {
                     r.Headers.Add("Referer", RefererUrl);
-                }              
+                }
             }
-#endif       
-            using (var response = request.GetResponse())
-            {
-                if (CheckTileImageHttpResponse(response))
-                {
-                    using (Stream responseStream = response.GetResponseStream())
-                    {
+
+            using (var response = request.GetResponse()) {
+                if (CheckTileImageHttpResponse(response)) {
+                    using (Stream responseStream = response.GetResponseStream()) {
                         MemoryStream data = Stuff.CopyStream(responseStream, false);
 
                         Debug.WriteLine("Response[" + data.Length + " bytes]: " + url);
 
-                        if (data.Length > 0)
-                        {
+                        if (data.Length > 0) {
                             ret = TileImageProxy.FromStream(data);
 
-                            if (ret != null)
-                            {
+                            if (ret != null) {
                                 ret.Data = data;
                                 ret.Data.Position = 0;
-                            }
-                            else
-                            {
+                            } else {
                                 data.Dispose();
                             }
                         }
                         data = null;
                     }
-                }
-                else
-                {
+                } else {
                     Debug.WriteLine("CheckTileImageHttpResponse[false]: " + url);
                 }
-#if PocketPC
-                request.Abort();
-#endif
                 response.Close();
             }
             return ret;
         }
 
-        protected string GetContentUsingHttp(string url)
-        {
+        protected string GetContentUsingHttp(string url) {
             string ret = string.Empty;
 
-#if !PocketPC
             WebRequest request = IsSocksProxy ? SocksHttpWebRequest.Create(url) : WebRequest.Create(url);
-#else
-            WebRequest request = WebRequest.Create(url);
-#endif
 
-            if (WebProxy != null)
-            {
+            if (WebProxy != null) {
                 request.Proxy = WebProxy;
             }
 
-            if (Credential != null)
-            {
+            if (Credential != null) {
                 request.PreAuthenticate = true;
                 request.Credentials = Credential;
             }
-            
-            if(!string.IsNullOrEmpty(Authorization))
-            {
+
+            if (!string.IsNullOrEmpty(Authorization)) {
                 request.Headers.Set("Authorization", Authorization);
             }
 
-            if (request is HttpWebRequest)
-            {
+            if (request is HttpWebRequest) {
                 var r = request as HttpWebRequest;
                 r.UserAgent = UserAgent;
                 r.ReadWriteTimeout = TimeoutMs * 6;
                 r.Accept = requestAccept;
                 r.Referer = RefererUrl;
                 r.Timeout = TimeoutMs;
-            }
-#if !PocketPC
-            else if (request is SocksHttpWebRequest)
-            {
+            } else if (request is SocksHttpWebRequest) {
                 var r = request as SocksHttpWebRequest;
 
-                if (!string.IsNullOrEmpty(UserAgent))
-                {
+                if (!string.IsNullOrEmpty(UserAgent)) {
                     r.Headers.Add("User-Agent", UserAgent);
                 }
 
-                if (!string.IsNullOrEmpty(requestAccept))
-                {
+                if (!string.IsNullOrEmpty(requestAccept)) {
                     r.Headers.Add("Accept", requestAccept);
                 }
 
-                if (!string.IsNullOrEmpty(RefererUrl))
-                {
+                if (!string.IsNullOrEmpty(RefererUrl)) {
                     r.Headers.Add("Referer", RefererUrl);
                 }
             }
-#endif
-            using (var response = request.GetResponse())
-            {
-                using (Stream responseStream = response.GetResponseStream())
-                {
-                    using (StreamReader read = new StreamReader(responseStream, Encoding.UTF8))
-                    {
+
+            using (var response = request.GetResponse()) {
+                using (Stream responseStream = response.GetResponseStream()) {
+                    using (StreamReader read = new StreamReader(responseStream, Encoding.UTF8)) {
                         ret = read.ReadToEnd();
                     }
                 }
-#if PocketPC
-                request.Abort();
-#endif
                 response.Close();
             }
 
             return ret;
         }
 
-#if !PocketPC
         /// <summary>
         /// use at your own risk, storing tiles in files is slow and hard on the file system
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        protected virtual PureImage GetTileImageFromFile(string fileName)
-        {
+        protected virtual PureImage GetTileImageFromFile(string fileName) {
             return GetTileImageFromArray(File.ReadAllBytes(fileName));
         }
-#endif
-        protected virtual PureImage GetTileImageFromArray(byte [] data)
-        {
+
+        protected virtual PureImage GetTileImageFromArray(byte[] data) {
             return TileImageProxy.FromArray(data);
         }
-        
-        protected static int GetServerNum(GPoint pos, int max)
-        {
+
+        protected static int GetServerNum(GPoint pos, int max) {
             return (int)(pos.X + 2 * pos.Y) % max;
         }
 
-        public override int GetHashCode()
-        {
+        public override int GetHashCode() {
             return (int)DbId;
         }
 
-        public override bool Equals(object obj)
-        {
-            if (obj is GMapProvider)
-            {
+        public override bool Equals(object obj) {
+            if (obj is GMapProvider) {
                 return Id.Equals((obj as GMapProvider).Id);
             }
             return false;
-        }        
+        }
 
-        public override string ToString()
-        {
+        public override string ToString() {
             return Name;
-        }        
+        }
     }
 
     /// <summary>
     /// represents empty provider
     /// </summary>
-    public class EmptyProvider : GMapProvider
-    {
+    public class EmptyProvider : GMapProvider {
         public static readonly EmptyProvider Instance;
 
-        EmptyProvider()
-        {
+        EmptyProvider() {
             MaxZoom = null;
         }
 
-        static EmptyProvider()
-        {
+        static EmptyProvider() {
             Instance = new EmptyProvider();
         }
 
@@ -636,8 +548,7 @@ namespace GMap.NET.MapProviders
 
         public override Guid Id
         {
-            get
-            {
+            get {
                 return Guid.Empty;
             }
         }
@@ -645,8 +556,7 @@ namespace GMap.NET.MapProviders
         readonly string name = "None";
         public override string Name
         {
-            get
-            {
+            get {
                 return name;
             }
         }
@@ -654,52 +564,44 @@ namespace GMap.NET.MapProviders
         readonly MercatorProjection projection = MercatorProjection.Instance;
         public override PureProjection Projection
         {
-            get
-            {
+            get {
                 return projection;
             }
         }
 
         public override GMapProvider[] Overlays
         {
-            get
-            {
+            get {
                 return null;
             }
         }
 
-        public override PureImage GetTileImage(GPoint pos, int zoom)
-        {
+        public override PureImage GetTileImage(GPoint pos, int zoom) {
             return null;
         }
 
         #endregion
     }
 
-    public sealed class EmptyWebProxy : IWebProxy
-    {
+    public sealed class EmptyWebProxy : IWebProxy {
         public static readonly EmptyWebProxy Instance = new EmptyWebProxy();
 
         private ICredentials m_credentials;
         public ICredentials Credentials
         {
-            get
-            {
+            get {
                 return this.m_credentials;
             }
-            set
-            {
+            set {
                 this.m_credentials = value;
             }
         }
 
-        public Uri GetProxy(Uri uri)
-        {
+        public Uri GetProxy(Uri uri) {
             return uri;
         }
 
-        public bool IsBypassed(Uri uri)
-        {
+        public bool IsBypassed(Uri uri) {
             return true;
         }
     }

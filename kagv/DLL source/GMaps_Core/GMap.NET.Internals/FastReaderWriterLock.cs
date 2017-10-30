@@ -1,14 +1,10 @@
-﻿#if !MONO && !PocketPC
-#define UseFastResourceLock
-#endif
+﻿#define UseFastResourceLock
 
-namespace GMap.NET.Internals
-{
+namespace GMap.NET.Internals {
     using System;
     using System.Threading;
-#if !MONO
     using System.Runtime.InteropServices;
-#endif
+
 
     /// <summary>
     /// custom ReaderWriterLock
@@ -16,11 +12,9 @@ namespace GMap.NET.Internals
     /// http://msdn.microsoft.com/en-us/library/aa904937(VS.85).aspx
     /// http://msdn.microsoft.com/en-us/magazine/cc163405.aspx#S2
     /// </summary>
-    public sealed class FastReaderWriterLock : IDisposable
-    {
-#if !MONO && !PocketPC
-        private static class NativeMethods
-        {
+    public sealed class FastReaderWriterLock : IDisposable {
+
+        private static class NativeMethods {
             // Methods
             [DllImport("Kernel32", ExactSpelling = true)]
             internal static extern void AcquireSRWLockExclusive(ref IntPtr srw);
@@ -36,14 +30,10 @@ namespace GMap.NET.Internals
 
         IntPtr LockSRW = IntPtr.Zero;
 
-        public FastReaderWriterLock()
-        {
-            if (UseNativeSRWLock)
-            {
+        public FastReaderWriterLock() {
+            if (UseNativeSRWLock) {
                 NativeMethods.InitializeSRWLock(out this.LockSRW);
-            }
-            else
-            {
+            } else {
 #if UseFastResourceLock
                 pLock = new FastResourceLock();
 #endif
@@ -51,15 +41,12 @@ namespace GMap.NET.Internals
         }
 
 #if UseFastResourceLock
-        ~FastReaderWriterLock()
-        {
+        ~FastReaderWriterLock() {
             Dispose(false);
         }
 
-        void Dispose(bool disposing)
-        {
-            if (pLock != null)
-            {
+        void Dispose(bool disposing) {
+            if (pLock != null) {
                 pLock.Dispose();
                 pLock = null;
             }
@@ -68,27 +55,19 @@ namespace GMap.NET.Internals
         FastResourceLock pLock;
 #endif
 
-      static readonly bool UseNativeSRWLock = Stuff.IsRunningOnVistaOrLater() && IntPtr.Size == 4; // works only in 32-bit mode, any ideas on native 64-bit support? 
-
-#endif
+        static readonly bool UseNativeSRWLock = Stuff.IsRunningOnVistaOrLater() && IntPtr.Size == 4; // works only in 32-bit mode, any ideas on native 64-bit support? 
 
 #if !UseFastResourceLock
        Int32 busy = 0;
        Int32 readCount = 0;
 #endif
 
-        public void AcquireReaderLock()
-        {
-#if !MONO && !PocketPC
-            if (UseNativeSRWLock)
-            {
+        public void AcquireReaderLock() {
+            if (UseNativeSRWLock) {
                 NativeMethods.AcquireSRWLockShared(ref LockSRW);
-            }
-            else
-#endif
-            {
+            } else {
 #if UseFastResourceLock
-            pLock.AcquireShared();
+                pLock.AcquireShared();
 #else
             Thread.BeginCriticalRegion();
 
@@ -113,16 +92,10 @@ namespace GMap.NET.Internals
             }
         }
 
-        public void ReleaseReaderLock()
-        {
-#if !MONO && !PocketPC
-            if (UseNativeSRWLock)
-            {
+        public void ReleaseReaderLock() {
+            if (UseNativeSRWLock) {
                 NativeMethods.ReleaseSRWLockShared(ref LockSRW);
-            }
-            else
-#endif
-            {
+            } else {
 #if UseFastResourceLock
                 pLock.ReleaseShared();
 #else
@@ -132,16 +105,10 @@ namespace GMap.NET.Internals
             }
         }
 
-        public void AcquireWriterLock()
-        {
-#if !MONO && !PocketPC
-            if (UseNativeSRWLock)
-            {
+        public void AcquireWriterLock() {
+            if (UseNativeSRWLock) {
                 NativeMethods.AcquireSRWLockExclusive(ref LockSRW);
-            }
-            else
-#endif
-            {
+            } else {
 #if UseFastResourceLock
                 pLock.AcquireExclusive();
 #else
@@ -160,16 +127,10 @@ namespace GMap.NET.Internals
             }
         }
 
-        public void ReleaseWriterLock()
-        {
-#if !MONO && !PocketPC
-            if (UseNativeSRWLock)
-            {
+        public void ReleaseWriterLock() {
+            if (UseNativeSRWLock) {
                 NativeMethods.ReleaseSRWLockExclusive(ref LockSRW);
-            }
-            else
-#endif
-            {
+            } else {
 #if UseFastResourceLock
                 pLock.ReleaseExclusive();
 #else
@@ -181,8 +142,7 @@ namespace GMap.NET.Internals
 
         #region IDisposable Members
 
-        public void Dispose()
-        {
+        public void Dispose() {
 #if UseFastResourceLock
             this.Dispose(true);
             GC.SuppressFinalize(this);

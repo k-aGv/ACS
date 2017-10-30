@@ -1,6 +1,5 @@
 ﻿
-namespace GMap.NET.Projections
-{
+namespace GMap.NET.Projections {
     using System;
     using System.Collections.Generic;
 
@@ -8,8 +7,7 @@ namespace GMap.NET.Projections
     /// PROJCS["SWEREF99 TM",GEOGCS["SWEREF99",DATUM["SWEREF99",SPHEROID["GRS 1980",6378137,298.257222101,AUTHORITY["EPSG","7019"]],TOWGS84[0,0,0,0,0,0,0],AUTHORITY["EPSG","6619"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.01745329251994328,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4619"]],UNIT["metre",1,AUTHORITY["EPSG","9001"]],
     /// PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",0],PARAMETER["central_meridian",15],PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",500000],PARAMETER["false_northing",0],AUTHORITY["EPSG","3006"],AXIS["y",EAST],AXIS["x",NORTH]]
     /// </summary>
-    public class SWEREF99_TMProjection : PureProjection
-    {
+    public class SWEREF99_TMProjection : PureProjection {
         public static readonly SWEREF99_TMProjection Instance = new SWEREF99_TMProjection();
 
         static readonly double MinLatitude = 54.96;
@@ -34,8 +32,7 @@ namespace GMap.NET.Projections
 
         public override RectLatLng Bounds
         {
-            get
-            {
+            get {
                 return RectLatLng.FromLTRB(MinLongitude, MaxLatitude, MaxLongitude, MinLatitude);
             }
         }
@@ -43,30 +40,26 @@ namespace GMap.NET.Projections
         GSize tileSize = new GSize(256, 256);
         public override GSize TileSize
         {
-            get
-            {
+            get {
                 return tileSize;
             }
         }
 
         public override double Axis
         {
-            get
-            {
+            get {
                 return 6378137;
             }
         }
 
         public override double Flattening
         {
-            get
-            {
+            get {
                 return (1.0 / 298.257222101);
             }
         }
 
-        public override GPoint FromLatLngToPixel(double lat, double lng, int zoom)
-        {
+        public override GPoint FromLatLngToPixel(double lat, double lng, int zoom) {
             GPoint ret = GPoint.Empty;
 
             lat = Clip(lat, MinLatitude, MaxLatitude);
@@ -81,13 +74,11 @@ namespace GMap.NET.Projections
             return LksToPixel(lks, res);
         }
 
-        static GPoint LksToPixel(double[] lks, double res)
-        {
+        static GPoint LksToPixel(double[] lks, double res) {
             return new GPoint((long)Math.Floor((lks[0] - orignX) / res), (long)Math.Floor((orignY - lks[1]) / res));
         }
 
-        public override PointLatLng FromPixelToLatLng(long x, long y, int zoom)
-        {
+        public override PointLatLng FromPixelToLatLng(long x, long y, int zoom) {
             PointLatLng ret = PointLatLng.Empty;
 
             double res = GetTileMatrixResolution(zoom);
@@ -103,8 +94,7 @@ namespace GMap.NET.Projections
             return ret;
         }
 
-        double[] DTM10(double[] lonlat)
-        {
+        double[] DTM10(double[] lonlat) {
             // Eccentricity squared : (a^2 - b^2)/a^2
             double es = 1.0 - (semiMinor2 * semiMinor2) / (semiMajor * semiMajor); // e^2
 
@@ -124,8 +114,7 @@ namespace GMap.NET.Projections
             return new double[] { x, y, z, };
         }
 
-        double[] MTD10(double[] pnt)
-        {
+        double[] MTD10(double[] pnt) {
             // Eccentricity squared : (a^2 - b^2)/a^2
             double es = 1.0 - (semiMinor * semiMinor) / (semiMajor * semiMajor); // e^2
 
@@ -141,36 +130,26 @@ namespace GMap.NET.Projections
             double lon = 0;
             double lat = 0;
             double Height = 0;
-            if (pnt[0] != 0.0)
-            {
+            if (pnt[0] != 0.0) {
                 lon = Math.Atan2(pnt[1], pnt[0]);
-            }
-            else
-            {
-                if (pnt[1] > 0)
-                {
+            } else {
+                if (pnt[1] > 0) {
                     lon = Math.PI / 2;
-                }
-                else
-                   if (pnt[1] < 0)
-                {
+                } else
+                   if (pnt[1] < 0) {
                     lon = -Math.PI * 0.5;
-                }
-                else
-                {
+                } else {
                     AtPole = true;
                     lon = 0.0;
                     if (Z > 0.0) // north pole
                     {
                         lat = Math.PI * 0.5;
-                    }
-                    else
+                    } else
                        if (Z < 0.0) // south pole
                     {
                         lat = -Math.PI * 0.5;
-                    }
-                    else // center of earth
-                    {
+                    } else // center of earth
+                      {
                         return new double[] { RadiansToDegrees(lon), RadiansToDegrees(Math.PI * 0.5), -semiMinor, };
                     }
                 }
@@ -188,29 +167,22 @@ namespace GMap.NET.Projections
             double Sin_p1 = T1 / S1; // sin(phi1), phi1 is estimated latitude
             double Cos_p1 = Sum / S1; // cos(phi1)
             double Rn = semiMajor / Math.Sqrt(1.0 - es * Sin_p1 * Sin_p1); // Earth radius at location
-            if (Cos_p1 >= COS_67P5)
-            {
+            if (Cos_p1 >= COS_67P5) {
                 Height = W / Cos_p1 - Rn;
-            }
-            else
-               if (Cos_p1 <= -COS_67P5)
-            {
+            } else
+               if (Cos_p1 <= -COS_67P5) {
                 Height = W / -Cos_p1 - Rn;
-            }
-            else
-            {
+            } else {
                 Height = Z / Sin_p1 + Rn * (es - 1.0);
             }
 
-            if (!AtPole)
-            {
+            if (!AtPole) {
                 lat = Math.Atan(Sin_p1 / Cos_p1);
             }
             return new double[] { RadiansToDegrees(lon), RadiansToDegrees(lat), Height, };
         }
 
-        double[] DTM00(double[] lonlat)
-        {
+        double[] DTM00(double[] lonlat) {
             double e0, e1, e2, e3;  // eccentricity constants		
             double e, es, esp;      // eccentricity constants		
             double ml0;              // small value m			
@@ -260,8 +232,7 @@ namespace GMap.NET.Projections
                 return new double[] { x / metersPerUnit, y / metersPerUnit, lonlat[2] };
         }
 
-        double[] DTM01(double[] lonlat)
-        {
+        double[] DTM01(double[] lonlat) {
             // Eccentricity squared : (a^2 - b^2)/a^2
             double es = 1.0 - (semiMinor * semiMinor) / (semiMajor * semiMajor);
 
@@ -281,8 +252,7 @@ namespace GMap.NET.Projections
             return new double[] { x, y, z, };
         }
 
-        double[] MTD01(double[] pnt)
-        {
+        double[] MTD01(double[] pnt) {
             // Eccentricity squared : (a^2 - b^2)/a^2
             double es = 1.0 - (semiMinor2 * semiMinor2) / (semiMajor * semiMajor);
 
@@ -298,36 +268,26 @@ namespace GMap.NET.Projections
             double lon = 0;
             double lat = 0;
             double Height = 0;
-            if (pnt[0] != 0.0)
-            {
+            if (pnt[0] != 0.0) {
                 lon = Math.Atan2(pnt[1], pnt[0]);
-            }
-            else
-            {
-                if (pnt[1] > 0)
-                {
+            } else {
+                if (pnt[1] > 0) {
                     lon = Math.PI / 2;
-                }
-                else
-                   if (pnt[1] < 0)
-                {
+                } else
+                   if (pnt[1] < 0) {
                     lon = -Math.PI * 0.5;
-                }
-                else
-                {
+                } else {
                     At_Pole = true;
                     lon = 0.0;
                     if (Z > 0.0) // north pole
                     {
                         lat = Math.PI * 0.5;
-                    }
-                    else
+                    } else
                        if (Z < 0.0) // south pole
                     {
                         lat = -Math.PI * 0.5;
-                    }
-                    else // center of earth
-                    {
+                    } else // center of earth
+                      {
                         return new double[] { RadiansToDegrees(lon), RadiansToDegrees(Math.PI * 0.5), -semiMinor2, };
                     }
                 }
@@ -347,29 +307,22 @@ namespace GMap.NET.Projections
             double Cos_p1 = Sum / S1; // cos(phi1)
             double Rn = semiMajor / Math.Sqrt(1.0 - es * Sin_p1 * Sin_p1); // Earth radius at location
 
-            if (Cos_p1 >= COS_67P5)
-            {
+            if (Cos_p1 >= COS_67P5) {
                 Height = W / Cos_p1 - Rn;
-            }
-            else
-               if (Cos_p1 <= -COS_67P5)
-            {
+            } else
+               if (Cos_p1 <= -COS_67P5) {
                 Height = W / -Cos_p1 - Rn;
-            }
-            else
-            {
+            } else {
                 Height = Z / Sin_p1 + Rn * (es - 1.0);
             }
 
-            if (!At_Pole)
-            {
+            if (!At_Pole) {
                 lat = Math.Atan(Sin_p1 / Cos_p1);
             }
             return new double[] { RadiansToDegrees(lon), RadiansToDegrees(lat), Height, };
         }
 
-        double[] MTD11(double[] p)
-        {
+        double[] MTD11(double[] p) {
             double e0, e1, e2, e3;  // eccentricity constants		
             double e, es, esp;      // eccentricity constants		
             double ml0;         // small value m
@@ -397,8 +350,7 @@ namespace GMap.NET.Projections
 
             con = (ml0 + y / scaleFactor) / semiMajor;
             phi = con;
-            for (i = 0; ; i++)
-            {
+            for (i = 0; ; i++) {
                 delta_phi = ((con + e1 * Math.Sin(2.0 * phi) - e2 * Math.Sin(4.0 * phi) + e3 * Math.Sin(6.0 * phi)) / e0) - phi;
                 phi += delta_phi;
 
@@ -409,8 +361,7 @@ namespace GMap.NET.Projections
                     throw new ArgumentException("Latitude failed to converge");
             }
 
-            if (Math.Abs(phi) < HALF_PI)
-            {
+            if (Math.Abs(phi) < HALF_PI) {
                 SinCos(phi, out sin_phi, out cos_phi);
                 tan_phi = Math.Tan(phi);
                 c = esp * Math.Pow(cos_phi, 2);
@@ -435,9 +386,7 @@ namespace GMap.NET.Projections
                     return new double[] { RadiansToDegrees(lon), RadiansToDegrees(lat) };
                 else
                     return new double[] { RadiansToDegrees(lon), RadiansToDegrees(lat), p[2] };
-            }
-            else
-            {
+            } else {
                 if (p.Length < 3)
                     return new double[] { RadiansToDegrees(HALF_PI * Sign(y)), RadiansToDegrees(centralMeridian) };
                 else
@@ -465,51 +414,42 @@ namespace GMap.NET.Projections
         #endregion
 
         static double[] resolutions = new double[] { 4096.0, 2048.0, 1024.0, 512.0, 256.0, 128.0, 64.0, 32.0, 16.0, 8.0, 4.0, 2.0, 1.0, 0.5, 0.25, 0.15, 0.1, 0.05, 0.01 };
-        public static double GetTileMatrixResolution(int zoom)
-        {
+        public static double GetTileMatrixResolution(int zoom) {
             double ret = 0;
 
-            if (zoom < resolutions.Length)
-            {
+            if (zoom < resolutions.Length) {
                 ret = resolutions[zoom];
             }
 
             return ret;
         }
 
-        public override double GetGroundResolution(int zoom, double latitude)
-        {
+        public override double GetGroundResolution(int zoom, double latitude) {
             return GetTileMatrixResolution(zoom);
         }
 
         Dictionary<int, GSize> extentMatrixMin;
         Dictionary<int, GSize> extentMatrixMax;
 
-        public override GSize GetTileMatrixMinXY(int zoom)
-        {
-            if (extentMatrixMin == null)
-            {
+        public override GSize GetTileMatrixMinXY(int zoom) {
+            if (extentMatrixMin == null) {
                 GenerateExtents();
             }
             return extentMatrixMin[zoom];
         }
 
-        public override GSize GetTileMatrixMaxXY(int zoom)
-        {
-            if (extentMatrixMax == null)
-            {
+        public override GSize GetTileMatrixMaxXY(int zoom) {
+            if (extentMatrixMax == null) {
                 GenerateExtents();
             }
             return extentMatrixMax[zoom];
         }
 
-        void GenerateExtents()
-        {
+        void GenerateExtents() {
             extentMatrixMin = new Dictionary<int, GSize>();
             extentMatrixMax = new Dictionary<int, GSize>();
 
-            for (int i = 0; i <= resolutions.Length; i++)
-            {
+            for (int i = 0; i <= resolutions.Length; i++) {
                 double res = GetTileMatrixResolution(i);
 
                 extentMatrixMin.Add(i, new GSize(FromPixelToTileXY(FromLatLngToPixel(Bounds.LocationTopLeft, i))));

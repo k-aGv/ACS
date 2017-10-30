@@ -68,14 +68,14 @@ namespace kagv {
             //if (!(obj.GetType() == typeof(GridRect)))
             //    return false;
             GridRect p = (GridRect)obj;
-            if (ReferenceEquals(null, p)) 
+            if (ReferenceEquals(null, p))
                 return false;
             // Return true if the fields match:
             return (minX == p.minX) && (minY == p.minY) && (maxX == p.maxX) && (maxY == p.maxY);
         }
 
         public bool Equals(GridRect p) {
-            if (ReferenceEquals(null, p)) 
+            if (ReferenceEquals(null, p))
                 return false;
             // Return true if the fields match:
             return (minX == p.minX) && (minY == p.minY) && (maxX == p.maxX) && (maxY == p.maxY);

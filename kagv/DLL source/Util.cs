@@ -3,13 +3,13 @@ namespace kagv {
     public class Util {
         public static DiagonalMovement GetDiagonalMovement(bool iCrossCorners, bool iCrossAdjacentPoint) {
 
-            if (iCrossCorners && iCrossAdjacentPoint) 
+            if (iCrossCorners && iCrossAdjacentPoint)
                 return DiagonalMovement.Always;
-            else if (iCrossCorners) 
+            else if (iCrossCorners)
                 return DiagonalMovement.IfAtLeastOneWalkable;
-            else 
+            else
                 return DiagonalMovement.OnlyWhenNoObstacles;
-            
+
         }
     }
 }

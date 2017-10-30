@@ -68,7 +68,7 @@ namespace kagv {
                     break;
 
             }
-            width = height = Globals._BlockSide -1;
+            width = height = Globals._BlockSide - 1;
 
             boxRec = new Rectangle(x, y, width, height);
         }
@@ -110,7 +110,7 @@ namespace kagv {
         public void BeVisible() {
             switch (boxType) {
                 case BoxType.Normal:
-                    brush = new SolidBrush(Globals.boxDefaultColor); 
+                    brush = new SolidBrush(Globals.boxDefaultColor);
                     //brush = new SolidBrush(Color.Transparent);
                     break;
                 case BoxType.Wall:
@@ -134,7 +134,7 @@ namespace kagv {
                     if (brush != null)
                         brush.Dispose();
 
-                    brush = new SolidBrush(Globals.boxDefaultColor);   
+                    brush = new SolidBrush(Globals.boxDefaultColor);
                     boxType = BoxType.Normal;
                     break;
 

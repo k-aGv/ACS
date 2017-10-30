@@ -72,22 +72,22 @@ namespace kagv {
         }
 
         public bool Equals(GridPos p) {
-            if (ReferenceEquals(null, p)) 
+            if (ReferenceEquals(null, p))
                 return false;
-            
+
             // Return true if the fields match:
             return (x == p.x) && (y == p.y);
         }
 
         public static bool operator ==(GridPos a, GridPos b) {
             // If both are null, or both are same instance, return true.
-            if (ReferenceEquals(a, b)) 
+            if (ReferenceEquals(a, b))
                 return true;
-            if (ReferenceEquals(null, a)) 
+            if (ReferenceEquals(null, a))
                 return false;
-            if (ReferenceEquals(null, b)) 
+            if (ReferenceEquals(null, b))
                 return false;
-            
+
             // Return true if the fields match:
             return a.x == b.x && a.y == b.y;
         }

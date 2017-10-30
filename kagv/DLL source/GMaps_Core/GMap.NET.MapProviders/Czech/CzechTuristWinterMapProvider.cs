@@ -1,21 +1,17 @@
 ﻿
-namespace GMap.NET.MapProviders
-{
+namespace GMap.NET.MapProviders {
     using System;
 
     /// <summary>
     /// CzechTuristMap provider, http://www.mapy.cz/
     /// </summary>
-    public class CzechTuristWinterMapProvider : CzechMapProviderBase
-    {
+    public class CzechTuristWinterMapProvider : CzechMapProviderBase {
         public static readonly CzechTuristWinterMapProvider Instance;
 
-        CzechTuristWinterMapProvider()
-        {
+        CzechTuristWinterMapProvider() {
         }
 
-        static CzechTuristWinterMapProvider()
-        {
+        static CzechTuristWinterMapProvider() {
             Instance = new CzechTuristWinterMapProvider();
         }
 
@@ -24,8 +20,7 @@ namespace GMap.NET.MapProviders
         readonly Guid id = new Guid("F7B7FC9E-BDC2-4A9D-A1D3-A6BEC8FE0EB2");
         public override Guid Id
         {
-            get
-            {
+            get {
                 return id;
             }
         }
@@ -33,14 +28,12 @@ namespace GMap.NET.MapProviders
         readonly string name = "CzechTuristWinterMap";
         public override string Name
         {
-            get
-            {
+            get {
                 return name;
             }
         }
 
-        public override PureImage GetTileImage(GPoint pos, int zoom)
-        {
+        public override PureImage GetTileImage(GPoint pos, int zoom) {
             string url = MakeTileImageUrl(pos, zoom, LanguageStr);
 
             return GetTileImageUsingHttp(url);
@@ -48,8 +41,7 @@ namespace GMap.NET.MapProviders
 
         #endregion
 
-        string MakeTileImageUrl(GPoint pos, int zoom, string language)
-        {
+        string MakeTileImageUrl(GPoint pos, int zoom, string language) {
             // http://m3.mapserver.mapy.cz/wturist_winter-m/14-8802-5528
 
             return string.Format(UrlFormat, GetServerNum(pos, 3) + 1, zoom, pos.X, pos.Y);

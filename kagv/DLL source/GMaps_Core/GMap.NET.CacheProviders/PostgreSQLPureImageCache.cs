@@ -1,6 +1,5 @@
 ﻿
-namespace GMap.NET.CacheProviders
-{
+namespace GMap.NET.CacheProviders {
 #if PostgreSQL
    using System;
    using System.Diagnostics;
@@ -74,7 +73,7 @@ namespace GMap.NET.CacheProviders
          {
             if(!Initialized)
             {
-   #region prepare postgresql & cache table
+    #region prepare postgresql & cache table
 
                try
                {
@@ -145,14 +144,14 @@ namespace GMap.NET.CacheProviders
                   Debug.WriteLine(ex.Message);
                }
 
-   #endregion
+    #endregion
             }
 
             return Initialized;
          }
       }
 
-   #region IDisposable Members
+    #region IDisposable Members
 
       public void Dispose()
       {
@@ -189,9 +188,9 @@ namespace GMap.NET.CacheProviders
          Initialized = false;
       }
 
-   #endregion
+    #endregion
 
-   #region PureImageCache Members
+    #region PureImageCache Members
 
       public bool PutImageToCache(byte[] tile, int type, GPoint pos, int zoom)
       {
@@ -269,7 +268,7 @@ namespace GMap.NET.CacheProviders
          throw new NotImplementedException();
       }
 
-   #endregion
+    #endregion
    }
 #endif
 }

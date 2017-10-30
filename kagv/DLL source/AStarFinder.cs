@@ -53,9 +53,9 @@ namespace kagv {
                 var node = openList.DeleteMin();
                 node.isClosed = true;
 
-                if (node == endNode) 
+                if (node == endNode)
                     return Node.Backtrace(endNode);
-                
+
                 var neighbors = grid.GetNeighbors(node, diagonalMovement);
 
 
@@ -78,7 +78,7 @@ namespace kagv {
                                 openList.Add(neighbor);
                             }
                             neighbor.isOpened = true;
-                        } 
+                        }
                     }
                 });
 

@@ -1,7 +1,5 @@
-﻿namespace kagv
-{
-    partial class main_form
-    {
+﻿namespace kagv {
+    partial class main_form {
 
     }
 }

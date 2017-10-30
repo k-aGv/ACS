@@ -71,12 +71,12 @@ namespace kagv {
                         m_rectangles[widthTrav][heightTrav].DrawBox(paper, BoxType.Normal);
                         //m_rectangles[widthTrav][heightTrav].DrawBox(paper, BoxType.Start);
                         //m_rectangles[widthTrav][heightTrav].DrawBox(paper, BoxType.End);
-                       // m_rectangles[widthTrav][heightTrav].DrawBox(paper, BoxType.Wall);
+                        // m_rectangles[widthTrav][heightTrav].DrawBox(paper, BoxType.Wall);
                         m_rectangles[widthTrav][heightTrav].DrawBox(paper, BoxType.Load);
 
-                       // if (m_rectangles[widthTrav][heightTrav].boxType == BoxType.Load
-                       //     && isLoad[widthTrav, heightTrav] == 3)
-                       //     m_rectangles[widthTrav][heightTrav].SetAsTargetted(paper);
+                        // if (m_rectangles[widthTrav][heightTrav].boxType == BoxType.Load
+                        //     && isLoad[widthTrav, heightTrav] == 3)
+                        //     m_rectangles[widthTrav][heightTrav].SetAsTargetted(paper);
 
                     }
                 }
@@ -106,14 +106,14 @@ namespace kagv {
                */
             } catch { }
         }
-     
+
         private void main_form_Load(object sender, EventArgs e) {
 
             if (File.Exists("_tmpMap.txt"))
                 File.Delete("_tmpMap.txt");
 
             //Hide industrial-dedicated stuff for now
-#region industrial-dedicated
+            #region industrial-dedicated
             importMapToolStripMenuItem.Visible = false;
             debugToolStripMenuItem.Visible = false;
             aToolStripMenuItem.Visible = false;
@@ -123,12 +123,12 @@ namespace kagv {
             aGVIndexToolStripMenuItem.Visible = false;
             borderColorToolStripMenuItem.Visible = false;
             bordersToolStripMenuItem.Visible = false;
-            gb_AStar.Visible = gb_agvs.Visible = gb_settings.Visible = gb_type.Visible= false;
+            gb_AStar.Visible = gb_agvs.Visible = gb_settings.Visible = gb_type.Visible = false;
             lb_noSettings.Text = "No settings available in Logistics branch";
             lb_noSettings.ForeColor = Color.IndianRed;
             lb_noSettings.Font = new Font(FontFamily.GenericSansSerif, 10, FontStyle.Bold);
-            lb_noSettings.Location = new Point((menuPanel.Width / 2) - lb_noSettings.Size.Width/2, menuPanel.Height /2);
-#endregion
+            lb_noSettings.Location = new Point((menuPanel.Width / 2) - lb_noSettings.Size.Width / 2, menuPanel.Height / 2);
+            #endregion
             //Automatically enable the CPUs for this app.
             var _proc = System.Diagnostics.Process.GetCurrentProcess();
             int coreFlag;
@@ -139,7 +139,7 @@ namespace kagv {
 
             _proc.ProcessorAffinity = new IntPtr(coreFlag);
             //More infos here:https://msdn.microsoft.com/en-us/library/system.diagnostics.processthread.processoraffinity(v=vs.110).aspx
-           
+
         }
 
         private void main_form_MouseDown(object sender, MouseEventArgs e) {
@@ -327,7 +327,7 @@ namespace kagv {
                 }
             }
             */
-           
+
             //if user enable the highlighting over a box while mouse hovering
             if (allowHighlight)
                 for (int widthTrav = 0; widthTrav < Globals._WidthBlocks; widthTrav++)
@@ -354,20 +354,20 @@ namespace kagv {
         //shown in the screen
         private void main_form_MouseUp(object sender, MouseEventArgs e) {
 
-           // if (e.Button == MouseButtons.Right) {
-           //     tp.Hide(this);
-           //     return;
-           // }
+            // if (e.Button == MouseButtons.Right) {
+            //     tp.Hide(this);
+            //     return;
+            // }
             isMouseDown = false;
 
-           // for (int i = 0; i < startPos.Count; i++)
-           //     AGVs[i].StepsCounter = 0;
+            // for (int i = 0; i < startPos.Count; i++)
+            //     AGVs[i].StepsCounter = 0;
 
             Redraw();//The main function of this executable.Contains almost every drawing and calculating stuff
-           // Invalidate();
+                     // Invalidate();
         }
 
-        
+
         private void nUD_AGVs_ValueChanged(object sender, EventArgs e) {
 
             //if we change the AGVs value from numeric updown,do the following
@@ -382,7 +382,7 @@ namespace kagv {
                     if (start_position.Count > nUD_AGVs.Value) {
                         m_rectangles[start_position[0].x][start_position[0].y].SwitchEnd_StartToNormal(); //removes the very last
                         removed = true;
-                        
+
                         Invalidate();
                     }
                 }
@@ -392,7 +392,7 @@ namespace kagv {
         }
 
         private void main_form_MouseClick(object sender, MouseEventArgs e) {
-            
+
             if (!menuPanel.Enabled)
                 return;
             Point click_coords = new Point(e.X, e.Y);
@@ -411,21 +411,21 @@ namespace kagv {
                                     m_rectangles[widthTrav][heightTrav].SwitchLoad();
                                     //isLoad[widthTrav, heightTrav] = 1;
                                     //Invalidate();
-                                    break; 
+                                    break;
                                 case BoxType.Load:
                                     m_rectangles[widthTrav][heightTrav].SwitchLoad();
                                     //isLoad[widthTrav, heightTrav] = 2;
                                     //Invalidate();
                                     break;
-                                /*case BoxType.Wall:
-                                case BoxType.Start:
-                                case BoxType.End:
-                                    break;
-                                    */
+                                    /*case BoxType.Wall:
+                                    case BoxType.Start:
+                                    case BoxType.End:
+                                        break;
+                                        */
                             }
                         }
             return;
-            if (rb_start.Checked && nUD_AGVs.Value!=0) {
+            if (rb_start.Checked && nUD_AGVs.Value != 0) {
 
                 if (nUD_AGVs.Value == 1)//Saves only the last Click position to place the Start (1 start exists)
                 {
@@ -632,7 +632,7 @@ namespace kagv {
         private void allToolStripMenuItem_Click(object sender, EventArgs e) {
 
             FullyRestore();
-            
+
         }
 
         private void exportMapToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -642,7 +642,7 @@ namespace kagv {
         private void importMapToolStripMenuItem_Click(object sender, EventArgs e) {
             Import();
         }
-        
+
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
             About about = new About();
             about.ShowDialog();
@@ -782,7 +782,7 @@ namespace kagv {
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
             SetStyle(
             ControlStyles.DoubleBuffer, true);
-            
+
             for (int widthTrav = 0; widthTrav < Globals._WidthBlocks; widthTrav++) {
                 for (int heightTrav = 0; heightTrav < Globals._HeightBlocks; heightTrav++) {
                     g.DrawString("x" + widthTrav + "\n" + "y" + heightTrav,
@@ -790,7 +790,7 @@ namespace kagv {
                                     new SolidBrush(Color.DarkSlateBlue),
                                     new Point(m_rectangles[widthTrav][heightTrav].x, m_rectangles[widthTrav][heightTrav].y)
                                     );
-                    
+
                 }
             }
 
@@ -802,7 +802,7 @@ namespace kagv {
             Redraw();
             Refresh();
         }
-        
+
         private void main_form_FormClosing(object sender, FormClosingEventArgs e) {
             if (File.Exists("info.txt"))
                 File.Delete("info.txt");
@@ -828,8 +828,7 @@ namespace kagv {
             AcsAlgorithm.ShowDialog();
         }
 
-        private void importImageLayoutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+        private void importImageLayoutToolStripMenuItem_Click(object sender, EventArgs e) {
             ImportImage();
             menuPanel.Enabled = true;
         }
@@ -840,8 +839,8 @@ namespace kagv {
         }
 
         private void main_form_Click(object sender, EventArgs e) {
-            if (importedImageFile == null) MessageBox.Show("Did you import a Google Maps layout?\r\nPlease select Grid/Implement Google Maps to create an image layout","",MessageBoxButtons.OK,MessageBoxIcon.Question);
+            if (importedImageFile == null) MessageBox.Show("Did you import a Google Maps layout?\r\nPlease select Grid/Implement Google Maps to create an image layout", "", MessageBoxButtons.OK, MessageBoxIcon.Question);
         }
     }
-    
+
 }

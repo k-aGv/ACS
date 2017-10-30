@@ -1,6 +1,5 @@
 ﻿
-namespace GMap.NET.Projections
-{
+namespace GMap.NET.Projections {
 #if OLD_PERGO
    using System;
 

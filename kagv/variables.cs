@@ -37,7 +37,7 @@ namespace kagv {
         //not a Load = 2
         //Marked by an AGV Load = 3
         //Temporarily trapped Load = 4
-        int[,] isLoad; 
+        int[,] isLoad;
 
         BoxType[,] importmap;
 
@@ -59,10 +59,10 @@ namespace kagv {
         GridBox m_lastBoxSelect;
         BoxType m_lastBoxType = new BoxType();
         ToolTip tp;
-       
+
         bool holdCTRL;
         bool use_Halt = false;
-        bool overImage=false;
+        bool overImage = false;
         bool imported;
         bool beforeStart = true;
         bool calibrated = false;//flag checking if current point is correctly callibrated in the middle of the rectangle
@@ -74,12 +74,12 @@ namespace kagv {
         bool atLeastOneObstacle = false;
         bool ifNoObstacles = false;
         bool never = false;
-       
+
         Color selectedColor = Color.DarkGray;
-        
+
         Image importedLayout = null;
         Image importedImageFile;
-        
+
 
 
     }

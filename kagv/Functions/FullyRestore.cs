@@ -28,7 +28,7 @@ using System.Linq;
 
 namespace kagv {
 
-    public partial class main_form  {
+    public partial class main_form {
 
 
         //function that resets all of the used objects so they are ready for reuse, preventing memory leaks

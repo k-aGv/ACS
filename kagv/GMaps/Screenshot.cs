@@ -75,7 +75,7 @@ namespace kagv {
         Graphics gfx;
         void bg_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
             if (!e.Cancelled) {
-                if (e.Error != null) 
+                if (e.Error != null)
                     MessageBox.Show("Error:" + e.Error.ToString(), "GMap.NET", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
@@ -207,7 +207,7 @@ namespace kagv {
 
 
         private void btn_save_Click(object sender, EventArgs e) {
-            DialogResult save =  MessageBox.Show("Save?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult save = MessageBox.Show("Save?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (save == DialogResult.No) return;
 
             RectLatLng? area = null; //abstract structure
@@ -234,7 +234,7 @@ namespace kagv {
                 bg.RunWorkerAsync(new MapInfo(area.Value, (int)nud_zoom.Value, gmap.mymap.MapProvider, false, false));
                 gmap.mymap.Refresh();
             }
-            
+
         }
 
         private void btn_cancel_Click(object sender, EventArgs e) {

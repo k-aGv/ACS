@@ -37,11 +37,11 @@ namespace kagv {
             }
 
             int BoardersWidth = 2 * SystemInformation.Border3DSize.Width;
-            Width = ((Globals._WidthBlocks ) * Globals._BlockSide) - BoardersWidth;
-            Height = (Globals._HeightBlocks ) * Globals._BlockSide  ;
+            Width = ((Globals._WidthBlocks) * Globals._BlockSide) - BoardersWidth;
+            Height = (Globals._HeightBlocks) * Globals._BlockSide;
             Size = new Size(Width, Height + Globals._BottomBarOffset);
 
-            
+
 
             MaximizeBox = false;
             FormBorderStyle = FormBorderStyle.FixedSingle;

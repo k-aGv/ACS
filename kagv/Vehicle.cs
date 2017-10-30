@@ -103,7 +103,7 @@ namespace kagv {
         /// <returns></returns>
         public Point GetMarkedLoad() {
             Point _p = new Point(
-                (MarkedLoad.X * Globals._BlockSide) ,
+                (MarkedLoad.X * Globals._BlockSide),
                 (MarkedLoad.Y * Globals._BlockSide) + Globals._TopBarOffset
                 );
             return _p;
