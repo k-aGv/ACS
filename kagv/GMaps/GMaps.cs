@@ -66,7 +66,7 @@ namespace kagv {
             int titleHeight = screenRectangle.Top - Top;
 
             mymap.Width = gb_settings.Location.X - margin;
-            mymap.Height = Size.Height - margin - titleHeight - (2 * label1.Height);
+            mymap.Height = Size.Height - margin - titleHeight - (2 * label1.Height) - ms_Settings.Height;
             mymap.MapProvider = GMap.NET.MapProviders.GoogleMapProvider.Instance;//using it as FULL reference to have the complete list of providers
             GMaps.Instance.Mode = AccessMode.ServerOnly;
 
@@ -91,9 +91,9 @@ namespace kagv {
             nud_opacity.Value = 33;
 
             //resize GB ...just A E S T H I T I C 
-            gb_settings.Size = new Size(gb_settings.Size.Width, mymap.Size.Height);
+            gb_settings.Size = new Size(gb_settings.Size.Width, mymap.Height);
             //set the label to the bottom
-            label1.Location = new Point(10, mymap.Location.X + mymap.Size.Height + 5);
+            label1.Location = new Point(10,  mymap.Location.Y + mymap.Height + 1 );
         }
 
 
@@ -104,12 +104,7 @@ namespace kagv {
         }
 
         private void btn_marker_Click(object sender, EventArgs e) {
-            if (btn_rec.Enabled) {
-                btn_rec.Enabled = false;
-            }
-            Screenshot st = new Screenshot(this);
-            st.Owner = this;
-            st.Show();
+          
         }
 
         private void button1_Click(object sender, EventArgs e) {
@@ -201,8 +196,17 @@ namespace kagv {
         private void btn_refresh_Click(object sender, EventArgs e) {
            
             mymap.Refresh();
-            if (!btn_rec.Enabled) btn_rec.Enabled = true;
+            if (!getScreenShotToolStripMenuItem.Enabled) getScreenShotToolStripMenuItem.Enabled = true;
             
+        }
+
+        private void getScreenShotToolStripMenuItem_Click(object sender, EventArgs e) {
+            if (getScreenShotToolStripMenuItem.Enabled) {
+                getScreenShotToolStripMenuItem.Enabled = false;
+            }
+            Screenshot st = new Screenshot(this);
+            st.Owner = this;
+            st.Show();
         }
     }
 }

@@ -42,15 +42,18 @@
             this.label2 = new System.Windows.Forms.Label();
             this.gb_provider = new System.Windows.Forms.GroupBox();
             this.cb_provider = new System.Windows.Forms.ComboBox();
-            this.btn_rec = new System.Windows.Forms.Button();
             this.sfd = new System.Windows.Forms.SaveFileDialog();
             this.label1 = new System.Windows.Forms.Label();
             this.cd = new System.Windows.Forms.ColorDialog();
+            this.ms_Settings = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.getScreenShotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gb_settings.SuspendLayout();
             this.gb_preferences.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nud_opacity)).BeginInit();
             this.gb_coords.SuspendLayout();
             this.gb_provider.SuspendLayout();
+            this.ms_Settings.SuspendLayout();
             this.SuspendLayout();
             // 
             // refreshURL
@@ -66,7 +69,7 @@
             this.mymap.GrayScaleMode = false;
             this.mymap.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
             this.mymap.LevelsKeepInMemmory = 5;
-            this.mymap.Location = new System.Drawing.Point(12, 12);
+            this.mymap.Location = new System.Drawing.Point(12, 27);
             this.mymap.MarkersEnabled = true;
             this.mymap.MaxZoom = 2;
             this.mymap.MinZoom = 2;
@@ -79,7 +82,7 @@
             this.mymap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
             this.mymap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
             this.mymap.ShowTileGridLines = false;
-            this.mymap.Size = new System.Drawing.Size(877, 624);
+            this.mymap.Size = new System.Drawing.Size(877, 609);
             this.mymap.TabIndex = 3;
             this.mymap.Zoom = 0D;
             this.mymap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.mymap_MouseClick);
@@ -90,7 +93,6 @@
             this.gb_settings.Controls.Add(this.gb_preferences);
             this.gb_settings.Controls.Add(this.gb_coords);
             this.gb_settings.Controls.Add(this.gb_provider);
-            this.gb_settings.Controls.Add(this.btn_rec);
             this.gb_settings.Location = new System.Drawing.Point(895, 12);
             this.gb_settings.Name = "gb_settings";
             this.gb_settings.Size = new System.Drawing.Size(167, 562);
@@ -105,7 +107,7 @@
             this.gb_preferences.Controls.Add(this.btn_color);
             this.gb_preferences.Controls.Add(this.cb_wheel);
             this.gb_preferences.Controls.Add(this.cb_cross);
-            this.gb_preferences.Location = new System.Drawing.Point(6, 423);
+            this.gb_preferences.Location = new System.Drawing.Point(7, 364);
             this.gb_preferences.Name = "gb_preferences";
             this.gb_preferences.Size = new System.Drawing.Size(148, 125);
             this.gb_preferences.TabIndex = 7;
@@ -172,7 +174,7 @@
             this.gb_coords.Controls.Add(this.label4);
             this.gb_coords.Controls.Add(this.label3);
             this.gb_coords.Controls.Add(this.label2);
-            this.gb_coords.Location = new System.Drawing.Point(6, 141);
+            this.gb_coords.Location = new System.Drawing.Point(7, 82);
             this.gb_coords.Name = "gb_coords";
             this.gb_coords.Size = new System.Drawing.Size(148, 276);
             this.gb_coords.TabIndex = 6;
@@ -227,7 +229,7 @@
             // gb_provider
             // 
             this.gb_provider.Controls.Add(this.cb_provider);
-            this.gb_provider.Location = new System.Drawing.Point(6, 78);
+            this.gb_provider.Location = new System.Drawing.Point(7, 19);
             this.gb_provider.Name = "gb_provider";
             this.gb_provider.Size = new System.Drawing.Size(154, 57);
             this.gb_provider.TabIndex = 5;
@@ -243,16 +245,6 @@
             this.cb_provider.TabIndex = 4;
             this.cb_provider.SelectedIndexChanged += new System.EventHandler(this.cb_provider_SelectedIndexChanged);
             // 
-            // btn_rec
-            // 
-            this.btn_rec.Location = new System.Drawing.Point(6, 19);
-            this.btn_rec.Name = "btn_rec";
-            this.btn_rec.Size = new System.Drawing.Size(154, 53);
-            this.btn_rec.TabIndex = 3;
-            this.btn_rec.Text = "Mark rectangle";
-            this.btn_rec.UseVisualStyleBackColor = true;
-            this.btn_rec.Click += new System.EventHandler(this.btn_marker_Click);
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -262,6 +254,31 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "label1";
             // 
+            // ms_Settings
+            // 
+            this.ms_Settings.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem});
+            this.ms_Settings.Location = new System.Drawing.Point(0, 0);
+            this.ms_Settings.Name = "ms_Settings";
+            this.ms_Settings.Size = new System.Drawing.Size(1074, 24);
+            this.ms_Settings.TabIndex = 7;
+            this.ms_Settings.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.getScreenShotToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
+            this.fileToolStripMenuItem.Text = "Map";
+            // 
+            // getScreenShotToolStripMenuItem
+            // 
+            this.getScreenShotToolStripMenuItem.Name = "getScreenShotToolStripMenuItem";
+            this.getScreenShotToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.getScreenShotToolStripMenuItem.Text = "Get Screenshot";
+            this.getScreenShotToolStripMenuItem.Click += new System.EventHandler(this.getScreenShotToolStripMenuItem_Click);
+            // 
             // gmaps
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -270,7 +287,9 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.gb_settings);
             this.Controls.Add(this.mymap);
+            this.Controls.Add(this.ms_Settings);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.ms_Settings;
             this.MaximizeBox = false;
             this.Name = "gmaps";
             this.Text = "Google Maps implementation";
@@ -282,6 +301,8 @@
             this.gb_coords.ResumeLayout(false);
             this.gb_coords.PerformLayout();
             this.gb_provider.ResumeLayout(false);
+            this.ms_Settings.ResumeLayout(false);
+            this.ms_Settings.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -293,7 +314,6 @@
         public GMap.NET.WindowsForms.GMapControl mymap;//BE CAREFUL WITH THIS ONE
         private System.Windows.Forms.GroupBox gb_settings;
         private System.Windows.Forms.CheckBox cb_cross;
-        private System.Windows.Forms.Button btn_rec;
         private System.Windows.Forms.SaveFileDialog sfd;
         private System.Windows.Forms.GroupBox gb_provider;
         private System.Windows.Forms.ComboBox cb_provider;
@@ -310,5 +330,8 @@
         private System.Windows.Forms.ColorDialog cd;
         private System.Windows.Forms.NumericUpDown nud_opacity;
         private System.Windows.Forms.Label lb_opacity;
+        private System.Windows.Forms.MenuStrip ms_Settings;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem getScreenShotToolStripMenuItem;
     }
 }
