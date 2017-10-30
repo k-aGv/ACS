@@ -118,8 +118,8 @@ namespace kagv {
         }
 
         private void mymap_MouseClick(object sender, MouseEventArgs e) {
-            if (e.Button == MouseButtons.Right) {
 
+            if (e.Button == MouseButtons.Right) {
                 double remoteLat = mymap.FromLocalToLatLng(e.X, e.Y).Lat;
                 double remoteLng = mymap.FromLocalToLatLng(e.X, e.Y).Lng;
                 mymap.RoutesEnabled = true;
@@ -133,11 +133,9 @@ namespace kagv {
                 GMapOverlay overlay = new GMapOverlay("My Overlay");
                 overlay.Routes.Add(maproute);
                 mymap.Overlays.Add(overlay);
+                mymap.UpdateRouteLocalPosition(maproute);
+                mymap.Invalidate();
                 double dist = maproute.Distance;
-
-                //This has to be fixed
-                mymap.Zoom += 1;
-                mymap.Zoom -= 1;
 
                 MessageBox.Show(dist + " kms");
             }
