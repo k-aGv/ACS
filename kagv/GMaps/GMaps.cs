@@ -127,17 +127,23 @@ namespace kagv {
                 PointLatLng initial = new PointLatLng(mymap.Position.Lat, mymap.Position.Lng);
                 PointLatLng final = new PointLatLng(remoteLat, remoteLng);
 
-                GDirections dir;
-                var route = GMap.NET.MapProviders.GMapProviders.GoogleMap.GetDirections(out dir, initial, final, false, false, true, false, false);
-                GMapRoute maproute = new GMapRoute(dir.Route, "My route");
-                GMapOverlay overlay = new GMapOverlay("My Overlay");
-                overlay.Routes.Add(maproute);
-                mymap.Overlays.Add(overlay);
-                mymap.UpdateRouteLocalPosition(maproute);
-                mymap.Invalidate();
-                double dist = maproute.Distance;
-
-                MessageBox.Show(dist + " kms");
+                GDirections dir=null;
+                var route= new DirectionsStatusCode();
+                try {
+                    route = GMap.NET.MapProviders.GMapProviders.GoogleMap.GetDirections(out dir, initial, final, false, false, true, false, false);
+                    GMapRoute maproute = new GMapRoute(dir.Route, "My route");
+                    GMapOverlay overlay = new GMapOverlay("My Overlay");
+                    overlay.Routes.Add(maproute);
+                    mymap.Overlays.Add(overlay);
+                    mymap.UpdateRouteLocalPosition(maproute);
+                    mymap.Invalidate();
+                    double dist = maproute.Distance;
+                    MessageBox.Show(dist + " kms");
+                } catch {
+                    MessageBox.Show("Cannot create route to an unwalkable position.");
+                    return;
+                }
+                
             }
         }
 
