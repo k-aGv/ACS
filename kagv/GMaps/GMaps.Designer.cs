@@ -42,6 +42,7 @@
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showCrossToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reversedWheelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.button1 = new System.Windows.Forms.Button();
             this.gb_settings.SuspendLayout();
             this.gb_coords.SuspendLayout();
             this.gb_provider.SuspendLayout();
@@ -61,6 +62,7 @@
             this.mymap.MarkersEnabled = true;
             this.mymap.MaxZoom = 2;
             this.mymap.MinZoom = 2;
+            this.mymap.MouseWheelZoomEnabled = true;
             this.mymap.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
             this.mymap.Name = "mymap";
             this.mymap.NegativeMode = false;
@@ -78,6 +80,7 @@
             // 
             // gb_settings
             // 
+            this.gb_settings.Controls.Add(this.button1);
             this.gb_settings.Controls.Add(this.gb_coords);
             this.gb_settings.Controls.Add(this.gb_provider);
             this.gb_settings.Location = new System.Drawing.Point(895, 12);
@@ -225,6 +228,16 @@
             this.reversedWheelToolStripMenuItem.Text = "Reversed Wheel";
             this.reversedWheelToolStripMenuItem.Click += new System.EventHandler(this.reversedWheelToolStripMenuItem_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(6, 364);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(149, 23);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "Calculate all lengths";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // gmaps
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -270,5 +283,6 @@
         private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showCrossToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reversedWheelToolStripMenuItem;
+        private System.Windows.Forms.Button button1;
     }
 }

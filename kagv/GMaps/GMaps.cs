@@ -191,5 +191,32 @@ namespace kagv {
             mymap.InvertedMouseWheelZooming = reversedWheelToolStripMenuItem.Checked;
             mymap.Refresh();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Lengths = new List<List<double>>();
+
+            for (int i = 0; i < Destinations.Count; i++)
+            {
+                Lengths.Add(new List<double>());
+
+                for (int j = 0; j < Destinations.Count; j++)
+                {
+                    GMap.NET.MapProviders.GMapProviders.GoogleMap.GetDirections(out GDirections _d, Destinations[i], Destinations[j], false, false, false, false, false);
+                    try
+                    {
+                        GMapRoute gMapRoute = new GMapRoute(_d.Route, "e");
+                        GMapOverlay overlay = new GMapOverlay();
+                        overlay.Routes.Add(gMapRoute);
+                        mymap.Overlays.Add(overlay);
+
+                        Lengths[i].Add(gMapRoute.Distance);
+
+                    }
+                    catch { }
+
+                }
+            }
+        }
     }
 }
