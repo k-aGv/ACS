@@ -591,6 +591,8 @@ namespace kagv {
             else {
                 stopped = true;
                 pb.ResetText();
+                tb_length.Text = "";
+                tb_error.Text = "";
                 Size = new Size(_width, _heigth);
                 ACS.Enabled = true;
                 calc_stop_BTN.Enabled = false;
