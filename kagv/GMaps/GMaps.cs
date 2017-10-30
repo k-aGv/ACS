@@ -24,6 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 using GMap.NET;
 using GMap.NET.WindowsForms;
@@ -36,7 +37,8 @@ namespace kagv {
         public gmaps() {
             InitializeComponent();
         }
-
+        List<PointLatLng> Destinations = new List<PointLatLng>();
+        List<List<double>> Lengths = new List<List<double>>();
         public void ReloadMap() {
             gmaps_Load(new object(), new EventArgs());
         }
@@ -119,6 +121,24 @@ namespace kagv {
                     MessageBox.Show("Cannot create route to an unwalkable position.");
                     return;
                 }
+
+            }
+            else if (e.Button==MouseButtons.Middle)
+            {
+                double remoteLat = mymap.FromLocalToLatLng(e.X, e.Y).Lat;
+                double remoteLng = mymap.FromLocalToLatLng(e.X, e.Y).Lng;
+                mymap.RoutesEnabled = true;
+
+                PointLatLng initial = new PointLatLng(mymap.Position.Lat, mymap.Position.Lng);
+                PointLatLng final = new PointLatLng(remoteLat, remoteLng);
+
+                Destinations.Add(final);
+
+                GMapOverlay overlay = new GMapOverlay("My Overlay");
+                GMapMarker marker = new GMap.NET.WindowsForms.Markers.GMarkerGoogle(final, GMap.NET.WindowsForms.Markers.GMarkerGoogleType.arrow);
+                overlay.Markers.Add(marker);
+
+                mymap.Overlays.Add(overlay);
 
             }
         }
