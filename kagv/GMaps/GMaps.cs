@@ -118,7 +118,29 @@ namespace kagv {
         }
 
         private void mymap_MouseClick(object sender, MouseEventArgs e) {
+            if (e.Button == MouseButtons.Right) {
 
+                double remoteLat = mymap.FromLocalToLatLng(e.X, e.Y).Lat;
+                double remoteLng = mymap.FromLocalToLatLng(e.X, e.Y).Lng;
+                mymap.RoutesEnabled = true;
+
+                PointLatLng initial = new PointLatLng(mymap.Position.Lat, mymap.Position.Lng);
+                PointLatLng final = new PointLatLng(remoteLat, remoteLng);
+
+                GDirections dir;
+                var route = GMap.NET.MapProviders.GMapProviders.GoogleMap.GetDirections(out dir, initial, final, false, false, true, false, false);
+                GMapRoute maproute = new GMapRoute(dir.Route, "My route");
+                GMapOverlay overlay = new GMapOverlay("My Overlay");
+                overlay.Routes.Add(maproute);
+                mymap.Overlays.Add(overlay);
+                double dist = maproute.Distance;
+
+                //This has to be fixed
+                mymap.Zoom += 1;
+                mymap.Zoom -= 1;
+
+                MessageBox.Show(dist + " kms");
+            }
         }
 
         private void cb_provider_SelectedIndexChanged(object sender, EventArgs e) {
