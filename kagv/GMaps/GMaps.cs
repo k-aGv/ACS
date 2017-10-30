@@ -133,16 +133,19 @@ namespace kagv {
         }
 
         private void mymap_MouseMove(object sender, MouseEventArgs e) {
-            label1.Text = mymap.ViewArea + "";
-
-            label2.Text = "Lat:\r\n" + mymap.ViewArea.Lat + "";
-            label3.Text = "Lng:\r\n" + mymap.ViewArea.Lng + "";
-            label4.Text = "WidthLng:\r\n" + mymap.ViewArea.WidthLng + "";
-            label5.Text = "HeightLat:\r\n" + mymap.ViewArea.HeightLat + "";
-
+            //latitude = width
+            //longitude = height
             //THERE IS A FUNCTION mymap.FromLatLngToLocal :D :D :D
             double remoteLat = mymap.FromLocalToLatLng(e.X, e.Y).Lat;
             double remoteLng = mymap.FromLocalToLatLng(e.X, e.Y).Lng;
+
+            label1.Text = mymap.ViewArea + "";
+
+            label2.Text = "Lat:\r\n" + mymap.Position.Lat + "";
+            label3.Text = "Lng:\r\n" + mymap.Position.Lng + "";
+            label4.Text = "WidthLng:\r\n" + mymap.ViewArea.WidthLng + "";
+            label5.Text = "HeightLat:\r\n" + mymap.ViewArea.HeightLat + "";
+
             label6.Text = "Current coordinates:\r\n" + "X/Lat:" + remoteLat + "\r\n" + "Y/Lng:" + remoteLng;
         }
 
