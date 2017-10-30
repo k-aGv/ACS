@@ -218,5 +218,25 @@ namespace kagv {
                 }
             }
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            GMapOverlay overlay = new GMapOverlay();
+            for (int i = 0; i < Destinations.Count - 1; i++)
+            {
+                try
+                {
+                    GMap.NET.MapProviders.GMapProviders.GoogleMap.GetDirections(out GDirections _d, Destinations[i], Destinations[i + 1], false, false, false, false, false);
+                    GMapRoute route = new GMapRoute(_d.Route, "route");
+                    mymap.UpdateRouteLocalPosition(route);
+                    overlay.Routes.Add(route);
+
+                }
+                catch { }
+
+
+                mymap.Overlays.Add(overlay);
+            }
+        }
     }
 }

@@ -26,6 +26,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(gmaps));
             this.mymap = new GMap.NET.WindowsForms.GMapControl();
             this.gb_settings = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.gb_coords = new System.Windows.Forms.GroupBox();
             this.lb_coords = new System.Windows.Forms.Label();
             this.lb_heightlat = new System.Windows.Forms.Label();
@@ -42,7 +43,7 @@
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showCrossToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reversedWheelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.gb_settings.SuspendLayout();
             this.gb_coords.SuspendLayout();
             this.gb_provider.SuspendLayout();
@@ -80,6 +81,7 @@
             // 
             // gb_settings
             // 
+            this.gb_settings.Controls.Add(this.button2);
             this.gb_settings.Controls.Add(this.button1);
             this.gb_settings.Controls.Add(this.gb_coords);
             this.gb_settings.Controls.Add(this.gb_provider);
@@ -89,6 +91,16 @@
             this.gb_settings.TabIndex = 4;
             this.gb_settings.TabStop = false;
             this.gb_settings.Text = "Settings";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(6, 364);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(149, 23);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "Calculate all lengths";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // gb_coords
             // 
@@ -228,15 +240,15 @@
             this.reversedWheelToolStripMenuItem.Text = "Reversed Wheel";
             this.reversedWheelToolStripMenuItem.Click += new System.EventHandler(this.reversedWheelToolStripMenuItem_Click);
             // 
-            // button1
+            // button2
             // 
-            this.button1.Location = new System.Drawing.Point(6, 364);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(149, 23);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Calculate all lengths";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button2.Location = new System.Drawing.Point(6, 393);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(149, 23);
+            this.button2.TabIndex = 8;
+            this.button2.Text = "Create route from markers";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // gmaps
             // 
@@ -284,5 +296,6 @@
         private System.Windows.Forms.ToolStripMenuItem showCrossToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reversedWheelToolStripMenuItem;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
     }
 }
