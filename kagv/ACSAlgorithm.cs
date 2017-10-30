@@ -408,6 +408,7 @@ namespace kagv {
                 results[Iteration] = BestLength;
                 Iteration = Iteration + 1;
 
+                tb_length.Text = Convert.ToString(BestLength);
                 pb_calculated.Text = "Current progress... " + ((100 * Iteration) / NumItsMax) + "%\nIterations occured: " + Iteration + "/" + NumItsMax;
                 pb.PerformStep();
                 Application.DoEvents();
@@ -426,7 +427,7 @@ namespace kagv {
                 chart1.Series["Trip"].Points.AddXY(Customers[BestTour[i], 1], Customers[BestTour[i], 2]);
 
             }
-            tb_length.Text = Convert.ToString(BestLength);
+            
             Application.DoEvents();
             if ((BestTour.Length - 1) != BestTour.Distinct().Count()) {
                 tb_error.Text = Convert.ToString("Dublicates found");
