@@ -23,7 +23,6 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(gmaps));
             this.mymap = new GMap.NET.WindowsForms.GMapControl();
             this.gb_settings = new System.Windows.Forms.GroupBox();
@@ -43,7 +42,6 @@
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showCrossToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reversedWheelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.gb_settings.SuspendLayout();
             this.gb_coords.SuspendLayout();
             this.gb_provider.SuspendLayout();
@@ -227,11 +225,6 @@
             this.reversedWheelToolStripMenuItem.Text = "Reversed Wheel";
             this.reversedWheelToolStripMenuItem.Click += new System.EventHandler(this.reversedWheelToolStripMenuItem_Click);
             // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
-            // 
             // gmaps
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -274,7 +267,6 @@
         private System.Windows.Forms.MenuStrip ms_Settings;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem getScreenShotToolStripMenuItem;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showCrossToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reversedWheelToolStripMenuItem;

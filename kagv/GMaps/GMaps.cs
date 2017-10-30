@@ -93,21 +93,6 @@ namespace kagv {
             label1.Location = new Point(10,  mymap.Location.Y + mymap.Height + 1 );
         }
 
-
-        
-        private void cb_cross_CheckedChanged(object sender, EventArgs e) {
-           
-        }
-
-        private void btn_marker_Click(object sender, EventArgs e) {
-          
-        }
-
-        private void button1_Click(object sender, EventArgs e) {
-            mymap.Zoom += 1;
-            mymap.Refresh();
-        }
-
         private void mymap_MouseClick(object sender, MouseEventArgs e) {
 
             if (e.Button == MouseButtons.Right) {
@@ -164,13 +149,6 @@ namespace kagv {
             lb_heightlat.Text = "HeightLat:\r\n" + mymap.ViewArea.HeightLat + "";
 
             lb_coords.Text = "Current coordinates:\r\n" + "X/Lat:" + remoteLat + "\r\n" + "Y/Lng:" + remoteLng;
-        }
-
-        private void btn_refresh_Click(object sender, EventArgs e) {
-           
-            mymap.Refresh();
-            if (!getScreenShotToolStripMenuItem.Enabled) getScreenShotToolStripMenuItem.Enabled = true;
-            
         }
 
         private void getScreenShotToolStripMenuItem_Click(object sender, EventArgs e) {
