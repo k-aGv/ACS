@@ -292,7 +292,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
-    <EmbeddedResource Include="Resources\logo.png" />
+    <EmbeddedResource Include="Resources\LASCM.png" />
+    <EmbeddedResource Include="Resources\autom.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

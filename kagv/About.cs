@@ -46,14 +46,14 @@ namespace kagv {
 
         private void About_Load(object sender, EventArgs e) {
             this.CenterToScreen();
-            pb.Image = _getEmbedResource("logo.png");
+            pb.Image = _getEmbedResource("LASCM.png");
             pb_divider.Image = _getEmbedResource("divider.png");
             pb_divider2.Image = _getEmbedResource("divider.png");
 
         }
 
         private void linkLabel3_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e) {
-            System.Diagnostics.Process.Start("http://www.autom.teithe.gr");
+            System.Diagnostics.Process.Start("http://lascm.meng.auth.gr/");
         }
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
