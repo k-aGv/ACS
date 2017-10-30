@@ -54,7 +54,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.label7.Location = new System.Drawing.Point(2, 309);
+            this.label7.Location = new System.Drawing.Point(2, 327);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(131, 15);
             this.label7.TabIndex = 43;
@@ -64,7 +64,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.label9.Location = new System.Drawing.Point(3, 324);
+            this.label9.Location = new System.Drawing.Point(3, 342);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(100, 15);
             this.label9.TabIndex = 42;
@@ -74,17 +74,17 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.label4.Location = new System.Drawing.Point(2, 294);
+            this.label4.Location = new System.Drawing.Point(2, 312);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(130, 15);
+            this.label4.Size = new System.Drawing.Size(132, 15);
             this.label4.TabIndex = 41;
-            this.label4.Text = "Υπεύθυνοι ανάπτυξης:";
+            this.label4.Text = "Υπεύθυνοι framework:";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.label1.Location = new System.Drawing.Point(1, 171);
+            this.label1.Location = new System.Drawing.Point(1, 189);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(273, 15);
             this.label1.TabIndex = 40;
@@ -95,7 +95,7 @@
             this.linkLabel3.AutoSize = true;
             this.linkLabel3.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
             this.linkLabel3.LinkArea = new System.Windows.Forms.LinkArea(50, 21);
-            this.linkLabel3.Location = new System.Drawing.Point(93, 136);
+            this.linkLabel3.Location = new System.Drawing.Point(87, 153);
             this.linkLabel3.Name = "linkLabel3";
             this.linkLabel3.Size = new System.Drawing.Size(207, 35);
             this.linkLabel3.TabIndex = 39;
@@ -111,17 +111,18 @@
             this.linkLabel1.LinkArea = new System.Windows.Forms.LinkArea(21, 0);
             this.linkLabel1.Location = new System.Drawing.Point(4, 96);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(384, 40);
+            this.linkLabel1.Size = new System.Drawing.Size(384, 57);
             this.linkLabel1.TabIndex = 38;
-            this.linkLabel1.Text = "Laboratory of Statistics and Quantitative Analysis Methods \r\n     (Logistics and " +
-    "Supply Chain Management) (LASCM)";
+            this.linkLabel1.Text = "Laboratory of Statistics and Quantitative Analysis Methods \r\n            (Logisti" +
+    "cs and Supply Chain Management) \r\n                                         (LASC" +
+    "M)";
             this.linkLabel1.UseCompatibleTextRendering = true;
             // 
             // pb
             // 
             this.pb.Location = new System.Drawing.Point(4, 3);
             this.pb.Name = "pb";
-            this.pb.Size = new System.Drawing.Size(385, 60);
+            this.pb.Size = new System.Drawing.Size(376, 60);
             this.pb.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pb.TabIndex = 37;
             this.pb.TabStop = false;
@@ -129,7 +130,7 @@
             // lb_source
             // 
             this.lb_source.AutoSize = true;
-            this.lb_source.Location = new System.Drawing.Point(1, 379);
+            this.lb_source.Location = new System.Drawing.Point(1, 397);
             this.lb_source.Name = "lb_source";
             this.lb_source.Size = new System.Drawing.Size(120, 13);
             this.lb_source.TabIndex = 46;
@@ -138,7 +139,7 @@
             // linkLabel2
             // 
             this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Location = new System.Drawing.Point(127, 379);
+            this.linkLabel2.Location = new System.Drawing.Point(127, 397);
             this.linkLabel2.Name = "linkLabel2";
             this.linkLabel2.Size = new System.Drawing.Size(120, 13);
             this.linkLabel2.TabIndex = 47;
@@ -148,7 +149,7 @@
             // 
             // pb_divider
             // 
-            this.pb_divider.Location = new System.Drawing.Point(5, 352);
+            this.pb_divider.Location = new System.Drawing.Point(5, 370);
             this.pb_divider.Name = "pb_divider";
             this.pb_divider.Size = new System.Drawing.Size(376, 24);
             this.pb_divider.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -168,7 +169,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.label3.Location = new System.Drawing.Point(1, 251);
+            this.label3.Location = new System.Drawing.Point(1, 269);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(106, 15);
             this.label3.TabIndex = 51;
@@ -178,7 +179,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.label5.Location = new System.Drawing.Point(1, 236);
+            this.label5.Location = new System.Drawing.Point(1, 254);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(132, 15);
             this.label5.TabIndex = 50;
@@ -188,27 +189,27 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.label2.Location = new System.Drawing.Point(1, 195);
+            this.label2.Location = new System.Drawing.Point(1, 213);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(161, 15);
+            this.label2.Size = new System.Drawing.Size(165, 15);
             this.label2.TabIndex = 52;
-            this.label2.Text = "Υπεύθυνος αλγορίθμου ACS";
+            this.label2.Text = "Υπεύθυνος αλγορίθμου ACS:";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.label6.Location = new System.Drawing.Point(1, 210);
+            this.label6.Location = new System.Drawing.Point(1, 228);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(172, 15);
+            this.label6.Size = new System.Drawing.Size(132, 15);
             this.label6.TabIndex = 53;
-            this.label6.Text = "Πουλημένος Δημήτριος - ΑΠΘ ";
+            this.label6.Text = "Πουλημένος Δημήτριος";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.label8.Location = new System.Drawing.Point(1, 266);
+            this.label8.Location = new System.Drawing.Point(1, 284);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(120, 15);
             this.label8.TabIndex = 54;
@@ -218,7 +219,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(392, 409);
+            this.ClientSize = new System.Drawing.Size(382, 413);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label2);
