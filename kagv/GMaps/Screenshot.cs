@@ -250,6 +250,10 @@ namespace kagv {
 
         private void Screenshot_Load(object sender, EventArgs e) {
 
+            nud_opacity.Maximum = 255;
+            nud_opacity.Minimum = 0;
+            nud_opacity.Value = 33;
+
             cb_drawinfo.Checked = false;
             cb_drawscale.Checked = false;
             Location = gmap.Location;
@@ -257,6 +261,23 @@ namespace kagv {
             nud_zoom.Maximum = gmap.mymap.MaxZoom;
             nud_zoom.Minimum = gmap.mymap.MinZoom;
             nud_zoom.Value = Convert.ToDecimal(gmap.mymap.Zoom);
+        }
+
+        private void lb_opacity_Click(object sender, EventArgs e) {
+
+        }
+
+        private void nud_opacity_ValueChanged(object sender, EventArgs e) {
+            gmap.mymap.SelectedAreaFillColor = Color.FromArgb((int)nud_opacity.Value, gmap.mymap.SelectedAreaFillColor);
+            gmap.mymap.Refresh();
+        }
+
+        private void btn_color_Click(object sender, EventArgs e) {
+            if (cd.ShowDialog() == DialogResult.OK) {
+                gmap.mymap.SelectedAreaFillColor = Color.FromArgb((int)nud_opacity.Value, cd.Color);
+
+                gmap.mymap.Refresh();
+            }
         }
     }
 

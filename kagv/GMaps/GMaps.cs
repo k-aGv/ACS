@@ -29,7 +29,7 @@ using GMap.NET;
 using GMap.NET.WindowsForms;
 
 
-namespace kagv {
+namespace kagv { 
     public partial class gmaps : Form {
         internal readonly GMapOverlay myobjects = new GMapOverlay("objects");
 
@@ -57,8 +57,7 @@ namespace kagv {
 
             gb_settings.Location = new Point(Size.Width - gb_settings.Width - BoardersWidth - margin, gb_settings.Location.Y);
 
-            nud_opacity.Maximum = 255;
-            nud_opacity.Minimum = 0;
+           
 
             //map implementation
             //get title's bar size
@@ -82,14 +81,12 @@ namespace kagv {
             mymap.Overlays.Add(myobjects);
             mymap.DragButton = MouseButtons.Left;
             mymap.InvertedMouseWheelZooming = false;
-            cb_wheel.Checked = false;
-
+            
 
             //its not a joke ->
             //____________________________________________________________________opacity______________R___________________________G_______________________B
             mymap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
-            nud_opacity.Value = 33;
-
+           
             //resize GB ...just A E S T H I T I C 
             gb_settings.Size = new Size(gb_settings.Size.Width, mymap.Height);
             //set the label to the bottom
@@ -99,8 +96,7 @@ namespace kagv {
 
         
         private void cb_cross_CheckedChanged(object sender, EventArgs e) {
-            mymap.ShowCenter = cb_cross.Checked;
-            mymap.Refresh();
+           
         }
 
         private void btn_marker_Click(object sender, EventArgs e) {
@@ -170,29 +166,6 @@ namespace kagv {
             lb_coords.Text = "Current coordinates:\r\n" + "X/Lat:" + remoteLat + "\r\n" + "Y/Lng:" + remoteLng;
         }
 
-        private void cb_wheel_CheckedChanged(object sender, EventArgs e) {
-            mymap.InvertedMouseWheelZooming = cb_wheel.Checked;
-            mymap.Refresh();
-        }
-
-        private void btn_color_Click(object sender, EventArgs e) {
-            if (cd.ShowDialog() == DialogResult.OK) {
-                mymap.SelectedAreaFillColor = Color.FromArgb((int)nud_opacity.Value, cd.Color);
-
-                mymap.Refresh();
-            }
-        }
-
-        private void nud_opacity_ValueChanged(object sender, EventArgs e) {
-            mymap.SelectedAreaFillColor = Color.FromArgb((int)nud_opacity.Value, mymap.SelectedAreaFillColor);
-            mymap.Refresh();
-
-        }
-
-        private void refreshURL_Tick(object sender, EventArgs e) {
-
-        }
-
         private void btn_refresh_Click(object sender, EventArgs e) {
            
             mymap.Refresh();
@@ -207,6 +180,18 @@ namespace kagv {
             Screenshot st = new Screenshot(this);
             st.Owner = this;
             st.Show();
+        }
+
+        private void showCrossToolStripMenuItem_Click(object sender, EventArgs e) {
+            showCrossToolStripMenuItem.Checked = !showCrossToolStripMenuItem.Checked;
+            mymap.ShowCenter = showCrossToolStripMenuItem.Checked;
+            mymap.Refresh();
+        }
+
+        private void reversedWheelToolStripMenuItem_Click(object sender, EventArgs e) {
+            reversedWheelToolStripMenuItem.Checked = !reversedWheelToolStripMenuItem.Checked;
+            mymap.InvertedMouseWheelZooming = reversedWheelToolStripMenuItem.Checked;
+            mymap.Refresh();
         }
     }
 }
