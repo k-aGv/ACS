@@ -162,12 +162,12 @@ namespace kagv {
 
             label1.Text = mymap.ViewArea + "";
 
-            label2.Text = "Lat:\r\n" + mymap.Position.Lat + "";
-            label3.Text = "Lng:\r\n" + mymap.Position.Lng + "";
-            label4.Text = "WidthLng:\r\n" + mymap.ViewArea.WidthLng + "";
-            label5.Text = "HeightLat:\r\n" + mymap.ViewArea.HeightLat + "";
+            lb_lat.Text = "Lat:\r\n" + mymap.Position.Lat + "";
+            lb_lng.Text = "Lng:\r\n" + mymap.Position.Lng + "";
+            lb_widthlng.Text = "WidthLng:\r\n" + mymap.ViewArea.WidthLng + "";
+            lb_heightlat.Text = "HeightLat:\r\n" + mymap.ViewArea.HeightLat + "";
 
-            label6.Text = "Current coordinates:\r\n" + "X/Lat:" + remoteLat + "\r\n" + "Y/Lng:" + remoteLng;
+            lb_coords.Text = "Current coordinates:\r\n" + "X/Lat:" + remoteLat + "\r\n" + "Y/Lng:" + remoteLng;
         }
 
         private void cb_wheel_CheckedChanged(object sender, EventArgs e) {

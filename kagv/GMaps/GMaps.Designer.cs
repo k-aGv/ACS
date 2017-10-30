@@ -35,11 +35,11 @@
             this.cb_wheel = new System.Windows.Forms.CheckBox();
             this.cb_cross = new System.Windows.Forms.CheckBox();
             this.gb_coords = new System.Windows.Forms.GroupBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lb_coords = new System.Windows.Forms.Label();
+            this.lb_heightlat = new System.Windows.Forms.Label();
+            this.lb_widthlng = new System.Windows.Forms.Label();
+            this.lb_lng = new System.Windows.Forms.Label();
+            this.lb_lat = new System.Windows.Forms.Label();
             this.gb_provider = new System.Windows.Forms.GroupBox();
             this.cb_provider = new System.Windows.Forms.ComboBox();
             this.sfd = new System.Windows.Forms.SaveFileDialog();
@@ -169,11 +169,11 @@
             // 
             // gb_coords
             // 
-            this.gb_coords.Controls.Add(this.label6);
-            this.gb_coords.Controls.Add(this.label5);
-            this.gb_coords.Controls.Add(this.label4);
-            this.gb_coords.Controls.Add(this.label3);
-            this.gb_coords.Controls.Add(this.label2);
+            this.gb_coords.Controls.Add(this.lb_coords);
+            this.gb_coords.Controls.Add(this.lb_heightlat);
+            this.gb_coords.Controls.Add(this.lb_widthlng);
+            this.gb_coords.Controls.Add(this.lb_lng);
+            this.gb_coords.Controls.Add(this.lb_lat);
             this.gb_coords.Location = new System.Drawing.Point(7, 82);
             this.gb_coords.Name = "gb_coords";
             this.gb_coords.Size = new System.Drawing.Size(148, 276);
@@ -181,50 +181,50 @@
             this.gb_coords.TabStop = false;
             this.gb_coords.Text = "Coordinates";
             // 
-            // label6
+            // lb_coords
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 219);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(35, 13);
-            this.label6.TabIndex = 7;
-            this.label6.Text = "label6";
+            this.lb_coords.AutoSize = true;
+            this.lb_coords.Location = new System.Drawing.Point(6, 219);
+            this.lb_coords.Name = "lb_coords";
+            this.lb_coords.Size = new System.Drawing.Size(103, 13);
+            this.lb_coords.TabIndex = 7;
+            this.lb_coords.Text = "Current Coordinates:";
             // 
-            // label5
+            // lb_heightlat
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 168);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(35, 13);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "label2";
+            this.lb_heightlat.AutoSize = true;
+            this.lb_heightlat.Location = new System.Drawing.Point(6, 168);
+            this.lb_heightlat.Name = "lb_heightlat";
+            this.lb_heightlat.Size = new System.Drawing.Size(56, 13);
+            this.lb_heightlat.TabIndex = 0;
+            this.lb_heightlat.Text = "HeightLat:";
             // 
-            // label4
+            // lb_widthlng
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 124);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(35, 13);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "label2";
+            this.lb_widthlng.AutoSize = true;
+            this.lb_widthlng.Location = new System.Drawing.Point(6, 124);
+            this.lb_widthlng.Name = "lb_widthlng";
+            this.lb_widthlng.Size = new System.Drawing.Size(56, 13);
+            this.lb_widthlng.TabIndex = 0;
+            this.lb_widthlng.Text = "WidthLng:";
             // 
-            // label3
+            // lb_lng
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 79);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 13);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "label2";
+            this.lb_lng.AutoSize = true;
+            this.lb_lng.Location = new System.Drawing.Point(6, 79);
+            this.lb_lng.Name = "lb_lng";
+            this.lb_lng.Size = new System.Drawing.Size(28, 13);
+            this.lb_lng.TabIndex = 0;
+            this.lb_lng.Text = "Lng:";
             // 
-            // label2
+            // lb_lat
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 35);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 13);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "label2";
+            this.lb_lat.AutoSize = true;
+            this.lb_lat.Location = new System.Drawing.Point(6, 35);
+            this.lb_lat.Name = "lb_lat";
+            this.lb_lat.Size = new System.Drawing.Size(25, 13);
+            this.lb_lat.TabIndex = 0;
+            this.lb_lat.Text = "Lat:";
             // 
             // gb_provider
             // 
@@ -319,11 +319,11 @@
         private System.Windows.Forms.ComboBox cb_provider;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox gb_coords;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lb_lng;
+        private System.Windows.Forms.Label lb_lat;
+        private System.Windows.Forms.Label lb_heightlat;
+        private System.Windows.Forms.Label lb_widthlng;
+        private System.Windows.Forms.Label lb_coords;
         private System.Windows.Forms.GroupBox gb_preferences;
         private System.Windows.Forms.CheckBox cb_wheel;
         private System.Windows.Forms.Button btn_color;
