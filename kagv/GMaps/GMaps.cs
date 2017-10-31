@@ -21,7 +21,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-#define SQLite
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -38,7 +37,6 @@ namespace kagv {
 
         public gmaps() {
             InitializeComponent();
-            
         }
         List<PointLatLng> Destinations = new List<PointLatLng>();
         List<List<double>> Lengths = new List<List<double>>();
@@ -48,7 +46,6 @@ namespace kagv {
             gmaps_Load(new object(), new EventArgs());
         }
         private void gmaps_Load(object sender, EventArgs e) {
-
             //calculate margin
             int margin = mymap.Location.X + SystemInformation.Border3DSize.Width;
 

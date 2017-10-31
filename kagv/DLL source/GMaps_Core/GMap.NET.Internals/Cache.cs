@@ -1,4 +1,4 @@
-﻿#define SQLite
+﻿
 namespace GMap.NET.Internals {
     using System;
     using System.Diagnostics;
