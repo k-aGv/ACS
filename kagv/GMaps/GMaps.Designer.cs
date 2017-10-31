@@ -26,6 +26,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(gmaps));
             this.mymap = new GMap.NET.WindowsForms.GMapControl();
             this.gb_settings = new System.Windows.Forms.GroupBox();
+            this.pb_calculated = new System.Windows.Forms.Label();
+            this.pb = new System.Windows.Forms.ProgressBar();
             this.button1 = new System.Windows.Forms.Button();
             this.gb_coords = new System.Windows.Forms.GroupBox();
             this.lb_coords = new System.Windows.Forms.Label();
@@ -43,8 +45,6 @@
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showCrossToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reversedWheelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pb_calculated = new System.Windows.Forms.Label();
-            this.pb = new System.Windows.Forms.ProgressBar();
             this.gb_settings.SuspendLayout();
             this.gb_coords.SuspendLayout();
             this.gb_provider.SuspendLayout();
@@ -93,6 +93,23 @@
             this.gb_settings.TabIndex = 4;
             this.gb_settings.TabStop = false;
             this.gb_settings.Text = "Settings";
+            // 
+            // pb_calculated
+            // 
+            this.pb_calculated.AutoSize = true;
+            this.pb_calculated.Location = new System.Drawing.Point(6, 392);
+            this.pb_calculated.Name = "pb_calculated";
+            this.pb_calculated.Size = new System.Drawing.Size(93, 13);
+            this.pb_calculated.TabIndex = 11;
+            this.pb_calculated.Text = "Current progress...";
+            // 
+            // pb
+            // 
+            this.pb.Location = new System.Drawing.Point(7, 422);
+            this.pb.Name = "pb";
+            this.pb.Size = new System.Drawing.Size(154, 23);
+            this.pb.Step = 1;
+            this.pb.TabIndex = 10;
             // 
             // button1
             // 
@@ -241,23 +258,6 @@
             this.reversedWheelToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
             this.reversedWheelToolStripMenuItem.Text = "Reversed Wheel";
             this.reversedWheelToolStripMenuItem.Click += new System.EventHandler(this.reversedWheelToolStripMenuItem_Click);
-            // 
-            // pb_calculated
-            // 
-            this.pb_calculated.AutoSize = true;
-            this.pb_calculated.Location = new System.Drawing.Point(6, 392);
-            this.pb_calculated.Name = "pb_calculated";
-            this.pb_calculated.Size = new System.Drawing.Size(35, 13);
-            this.pb_calculated.TabIndex = 11;
-            this.pb_calculated.Text = "label2";
-            // 
-            // pb
-            // 
-            this.pb.Location = new System.Drawing.Point(7, 422);
-            this.pb.Name = "pb";
-            this.pb.Size = new System.Drawing.Size(154, 23);
-            this.pb.Step = 1;
-            this.pb.TabIndex = 10;
             // 
             // gmaps
             // 
