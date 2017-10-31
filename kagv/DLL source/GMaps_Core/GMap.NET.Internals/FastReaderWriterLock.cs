@@ -110,7 +110,7 @@ namespace GMap.NET.Internals {
             if (UseNativeSRWLock)
                 NativeMethods.ReleaseSRWLockExclusive(ref LockSRW);
             else
-                pLock.ReleaseExclusive();
+                pLock?.ReleaseExclusive();
             
         }
 
