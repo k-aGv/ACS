@@ -1,5 +1,5 @@
-﻿#if X64
-#define SQLite
+﻿
+
 namespace GMap.NET.CacheProviders {
 #if SQLite
 
@@ -71,7 +71,7 @@ namespace GMap.NET.CacheProviders {
                }
                else if(Environment.Version.Major == 4)
                {
-                  using(MemoryStream gzipDll = new MemoryStream((IntPtr.Size == 8 ? kagv.Properties.Resources.System_Data_SQLite_x64_NET4_dll : kagv.Properties.Resources.System_Data_SQLite_x86_NET4_dll)))
+                  using(MemoryStream gzipDll = new MemoryStream((IntPtr.Size == 8 ? Properties.Resources.System_Data_SQLite_x64_NET4_dll : Properties.Resources.System_Data_SQLite_x86_NET4_dll)))
                   {
                      using(var gs = new System.IO.Compression.GZipStream(gzipDll, System.IO.Compression.CompressionMode.Decompress))
                      {
@@ -278,7 +278,7 @@ namespace GMap.NET.CacheProviders {
                         using(DbCommand cmd = cn.CreateCommand())
                         {
                            cmd.Transaction = tr;
-                           cmd.CommandText = kagv.Properties.Resources.CreateTileDb;
+                           cmd.CommandText = Properties.Resources.CreateTileDb;
 
                            cmd.ExecuteNonQuery();
                         }
@@ -828,4 +828,3 @@ namespace GMap.NET.CacheProviders {
    }
 #endif
 }
-#endif

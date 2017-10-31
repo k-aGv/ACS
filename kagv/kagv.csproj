@@ -88,9 +88,6 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Release|x64'" >
-	<DefineConstants>X64</DefineConstants>
-  </PropertyGroup>  
   <PropertyGroup>
     <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
@@ -105,10 +102,6 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.SQLite, Version=1.0.98.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Resources\DLLS\Reference\System.Data.SQLite.DLL</HintPath>
-    </Reference>
     <Reference Include="System.Data.SqlServerCe, Version=3.5.1.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Resources\System.Data.SqlServerCe.dll</HintPath>
@@ -442,10 +435,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Resources\DLLS\System.Data.SQLite.x64.NET2.dll.gz" />
-    <None Include="Resources\DLLS\System.Data.SQLite.x64.NET4.dll.gz" />
-    <None Include="Resources\DLLS\System.Data.SQLite.x86.NET2.dll.gz" />
-    <None Include="Resources\DLLS\System.Data.SQLite.x86.NET4.dll.gz" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -474,8 +463,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
-    <Content Include="Resources\DLLS\Reference\System.Data.SQLite.DLL" />
-    <Content Include="Resources\DLLS\Reference\System.Data.SQLite.XML" />
     <Content Include="Resources\GMaps_Resources\arrow.png" />
     <Content Include="Resources\GMaps_Resources\arrowshadow.png" />
     <Content Include="Resources\GMaps_Resources\black_small.png" />
