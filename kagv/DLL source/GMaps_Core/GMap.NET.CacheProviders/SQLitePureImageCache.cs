@@ -1,4 +1,5 @@
 ﻿
+
 namespace GMap.NET.CacheProviders {
 #if SQLite
 
@@ -14,6 +15,7 @@ namespace GMap.NET.CacheProviders {
 
    using System.Data.SQLite;
    using GMap.NET.Internals;
+
 
 
    /// <summary>
@@ -50,7 +52,7 @@ namespace GMap.NET.CacheProviders {
 
                if(Environment.Version.Major == 2)
                {
-                  using(MemoryStream gzipDll = new MemoryStream((IntPtr.Size == 8 ? Properties.Resources.System_Data_SQLite_x64_NET2_dll : Properties.Resources.System_Data_SQLite_x86_NET2_dll)))
+                  using(MemoryStream gzipDll = new MemoryStream((IntPtr.Size == 8 ? kagv.Properties.Resources.System_Data_SQLite_x64_NET2_dll : kagv.Properties.Resources.System_Data_SQLite_x86_NET2_dll)))
                   {
                      using(var gs = new System.IO.Compression.GZipStream(gzipDll, System.IO.Compression.CompressionMode.Decompress))
                      {

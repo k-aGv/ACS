@@ -1,11 +1,9 @@
-﻿#define UseFastResourceLock
-
+﻿
 namespace GMap.NET.Internals {
     using System;
     using System.Threading;
     using System.Runtime.InteropServices;
-
-
+    
     /// <summary>
     /// custom ReaderWriterLock
     /// in Vista and later uses integrated Slim Reader/Writer (SRW) Lock
@@ -31,16 +29,23 @@ namespace GMap.NET.Internals {
         IntPtr LockSRW = IntPtr.Zero;
 
         public FastReaderWriterLock() {
+
+            var proc = System.Diagnostics.Process.GetCurrentProcess();
+            int coreFlag;
+            if (Environment.ProcessorCount == 1) coreFlag = 0x0001;
+            else if (Environment.ProcessorCount == 2) coreFlag = 0x0003;
+            else if (Environment.ProcessorCount == 3) coreFlag = 0x0007;
+            else coreFlag = 0x000F; //use only 4 cores.We dont care for pcs with more than 4 cores.
+
+            proc.ProcessorAffinity = new IntPtr(coreFlag);
+
             if (UseNativeSRWLock) {
                 NativeMethods.InitializeSRWLock(out this.LockSRW);
             } else {
-#if UseFastResourceLock
                 pLock = new FastResourceLock();
-#endif
             }
         }
-
-#if UseFastResourceLock
+        
         ~FastReaderWriterLock() {
             Dispose(false);
         }
@@ -53,22 +58,17 @@ namespace GMap.NET.Internals {
         }
 
         FastResourceLock pLock;
-#endif
 
         static readonly bool UseNativeSRWLock = Stuff.IsRunningOnVistaOrLater() && IntPtr.Size == 4; // works only in 32-bit mode, any ideas on native 64-bit support? 
 
-#if !UseFastResourceLock
-       Int32 busy = 0;
-       Int32 readCount = 0;
-#endif
+        Int32 busy = 0;
+        Int32 readCount = 0;
 
         public void AcquireReaderLock() {
             if (UseNativeSRWLock) {
                 NativeMethods.AcquireSRWLockShared(ref LockSRW);
             } else {
-#if UseFastResourceLock
                 pLock.AcquireShared();
-#else
             Thread.BeginCriticalRegion();
 
             while(Interlocked.CompareExchange(ref busy, 1, 0) != 0)
@@ -88,65 +88,37 @@ namespace GMap.NET.Internals {
             Thread.Sleep(0);
 
             Interlocked.Exchange(ref busy, 0);
-#endif
+
             }
         }
 
         public void ReleaseReaderLock() {
-            if (UseNativeSRWLock) {
+            if (UseNativeSRWLock) 
                 NativeMethods.ReleaseSRWLockShared(ref LockSRW);
-            } else {
-#if UseFastResourceLock
+            else 
                 pLock.ReleaseShared();
-#else
-            Interlocked.Decrement(ref readCount);
-            Thread.EndCriticalRegion();
-#endif
-            }
         }
 
         public void AcquireWriterLock() {
-            if (UseNativeSRWLock) {
+            if (UseNativeSRWLock) 
                 NativeMethods.AcquireSRWLockExclusive(ref LockSRW);
-            } else {
-#if UseFastResourceLock
+            else
                 pLock.AcquireExclusive();
-#else
-            Thread.BeginCriticalRegion();
-
-            while(Interlocked.CompareExchange(ref busy, 1, 0) != 0)
-            {
-               Thread.Sleep(1);
-            }
-
-            while(Interlocked.CompareExchange(ref readCount, 0, 0) != 0)
-            {
-               Thread.Sleep(1);
-            }
-#endif
-            }
         }
 
         public void ReleaseWriterLock() {
-            if (UseNativeSRWLock) {
+            if (UseNativeSRWLock)
                 NativeMethods.ReleaseSRWLockExclusive(ref LockSRW);
-            } else {
-#if UseFastResourceLock
+            else
                 pLock.ReleaseExclusive();
-#else
-            Interlocked.Exchange(ref busy, 0);
-            Thread.EndCriticalRegion();
-#endif
-            }
+            
         }
 
         #region IDisposable Members
 
         public void Dispose() {
-#if UseFastResourceLock
             this.Dispose(true);
             GC.SuppressFinalize(this);
-#endif
         }
 
         #endregion
