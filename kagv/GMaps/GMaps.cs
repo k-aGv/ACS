@@ -39,6 +39,8 @@ namespace kagv {
         }
         List<PointLatLng> Destinations = new List<PointLatLng>();
         List<List<double>> Lengths = new List<List<double>>();
+        List<GMapOverlay> _markers_overlay = new List<GMapOverlay>();
+
         public void ReloadMap() {
             gmaps_Load(new object(), new EventArgs());
         }
@@ -123,7 +125,7 @@ namespace kagv {
                 }
 
             }
-            else if (e.Button==MouseButtons.Middle)
+            else if (e.Button == MouseButtons.Middle) //place markers
             {
                 double remoteLat = mymap.FromLocalToLatLng(e.X, e.Y).Lat;
                 double remoteLng = mymap.FromLocalToLatLng(e.X, e.Y).Lng;
@@ -134,12 +136,34 @@ namespace kagv {
 
                 Destinations.Add(final);
 
-                GMapOverlay overlay = new GMapOverlay("My Overlay");
-                GMapMarker marker = new GMap.NET.WindowsForms.Markers.GMarkerGoogle(final, GMap.NET.WindowsForms.Markers.GMarkerGoogleType.arrow);
-                overlay.Markers.Add(marker);
+                _markers_overlay.Add(new GMapOverlay("Marker" + Convert.ToString(Destinations.Count - 1)));
 
-                mymap.Overlays.Add(overlay);
+                _markers_overlay[_markers_overlay.Count - 1].Markers.Add(new GMap.NET.WindowsForms.Markers.GMarkerGoogle(final, GMap.NET.WindowsForms.Markers.GMarkerGoogleType.arrow));
+                mymap.UpdateMarkerLocalPosition(_markers_overlay[_markers_overlay.Count - 1].Markers[0]);
+                mymap.Overlays.Add(_markers_overlay[_markers_overlay.Count - 1]);
 
+                if (Destinations.Count > 1)
+                {
+                    GMap.NET.MapProviders.GMapProviders.GoogleMap.GetDirections(
+                        out GDirections _d,
+                        Destinations[Destinations.Count - 2],
+                        Destinations[Destinations.Count - 1],
+                        false, false, false, false, false
+                        );
+                    try
+                    {
+                        GMapRoute route = new GMapRoute(_d.Route, "Route");
+                        GMapOverlay _route_overlay = new GMapOverlay("RouteOverlay");
+                        _route_overlay.Routes.Add(route);
+                        mymap.UpdateRouteLocalPosition(route);
+                        mymap.Overlays.Add(_route_overlay);
+                    }
+                    catch
+                    {
+                        Destinations.RemoveAt(Destinations.Count - 1);
+                        _markers_overlay[_markers_overlay.Count - 1].Markers.Clear();
+                    }
+                }
             }
         }
 
