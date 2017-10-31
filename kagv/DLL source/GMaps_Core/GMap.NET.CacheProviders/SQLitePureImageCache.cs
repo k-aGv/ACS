@@ -1,7 +1,5 @@
 ﻿#if X64
-#define SQLite
 namespace GMap.NET.CacheProviders {
-#if SQLite
 
    using System.Collections.Generic;
    using System.Data.Common;
@@ -25,12 +23,13 @@ namespace GMap.NET.CacheProviders {
    {
       static SQLitePureImageCache()
       {
-         AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
+            AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
       }
 
       static System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
       {
-         if(args.Name.StartsWith("System.Data.SQLite", StringComparison.OrdinalIgnoreCase))
+
+            if (args.Name.StartsWith("System.Data.SQLite", StringComparison.OrdinalIgnoreCase))
          {
             string appDataDir = CacheLocator.GetApplicationDataFolderPath();
             if(string.IsNullOrEmpty(appDataDir))
@@ -104,7 +103,7 @@ namespace GMap.NET.CacheProviders {
       /// </summary>
       public static void Ping()
       {
-          if (++ping == 1)
+            if (++ping == 1)
           {
               Trace.WriteLine("SQLiteVersion: " + SQLiteConnection.SQLiteVersion + " | " + SQLiteConnection.SQLiteSourceId + " | " + SQLiteConnection.DefineConstants);
           }
@@ -119,9 +118,10 @@ namespace GMap.NET.CacheProviders {
 
       public string GtileCache
       {
+
          get
          {
-            return gtileCache;
+                return gtileCache;
          }
       }
 
@@ -136,9 +136,10 @@ namespace GMap.NET.CacheProviders {
          }
          set
          {
-            cache = value;
-
-            gtileCache = Path.Combine(cache, "TileDBv5") + Path.DirectorySeparatorChar;
+                
+                cache = value;
+                
+                gtileCache = Path.Combine(cache, "TileDBv5") + Path.DirectorySeparatorChar;
 
             dir = gtileCache + GMapProvider.LanguageStr + Path.DirectorySeparatorChar;
 
@@ -196,7 +197,8 @@ namespace GMap.NET.CacheProviders {
       void CheckPreAllocation()
       {
          {
-            byte[] pageSizeBytes = new byte[2];
+               
+                byte[] pageSizeBytes = new byte[2];
             byte[] freePagesBytes = new byte[4];
 
             lock(this)
@@ -246,8 +248,8 @@ namespace GMap.NET.CacheProviders {
       public static bool CreateEmptyDB(string file)
       {
          bool ret = true;
-
-         try
+            
+            try
          {
             string dir = Path.GetDirectoryName(file);
             if(!Directory.Exists(dir))
@@ -766,6 +768,5 @@ namespace GMap.NET.CacheProviders {
 
     #endregion
    }
-#endif
 }
 #endif

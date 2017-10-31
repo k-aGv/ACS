@@ -1,4 +1,4 @@
-﻿
+﻿#define SQLite
 namespace GMap.NET {
     using System;
     using System.Collections.Generic;
