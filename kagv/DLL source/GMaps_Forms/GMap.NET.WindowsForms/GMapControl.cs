@@ -486,6 +486,12 @@ namespace GMap.NET.WindowsForms {
 
                 BottomFormat.LineAlignment = StringAlignment.Far;
 
+
+                if (GMaps.Instance.IsRunningOnMono) {
+                    // no imports to move pointer
+                    MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionWithoutCenter;
+                }
+
                 Overlays.CollectionChanged += new NotifyCollectionChangedEventHandler(Overlays_CollectionChanged);
             }
         }
@@ -1764,8 +1770,10 @@ namespace GMap.NET.WindowsForms {
 
                 // set mouse position to map center
                 if (MouseWheelZoomType != MouseWheelZoomType.MousePositionWithoutCenter) {
-                    Point p = PointToScreen(new System.Drawing.Point(Width / 2, Height / 2));
-                    Stuff.SetCursorPos(p.X,p.Y);
+                    if (!GMaps.Instance.IsRunningOnMono) {
+                        System.Drawing.Point p = PointToScreen(new System.Drawing.Point(Width / 2, Height / 2));
+                        Stuff.SetCursorPos((int)p.X, (int)p.Y);
+                    }
                 }
 
                 Core.MouseWheelZooming = true;

@@ -147,7 +147,10 @@ namespace GMap.NET.CacheProviders {
             {
                Directory.CreateDirectory(dir);
             }
+
+#if !MONO
             SQLiteConnection.ClearAllPools();              
+#endif
             // make empty db
             {
                db = dir + "Data.gmdb";
@@ -170,7 +173,11 @@ namespace GMap.NET.CacheProviders {
                //connBuilder.JournalMode = SQLiteJournalModeEnum.Wal;
                //connBuilder.Pooling = true;
                //var x = connBuilder.ToString();
+#if !MONO
+               ConnectionString = string.Format("Data Source=\"{0}\";Page Size=32768;Pooling=True", db); //;Journal Mode=Wal
+#else
                ConnectionString = string.Format("Version=3,URI=file://{0},FailIfMissing=True,Page Size=32768,Pooling=True", db);
+#endif
             }
 
             // clear old attachments
@@ -257,7 +264,11 @@ namespace GMap.NET.CacheProviders {
 
             using(SQLiteConnection cn = new SQLiteConnection())
             {
+#if !MONO
                cn.ConnectionString = string.Format("Data Source=\"{0}\";FailIfMissing=False;Page Size=32768", file);
+#else
+               cn.ConnectionString = string.Format("Version=3,URI=file://{0},FailIfMissing=False,Page Size=32768", file);
+#endif
                cn.Open();
                {
                   using(DbTransaction tr = cn.BeginTransaction())
@@ -275,6 +286,9 @@ namespace GMap.NET.CacheProviders {
                      }
                      catch(Exception exx)
                      {
+#if MONO
+                        Console.WriteLine("CreateEmptyDB: " + exx.ToString());
+#endif
                         Debug.WriteLine("CreateEmptyDB: " + exx.ToString());
 
                         tr.Rollback();
@@ -287,6 +301,9 @@ namespace GMap.NET.CacheProviders {
          }
          catch(Exception ex)
          {
+#if MONO
+            Console.WriteLine("CreateEmptyDB: " + ex.ToString());
+#endif
             Debug.WriteLine("CreateEmptyDB: " + ex.ToString());
             ret = false;
          }
@@ -303,7 +320,11 @@ namespace GMap.NET.CacheProviders {
 
             using(SQLiteConnection cn = new SQLiteConnection())
             {
+#if !MONO
                cn.ConnectionString = string.Format("Data Source=\"{0}\";FailIfMissing=False;Page Size=32768", file);
+#else
+               cn.ConnectionString = string.Format("Version=3,URI=file://{0},FailIfMissing=False,Page Size=32768", file);
+#endif
                cn.Open();
                {
                   using(DbTransaction tr = cn.BeginTransaction())
@@ -320,6 +341,9 @@ namespace GMap.NET.CacheProviders {
                      }
                      catch(Exception exx)
                      {
+#if MONO
+                        Console.WriteLine("PreAllocateDB: " + exx.ToString());
+#endif
                         Debug.WriteLine("PreAllocateDB: " + exx.ToString());
 
                         tr.Rollback();
@@ -332,6 +356,9 @@ namespace GMap.NET.CacheProviders {
          }
          catch(Exception ex)
          {
+#if MONO
+            Console.WriteLine("PreAllocateDB: " + ex.ToString());
+#endif
             Debug.WriteLine("PreAllocateDB: " + ex.ToString());
             ret = false;
          }
@@ -348,7 +375,11 @@ namespace GMap.NET.CacheProviders {
             {
                using(SQLiteConnection cn = new SQLiteConnection())
                {
+#if !MONO
                   cn.ConnectionString = string.Format("Data Source=\"{0}\";FailIfMissing=False;Page Size=32768;Pooling=True", file);
+#else
+                  cn.ConnectionString = string.Format("Version=3,URI=file://{0},FailIfMissing=False,Page Size=32768,Pooling=True", file);
+#endif
                   cn.Open();
                   {
                      using(DbTransaction tr = cn.BeginTransaction())
@@ -398,6 +429,9 @@ namespace GMap.NET.CacheProviders {
                         }
                         catch(Exception exx)
                         {
+#if MONO
+                           Console.WriteLine("AlterDBAddTimeColumn: " + exx.ToString());
+#endif
                            Debug.WriteLine("AlterDBAddTimeColumn: " + exx.ToString());
 
                            tr.Rollback();
@@ -415,6 +449,9 @@ namespace GMap.NET.CacheProviders {
          }
          catch(Exception ex)
          {
+#if MONO
+            Console.WriteLine("AlterDBAddTimeColumn: " + ex.ToString());
+#endif
             Debug.WriteLine("AlterDBAddTimeColumn: " + ex.ToString());
             ret = false;
          }
@@ -429,7 +466,11 @@ namespace GMap.NET.CacheProviders {
          {
             using(SQLiteConnection cn = new SQLiteConnection())
             {
+#if !MONO
                cn.ConnectionString = string.Format("Data Source=\"{0}\";FailIfMissing=True;Page Size=32768", file);
+#else
+               cn.ConnectionString = string.Format("Version=3,URI=file://{0},FailIfMissing=True,Page Size=32768", file);
+#endif
                cn.Open();
                {
                   using(DbCommand cmd = cn.CreateCommand())
@@ -464,15 +505,22 @@ namespace GMap.NET.CacheProviders {
             {
                using(SQLiteConnection cn1 = new SQLiteConnection())
                {
+#if !MONO
                   cn1.ConnectionString = string.Format("Data Source=\"{0}\";Page Size=32768", sourceFile);
+#else
+                  cn1.ConnectionString = string.Format("Version=3,URI=file://{0},FailIfMissing=True,Page Size=32768", sourceFile);
+#endif
 
                   cn1.Open();
                   if(cn1.State == System.Data.ConnectionState.Open)
                   {
                      using(SQLiteConnection cn2 = new SQLiteConnection())
                      {
+#if !MONO
                         cn2.ConnectionString = string.Format("Data Source=\"{0}\";Page Size=32768", destFile);
-
+#else
+                        cn2.ConnectionString = string.Format("Version=3,URI=file://{0},FailIfMissing=True,Page Size=32768", destFile);
+#endif
                         cn2.Open();
                         if(cn2.State == System.Data.ConnectionState.Open)
                         {
@@ -644,6 +692,9 @@ namespace GMap.NET.CacheProviders {
                         }
                         catch(Exception ex)
                         {
+#if MONO
+                           Console.WriteLine("PutImageToCache: " + ex.ToString());
+#endif
                            Debug.WriteLine("PutImageToCache: " + ex.ToString());
 
                            tr.Rollback();
@@ -661,6 +712,9 @@ namespace GMap.NET.CacheProviders {
             }
             catch(Exception ex)
             {
+#if MONO
+               Console.WriteLine("PutImageToCache: " + ex.ToString());
+#endif
                Debug.WriteLine("PutImageToCache: " + ex.ToString());
                ret = false;
             }
@@ -726,6 +780,9 @@ namespace GMap.NET.CacheProviders {
          }
          catch(Exception ex)
          {
+#if MONO
+            Console.WriteLine("GetImageFromCache: " + ex.ToString());
+#endif
             Debug.WriteLine("GetImageFromCache: " + ex.ToString());
             ret = null;
          }
@@ -758,6 +815,9 @@ namespace GMap.NET.CacheProviders {
          }
          catch(Exception ex)
          {
+#if MONO
+            Console.WriteLine("DeleteOlderThan: " + ex);
+#endif
             Debug.WriteLine("DeleteOlderThan: " + ex);
          }
 
