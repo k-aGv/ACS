@@ -97,28 +97,6 @@ namespace GMap.NET {
         /// </summary>
         readonly Queue<CacheQueueItem> tileCacheQueue = new Queue<CacheQueueItem>();
 
-        bool? isRunningOnMono;
-
-        /// <summary>
-        /// return true if running on mono
-        /// </summary>
-        /// <returns></returns>
-        public bool IsRunningOnMono
-        {
-            get {
-                if (!isRunningOnMono.HasValue) {
-                    try {
-                        isRunningOnMono = (Type.GetType("Mono.Runtime") != null);
-                        return isRunningOnMono.Value;
-                    } catch {
-                    }
-                } else {
-                    return isRunningOnMono.Value;
-                }
-                return false;
-            }
-        }
-
         /// <summary>
         /// cache worker
         /// </summary>
@@ -190,9 +168,7 @@ namespace GMap.NET {
         /// </summary>
         public void SQLitePing() {
 #if SQLite
-#if !MONO
          SQLitePureImageCache.Ping();
-#endif
 #endif
         }
 
