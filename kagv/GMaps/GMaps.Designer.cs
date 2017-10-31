@@ -43,6 +43,8 @@
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showCrossToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reversedWheelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pb_calculated = new System.Windows.Forms.Label();
+            this.pb = new System.Windows.Forms.ProgressBar();
             this.gb_settings.SuspendLayout();
             this.gb_coords.SuspendLayout();
             this.gb_provider.SuspendLayout();
@@ -80,6 +82,8 @@
             // 
             // gb_settings
             // 
+            this.gb_settings.Controls.Add(this.pb_calculated);
+            this.gb_settings.Controls.Add(this.pb);
             this.gb_settings.Controls.Add(this.button1);
             this.gb_settings.Controls.Add(this.gb_coords);
             this.gb_settings.Controls.Add(this.gb_provider);
@@ -238,6 +242,23 @@
             this.reversedWheelToolStripMenuItem.Text = "Reversed Wheel";
             this.reversedWheelToolStripMenuItem.Click += new System.EventHandler(this.reversedWheelToolStripMenuItem_Click);
             // 
+            // pb_calculated
+            // 
+            this.pb_calculated.AutoSize = true;
+            this.pb_calculated.Location = new System.Drawing.Point(6, 392);
+            this.pb_calculated.Name = "pb_calculated";
+            this.pb_calculated.Size = new System.Drawing.Size(35, 13);
+            this.pb_calculated.TabIndex = 11;
+            this.pb_calculated.Text = "label2";
+            // 
+            // pb
+            // 
+            this.pb.Location = new System.Drawing.Point(7, 422);
+            this.pb.Name = "pb";
+            this.pb.Size = new System.Drawing.Size(154, 23);
+            this.pb.Step = 1;
+            this.pb.TabIndex = 10;
+            // 
             // gmaps
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -254,6 +275,7 @@
             this.Text = "Google Maps implementation";
             this.Load += new System.EventHandler(this.gmaps_Load);
             this.gb_settings.ResumeLayout(false);
+            this.gb_settings.PerformLayout();
             this.gb_coords.ResumeLayout(false);
             this.gb_coords.PerformLayout();
             this.gb_provider.ResumeLayout(false);
@@ -284,5 +306,7 @@
         private System.Windows.Forms.ToolStripMenuItem showCrossToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reversedWheelToolStripMenuItem;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label pb_calculated;
+        private System.Windows.Forms.ProgressBar pb;
     }
 }

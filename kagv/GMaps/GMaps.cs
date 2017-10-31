@@ -26,6 +26,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using System.IO;
 
 using GMap.NET;
 using GMap.NET.WindowsForms;
@@ -222,28 +223,40 @@ namespace kagv {
         private void button1_Click(object sender, EventArgs e)
         {
             Lengths = new List<List<double>>();
+            StreamWriter _writer = new StreamWriter("routeDistances.txt");
+            pb.Maximum = Destinations.Count * Destinations.Count;
+            int interval = 0;
 
             for (int i = 0; i < Destinations.Count; i++)
             {
-                Lengths.Add(new List<double>());
 
+                Lengths.Add(new List<double>());
                 for (int j = 0; j < Destinations.Count; j++)
                 {
-                    GMap.NET.MapProviders.GMapProviders.GoogleMap.GetDirections(out GDirections _d, Destinations[i], Destinations[j], false, false, false, false, false);
-                    try
+                    GDirections _d = new GDirections();
+                    do
                     {
-                        GMapRoute gMapRoute = new GMapRoute(_d.Route, "e");
-                        GMapOverlay overlay = new GMapOverlay();
-                        overlay.Routes.Add(gMapRoute);
-                        mymap.Overlays.Add(overlay);
+                        try
+                        {
+                            GMap.NET.MapProviders.GMapProviders.GoogleMap.GetDirections(out _d, Destinations[i], Destinations[j], false, false, false, false, true);
 
-                        Lengths[i].Add(gMapRoute.Distance);
+                            Lengths[i].Add(_d.DistanceValue);
 
-                    }
-                    catch { }
+                            _writer.WriteLine("Distance from " + i + " to " + j + " : " + _d.DistanceValue + "\n");
+                        }
+                        catch { }
+                    } while (_d == null);
+                    Application.DoEvents();
+                    pb_calculated.Text = "Current progress... " + ((100 * interval) / (Destinations.Count * Destinations.Count)) + "%\nDistances Calclated: " + interval + "/" + Destinations.Count * Destinations.Count;
+                    pb.PerformStep();
+                    interval++;
 
                 }
+                _writer.WriteLine("\n");
             }
+            _writer.Close();
+            pb_calculated.Text = "Current progress... " + ((100 * interval) / (Destinations.Count * Destinations.Count)) + "%\nIterations occured: " + interval + "/" + Destinations.Count * Destinations.Count;
+            pb.PerformStep();
         }
     }
 }
