@@ -144,6 +144,7 @@ namespace kagv {
 
         private void main_form_MouseDown(object sender, MouseEventArgs e) {
             return;
+            /*
             //If the simulation is running, do not do anything.leave the function explicitly
 
             //Supposing that timers are not enabled(that means that the simulation is not running)
@@ -250,6 +251,7 @@ namespace kagv {
                 }
 
             }
+            */
 
         }
 
@@ -425,6 +427,7 @@ namespace kagv {
                             }
                         }
             return;
+            /*
             if (rb_start.Checked && nUD_AGVs.Value != 0) {
 
                 if (nUD_AGVs.Value == 1)//Saves only the last Click position to place the Start (1 start exists)
@@ -478,8 +481,9 @@ namespace kagv {
                             m_rectangles[widthTrav][heightTrav] = new GridBox(widthTrav * Globals._BlockSide, heightTrav * Globals._BlockSide + Globals._TopBarOffset, BoxType.End);
                         }
             }
-
+            
             Invalidate();
+            */
         }
         //parametres
         private void useRecursiveToolStripMenuItem_Click(object sender, EventArgs e) {

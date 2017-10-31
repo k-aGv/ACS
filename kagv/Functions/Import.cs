@@ -33,6 +33,7 @@ namespace kagv {
         private void Import() {
             MessageBox.Show("Not available yet");
             return;
+            /*
             ofd_importmap.Filter = "kagv Map (*.kmap)|*.kmap";
             ofd_importmap.FileName = "";
 
@@ -99,6 +100,7 @@ namespace kagv {
                 } else
                     MessageBox.Show(this, "You have chosen an incompatible file import.\r\nPlease try again.", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            */
         }
     }
 }

@@ -34,7 +34,7 @@ namespace kagv {
         //Basic path planner function
         private void Redraw() {
             return;
-
+            /*
             bool start_found = false;
             bool end_found = false;
             mapHasLoads = false;
@@ -193,6 +193,7 @@ namespace kagv {
                     Array.Resize(ref AGVs[i].Paths, c - 1); //resize of the AGVs steps Table
 
             Invalidate();
+            */
         }
 
     }

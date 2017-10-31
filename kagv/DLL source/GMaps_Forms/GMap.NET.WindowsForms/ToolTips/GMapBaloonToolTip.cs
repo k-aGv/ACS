@@ -12,7 +12,7 @@ namespace GMap.NET.WindowsForms.ToolTips {
     public class GMapBaloonToolTip : GMapToolTip, ISerializable {
         public float Radius = 10f;
 
-        public static readonly Pen DefaultStroke = new Pen(Color.FromArgb(140, Color.Navy));
+        public new static readonly Pen DefaultStroke = new Pen(Color.FromArgb(140, Color.Navy));
 
         static GMapBaloonToolTip() {
             DefaultStroke.Width = 3;

@@ -25,7 +25,7 @@ THE SOFTWARE.
 namespace kagv {
 
     public partial class main_form {
-
+        /*
         //function that determines which loads are valid to keep and which are not
         private void KeepValidLoads(GridPos EndPoint) {
             int list_index = 0;
@@ -52,5 +52,6 @@ namespace kagv {
             if (loadPos.Count == 0)
                 mapHasLoads = false;
         }
+        */
     }
 }

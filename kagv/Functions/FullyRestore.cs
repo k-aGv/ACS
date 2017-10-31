@@ -37,10 +37,10 @@ namespace kagv {
             if (trappedStatus != null)
                 Array.Clear(trappedStatus, 0, trappedStatus.GetLength(0));
 
-            if (importmap != null) {
-                Array.Clear(importmap, 0, importmap.GetLength(0));
-                Array.Clear(importmap, 0, importmap.GetLength(1));
-            }
+            //if (importmap != null) {
+            //    Array.Clear(importmap, 0, importmap.GetLength(0));
+           //     Array.Clear(importmap, 0, importmap.GetLength(1));
+           // }
 
             if (BackgroundImage != null)
                 BackgroundImage = null;

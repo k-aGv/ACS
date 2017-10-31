@@ -39,19 +39,18 @@ namespace kagv {
         //Temporarily trapped Load = 4
         int[,] isLoad;
 
-        BoxType[,] importmap;
+        //BoxType[,] importmap;
 
         GridBox[][] m_rectangles;//2d jagged array. Contains grid information (coords of each box, boxtype, etc etc)  
 
         List<Vehicle> AGVs = new List<Vehicle>();
         List<GridPos> startPos = new List<GridPos>(); //Contains the coords of the Start boxes
-        List<GridPos> loadPos;
+        //List<GridPos> loadPos;
         bool[] trappedStatus = new bool[5];
-
 
         int a; //temporary X.Used to calculate the remained length of current line
         int b; //temporary Y.Used to calculate the remained length of current line
-        int pos_index = 0;
+        //int pos_index = 0;
         BaseGrid searchGrid;
         AStarParam jumpParam;//custom jump method with its features exposed
         static Graphics paper;//main graphics for grid

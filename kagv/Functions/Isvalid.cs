@@ -31,6 +31,7 @@ namespace kagv {
         //Function that validates the user's click 
         private bool Isvalid(Point _temp) {
             return true;
+            /*
             //The function received the coordinates of the user's click.
             //Clicking anywhere but on the Grid itself, will cause a "false" return, preventing
             //the click from giving any results
@@ -46,6 +47,7 @@ namespace kagv {
                 return false;
 
             return true;
+            */
         }
     }
 }
