@@ -385,7 +385,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\Resources.Designer.cs" />
+    <Compile Include="Resources\GMaps_Resources\Resources.Designer.cs" />
     <Compile Include="TwoOptSwap.cs" />
     <Compile Include="variables.cs">
       <SubType>Form</SubType>
@@ -424,7 +424,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Resources\Resources.resx">
+    <EmbeddedResource Include="Resources\GMaps_Resources\Resources.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
