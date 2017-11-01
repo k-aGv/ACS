@@ -251,7 +251,7 @@ namespace kagv {
                         catch { }
                     } while (_d == null);
                     Application.DoEvents();
-                    pb_calculated.Text = "Current progress... " + ((100 * interval) / (Destinations.Count * Destinations.Count)) + "%\nDistances Calculated: " + interval + "/" + Destinations.Count * Destinations.Count;
+                    pb_calculated.Text = "Current progress... " + ((100 * interval) / (Destinations.Count * Destinations.Count)) + "%\nDistances calculated: " + interval + "/" + Destinations.Count * Destinations.Count;
                     pb.PerformStep();
                     interval++;
 
@@ -259,7 +259,7 @@ namespace kagv {
                 _writer.WriteLine("\n");
             }
             _writer.Close();
-            pb_calculated.Text = "Completed... " + ((100 * interval) / (Destinations.Count * Destinations.Count)) + "%\nIterations occured: " + interval + "/" + Destinations.Count * Destinations.Count;
+            pb_calculated.Text = "Completed... " + ((100 * interval) / (Destinations.Count * Destinations.Count)) + "%\nDistances calculated: " + interval + "/" + Destinations.Count * Destinations.Count;
             pb.PerformStep();
         }
     }
