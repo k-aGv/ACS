@@ -40,5 +40,10 @@ namespace kagv
         {
             this.Close();
         }
+
+        private void linkLabel1_MouseClick(object sender, MouseEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://developers.google.com/maps/documentation/javascript/get-api-key");
+        }
     }
 }
