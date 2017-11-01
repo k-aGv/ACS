@@ -24,7 +24,6 @@
         /// </summary>
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(gmaps));
-            this.mymap = new GMap.NET.WindowsForms.GMapControl();
             this.gb_settings = new System.Windows.Forms.GroupBox();
             this.pb_calculated = new System.Windows.Forms.Label();
             this.pb = new System.Windows.Forms.ProgressBar();
@@ -45,40 +44,12 @@
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showCrossToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reversedWheelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mymap = new GMap.NET.WindowsForms.GMapControl();
             this.gb_settings.SuspendLayout();
             this.gb_coords.SuspendLayout();
             this.gb_provider.SuspendLayout();
             this.ms_Settings.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // mymap
-            // 
-            this.mymap.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.mymap.Bearing = 0F;
-            this.mymap.CanDragMap = true;
-            this.mymap.EmptyTileColor = System.Drawing.Color.LightSkyBlue;
-            this.mymap.GrayScaleMode = false;
-            this.mymap.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
-            this.mymap.LevelsKeepInMemmory = 5;
-            this.mymap.Location = new System.Drawing.Point(12, 27);
-            this.mymap.MarkersEnabled = true;
-            this.mymap.MaxZoom = 2;
-            this.mymap.MinZoom = 2;
-            this.mymap.MouseWheelZoomEnabled = true;
-            this.mymap.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
-            this.mymap.Name = "mymap";
-            this.mymap.NegativeMode = false;
-            this.mymap.PolygonsEnabled = true;
-            this.mymap.RetryLoadTile = 0;
-            this.mymap.RoutesEnabled = true;
-            this.mymap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
-            this.mymap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
-            this.mymap.ShowTileGridLines = false;
-            this.mymap.Size = new System.Drawing.Size(877, 609);
-            this.mymap.TabIndex = 3;
-            this.mymap.Zoom = 0D;
-            this.mymap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.mymap_MouseClick);
-            this.mymap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mymap_MouseMove);
             // 
             // gb_settings
             // 
@@ -258,6 +229,35 @@
             this.reversedWheelToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
             this.reversedWheelToolStripMenuItem.Text = "Reversed Wheel";
             this.reversedWheelToolStripMenuItem.Click += new System.EventHandler(this.reversedWheelToolStripMenuItem_Click);
+            // 
+            // mymap
+            // 
+            this.mymap.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.mymap.Bearing = 0F;
+            this.mymap.CanDragMap = true;
+            this.mymap.EmptyTileColor = System.Drawing.Color.LightSkyBlue;
+            this.mymap.GrayScaleMode = false;
+            this.mymap.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
+            this.mymap.LevelsKeepInMemmory = 5;
+            this.mymap.Location = new System.Drawing.Point(12, 27);
+            this.mymap.MarkersEnabled = true;
+            this.mymap.MaxZoom = 2;
+            this.mymap.MinZoom = 2;
+            this.mymap.MouseWheelZoomEnabled = true;
+            this.mymap.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
+            this.mymap.Name = "mymap";
+            this.mymap.NegativeMode = false;
+            this.mymap.PolygonsEnabled = true;
+            this.mymap.RetryLoadTile = 0;
+            this.mymap.RoutesEnabled = true;
+            this.mymap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
+            this.mymap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
+            this.mymap.ShowTileGridLines = false;
+            this.mymap.Size = new System.Drawing.Size(877, 609);
+            this.mymap.TabIndex = 3;
+            this.mymap.Zoom = 0D;
+            this.mymap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.mymap_MouseClick);
+            this.mymap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mymap_MouseMove);
             // 
             // gmaps
             // 

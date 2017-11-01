@@ -46,6 +46,7 @@ namespace kagv {
             gmaps_Load(new object(), new EventArgs());
         }
         private void gmaps_Load(object sender, EventArgs e) {
+            
             //calculate margin
             int margin = mymap.Location.X + SystemInformation.Border3DSize.Width;
 
@@ -136,7 +137,7 @@ namespace kagv {
                 PointLatLng final = new PointLatLng(remoteLat, remoteLng);
 
                 Destinations.Add(final);
-
+                
                 _markers_overlay.Add(new GMapOverlay("Marker" + Convert.ToString(Destinations.Count - 1)));
 
                 _markers_overlay[_markers_overlay.Count - 1].Markers.Add(new GMap.NET.WindowsForms.Markers.GMarkerGoogle(final, GMap.NET.WindowsForms.Markers.GMarkerGoogleType.arrow));

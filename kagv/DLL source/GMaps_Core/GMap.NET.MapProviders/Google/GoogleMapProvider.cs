@@ -17,8 +17,17 @@ namespace GMap.NET.MapProviders {
     public abstract class GoogleMapProviderBase : GMapProvider, RoutingProvider, GeocodingProvider, DirectionsProvider {
         public GoogleMapProviderBase() {
             MaxZoom = null;
-            RefererUrl = string.Format("http://maps.{0}/", Server);
+            RefererUrl = string.Format("https://maps.{0}/", Server);
             Copyright = string.Format("©{0} Google - Map data ©{0} Tele Atlas, Imagery ©{0} TerraMetrics", DateTime.Today.Year);
+            if (File.Exists("apikey.txt"))
+                try
+                {
+                    StreamReader _reader = new StreamReader("apikey.txt");
+                    ApiKey = _reader.ReadLine();
+                    _reader.Close();
+                }
+                catch { ApiKey = string.Empty; }
+            
         }
 
         public readonly string ServerAPIs /* ;}~~ */ = Stuff.GString(/*{^_^}*/"9gERyvblybF8iMuCt/LD6w=="/*d{'_'}b*/);
@@ -390,8 +399,8 @@ namespace GMap.NET.MapProviders {
             return points;
         }
 
-        static readonly string RouteUrlFormatPointLatLng = "http://maps.{6}/maps?f=q&output=dragdir&doflg=p&hl={0}{1}&q=&saddr=@{2},{3}&daddr=@{4},{5}";
-        static readonly string RouteUrlFormatStr = "http://maps.{4}/maps?f=q&output=dragdir&doflg=p&hl={0}{1}&q=&saddr=@{2}&daddr=@{3}";
+        static readonly string RouteUrlFormatPointLatLng = "https://maps.{6}/maps?f=q&output=dragdir&doflg=p&hl={0}{1}&q=&saddr=@{2},{3}&daddr=@{4},{5}";
+        static readonly string RouteUrlFormatStr = "https://maps.{4}/maps?f=q&output=dragdir&doflg=p&hl={0}{1}&q=&saddr=@{2}&daddr=@{3}";
 
         static readonly string WalkingStr = "&mra=ls&dirflg=w";
         static readonly string RouteWithoutHighwaysStr = "&mra=ls&dirflg=dh";
@@ -1234,8 +1243,8 @@ namespace GMap.NET.MapProviders {
             return status;
         }
 
-        static readonly string ReverseGeocoderUrlFormat = "http://maps.{0}/maps/api/geocode/xml?latlng={1},{2}&language={3}&sensor=false";
-        static readonly string GeocoderUrlFormat = "http://maps.{0}/maps/api/geocode/xml?address={1}&language={2}&sensor=false";
+        static readonly string ReverseGeocoderUrlFormat = "https://maps.{0}/maps/api/geocode/xml?latlng={1},{2}&language={3}&sensor=false";
+        static readonly string GeocoderUrlFormat = "https://maps.{0}/maps/api/geocode/xml?address={1}&language={2}&sensor=false";
 
         #endregion
 
@@ -1344,10 +1353,10 @@ namespace GMap.NET.MapProviders {
         DirectionsStatusCode GetDirectionsUrl(string url, out GDirections direction) {
             DirectionsStatusCode ret = DirectionsStatusCode.UNKNOWN_ERROR;
             direction = null;
-
+            kagv.ApiKey _ApiKey_form;
             try {
                 string kml = GMaps.Instance.UseDirectionsCache ? Cache.Instance.GetContent(url, CacheType.DirectionsCache) : string.Empty;
-
+               
                 bool cache = false;
 
                 if (string.IsNullOrEmpty(kml)) {
@@ -1361,6 +1370,20 @@ namespace GMap.NET.MapProviders {
                     }
 
                     kml = GetContentUsingHttp(urls);
+                    if (kml.Contains("OVER_QUERY_LIMIT"))
+                    {
+                        var result = System.Windows.Forms.MessageBox.Show(
+                            "Your daily limit of requests to Google servers has\n" +
+                            "been exhausted. You can use an ApiKey for unlimited requests.\n" +
+                            "Insert ApiKey now?",
+                            "Limit to daily requests.",
+                            System.Windows.Forms.MessageBoxButtons.YesNo);
+                        if (result == System.Windows.Forms.DialogResult.Yes)
+                        {
+                            _ApiKey_form = new kagv.ApiKey();
+                            _ApiKey_form.ShowDialog();
+                        }
+                    }
 
                     if (!string.IsNullOrEmpty(kml)) {
                         cache = true;
@@ -1867,10 +1890,10 @@ namespace GMap.NET.MapProviders {
             }
         }
 
-        static readonly string DirectionUrlFormatStr = "http://maps.{7}/maps/api/directions/xml?origin={0}&destination={1}&sensor={2}&language={3}{4}{5}{6}";
-        static readonly string DirectionUrlFormatPoint = "http://maps.{9}/maps/api/directions/xml?origin={0},{1}&destination={2},{3}&sensor={4}&language={5}{6}{7}{8}";
-        static readonly string DirectionUrlFormatWaypoint = "http://maps.{8}/maps/api/directions/xml?origin={0},{1}&waypoints={2}&destination={9},{10}&sensor={3}&language={4}{5}{6}{7}";
-        static readonly string DirectionUrlFormatWaypointStr = "http://maps.{7}/maps/api/directions/xml?origin={0}&waypoints={1}&destination={8}&sensor={2}&language={3}{4}{5}{6}";
+        static readonly string DirectionUrlFormatStr = "https://maps.{7}/maps/api/directions/xml?origin={0}&destination={1}&sensor={2}&language={3}{4}{5}{6}";
+        static readonly string DirectionUrlFormatPoint = "https://maps.{9}/maps/api/directions/xml?origin={0},{1}&destination={2},{3}&sensor={4}&language={5}{6}{7}{8}";
+        static readonly string DirectionUrlFormatWaypoint = "https://maps.{8}/maps/api/directions/xml?origin={0},{1}&waypoints={2}&destination={9},{10}&sensor={3}&language={4}{5}{6}{7}";
+        static readonly string DirectionUrlFormatWaypointStr = "https://maps.{7}/maps/api/directions/xml?origin={0}&waypoints={1}&destination={8}&sensor={2}&language={3}{4}{5}{6}";
 
         #endregion
 
@@ -1982,6 +2005,6 @@ namespace GMap.NET.MapProviders {
 
         static readonly string UrlFormatServer = "mt";
         static readonly string UrlFormatRequest = "vt";
-        static readonly string UrlFormat = "http://{0}{1}.{10}/maps/{2}/lyrs={3}&hl={4}&x={5}{6}&y={7}&z={8}&s={9}";
+        static readonly string UrlFormat = "https://{0}{1}.{10}/maps/{2}/lyrs={3}&hl={4}&x={5}{6}&y={7}&z={8}&s={9}";
     }
 }
