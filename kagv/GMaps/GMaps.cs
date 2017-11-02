@@ -100,8 +100,8 @@ namespace kagv {
         }
 
         private void mymap_MouseClick(object sender, MouseEventArgs e) {
-
-            if (e.Button == MouseButtons.Left) //place markers
+            
+            if (e.Button == MouseButtons.Left && !mymap.IsDragging) //place markers
             {
                 PointLatLng final = new PointLatLng(
                     mymap.FromLocalToLatLng(e.X, e.Y).Lat, 
