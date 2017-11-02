@@ -101,46 +101,21 @@ namespace kagv {
 
         private void mymap_MouseClick(object sender, MouseEventArgs e) {
 
-            if (e.Button == MouseButtons.Right) {
-                double remoteLat = mymap.FromLocalToLatLng(e.X, e.Y).Lat;
-                double remoteLng = mymap.FromLocalToLatLng(e.X, e.Y).Lng;
-                mymap.RoutesEnabled = true;
-
-                PointLatLng initial = new PointLatLng(mymap.Position.Lat, mymap.Position.Lng);
-                PointLatLng final = new PointLatLng(remoteLat, remoteLng);
-
-                GDirections dir = null;
-                var route = new DirectionsStatusCode();
-                try {
-                    route = GMap.NET.MapProviders.GMapProviders.GoogleMap.GetDirections(out dir, initial, final, false, false, true, false, false);
-                    GMapRoute maproute = new GMapRoute(dir.Route, "My route");
-                    GMapOverlay overlay = new GMapOverlay("My Overlay");
-                    overlay.Routes.Add(maproute);
-                    mymap.Overlays.Add(overlay);
-                    mymap.UpdateRouteLocalPosition(maproute);
-                    mymap.Invalidate();
-                    double dist = maproute.Distance;
-                    MessageBox.Show(dist + " kms");
-                } catch {
-                    MessageBox.Show("Cannot create route to an unwalkable position.");
-                    return;
-                }
-
-            }
-            else if (e.Button == MouseButtons.Middle) //place markers
+            if (e.Button == MouseButtons.Left) //place markers
             {
-                double remoteLat = mymap.FromLocalToLatLng(e.X, e.Y).Lat;
-                double remoteLng = mymap.FromLocalToLatLng(e.X, e.Y).Lng;
-                mymap.RoutesEnabled = true;
-
-                PointLatLng initial = new PointLatLng(mymap.Position.Lat, mymap.Position.Lng);
-                PointLatLng final = new PointLatLng(remoteLat, remoteLng);
+                PointLatLng final = new PointLatLng(
+                    mymap.FromLocalToLatLng(e.X, e.Y).Lat, 
+                    mymap.FromLocalToLatLng(e.X, e.Y).Lng
+                    );
 
                 Destinations.Add(final);
                 
                 _markers_overlay.Add(new GMapOverlay("Marker" + Convert.ToString(Destinations.Count - 1)));
 
-                _markers_overlay[_markers_overlay.Count - 1].Markers.Add(new GMap.NET.WindowsForms.Markers.GMarkerGoogle(final, GMap.NET.WindowsForms.Markers.GMarkerGoogleType.arrow));
+                _markers_overlay[_markers_overlay.Count - 1].Markers.Add(
+                    new GMap.NET.WindowsForms.Markers.GMarkerGoogle(
+                        final, 
+                        GMap.NET.WindowsForms.Markers.GMarkerGoogleType.arrow));
                 mymap.UpdateMarkerLocalPosition(_markers_overlay[_markers_overlay.Count - 1].Markers[0]);
                 mymap.Overlays.Add(_markers_overlay[_markers_overlay.Count - 1]);
 
