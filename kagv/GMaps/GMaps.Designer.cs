@@ -44,6 +44,11 @@
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showCrossToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reversedWheelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.routeFindingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.avoidHighwaysToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.avoidTollsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.useWalkingModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.metricToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mymap = new GMap.NET.WindowsForms.GMapControl();
             this.gb_settings.SuspendLayout();
             this.gb_coords.SuspendLayout();
@@ -209,7 +214,8 @@
             // 
             this.preferencesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.showCrossToolStripMenuItem,
-            this.reversedWheelToolStripMenuItem});
+            this.reversedWheelToolStripMenuItem,
+            this.routeFindingToolStripMenuItem});
             this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
             this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(80, 20);
             this.preferencesToolStripMenuItem.Text = "Preferences";
@@ -229,6 +235,43 @@
             this.reversedWheelToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
             this.reversedWheelToolStripMenuItem.Text = "Reversed Wheel";
             this.reversedWheelToolStripMenuItem.Click += new System.EventHandler(this.reversedWheelToolStripMenuItem_Click);
+            // 
+            // routeFindingToolStripMenuItem
+            // 
+            this.routeFindingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.avoidHighwaysToolStripMenuItem,
+            this.avoidTollsToolStripMenuItem,
+            this.useWalkingModeToolStripMenuItem,
+            this.metricToolStripMenuItem});
+            this.routeFindingToolStripMenuItem.Name = "routeFindingToolStripMenuItem";
+            this.routeFindingToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.routeFindingToolStripMenuItem.Text = "Route finding...";
+            // 
+            // avoidHighwaysToolStripMenuItem
+            // 
+            this.avoidHighwaysToolStripMenuItem.Name = "avoidHighwaysToolStripMenuItem";
+            this.avoidHighwaysToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.avoidHighwaysToolStripMenuItem.Text = "Avoid Highways";
+            // 
+            // avoidTollsToolStripMenuItem
+            // 
+            this.avoidTollsToolStripMenuItem.Name = "avoidTollsToolStripMenuItem";
+            this.avoidTollsToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.avoidTollsToolStripMenuItem.Text = "Avoid Tolls";
+            // 
+            // useWalkingModeToolStripMenuItem
+            // 
+            this.useWalkingModeToolStripMenuItem.Name = "useWalkingModeToolStripMenuItem";
+            this.useWalkingModeToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.useWalkingModeToolStripMenuItem.Text = "Use Walking Mode";
+            // 
+            // metricToolStripMenuItem
+            // 
+            this.metricToolStripMenuItem.Checked = true;
+            this.metricToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.metricToolStripMenuItem.Name = "metricToolStripMenuItem";
+            this.metricToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.metricToolStripMenuItem.Text = "Use origin based units";
             // 
             // mymap
             // 
@@ -308,5 +351,10 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label pb_calculated;
         private System.Windows.Forms.ProgressBar pb;
+        private System.Windows.Forms.ToolStripMenuItem routeFindingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem avoidHighwaysToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem avoidTollsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem useWalkingModeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem metricToolStripMenuItem;
     }
 }

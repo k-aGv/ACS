@@ -125,7 +125,11 @@ namespace kagv {
                         out GDirections _d,
                         Destinations[Destinations.Count - 2],
                         Destinations[Destinations.Count - 1],
-                        false, false, false, false, false
+                        avoidHighwaysToolStripMenuItem.Checked,
+                        avoidTollsToolStripMenuItem.Checked,
+                        useWalkingModeToolStripMenuItem.Checked,
+                        false,
+                        metricToolStripMenuItem.Checked
                         );
                     try
                     {
