@@ -242,5 +242,12 @@ namespace kagv {
             pb_calculated.Text = "Completed... " + ((100 * interval) / (Destinations.Count * Destinations.Count)) + "%\nDistances calculated: " + interval + "/" + Destinations.Count * Destinations.Count;
             pb.PerformStep();
         }
+
+        private void mymap_KeyPress(object sender, KeyPressEventArgs e) {
+            if (mymap.Focused) {
+                mymap.SelectedArea = new RectLatLng(0, 0, 0, 0);
+                mymap.Refresh();
+            }
+        }
     }
 }

@@ -299,6 +299,7 @@
             this.mymap.Size = new System.Drawing.Size(877, 609);
             this.mymap.TabIndex = 3;
             this.mymap.Zoom = 0D;
+            this.mymap.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.mymap_KeyPress);
             this.mymap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.mymap_MouseClick);
             this.mymap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mymap_MouseMove);
             // 
