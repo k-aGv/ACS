@@ -174,6 +174,7 @@ namespace kagv {
             lb_heightlat.Text = "HeightLat:\r\n" + mymap.ViewArea.HeightLat + "";
 
             lb_coords.Text = "Current coordinates:\r\n" + "X/Lat:" + remoteLat + "\r\n" + "Y/Lng:" + remoteLng;
+            mymap.Refresh();
         }
 
         private void getScreenShotToolStripMenuItem_Click(object sender, EventArgs e) {
