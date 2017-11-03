@@ -120,15 +120,15 @@ namespace kagv {
                 double remoteLat = mymap.FromLocalToLatLng(e.X, e.Y).Lat;
                 double remoteLng = mymap.FromLocalToLatLng(e.X, e.Y).Lng;
                
+                //GoogleSatelliteMap is more accurate while trying to find addresses
                 GeoCoderStatusCode status;
-                var ret = GMap.NET.MapProviders.GMapProviders.GoogleMap.GetPlacemark(_markers_overlay[_markers_overlay.Count - 1].Markers[0].Position, out status);
+                var ret = GMap.NET.MapProviders.GMapProviders.GoogleSatelliteMap.GetPlacemark(_markers_overlay[_markers_overlay.Count - 1].Markers[0].Position, out status);
                 if (status == GeoCoderStatusCode.G_GEO_SUCCESS && ret != null) {
-                    _markers_overlay[_markers_overlay.Count - 1].Markers[0].ToolTipText = ret.Value.Address;
+                    _markers_overlay[_markers_overlay.Count - 1].Markers[0].ToolTipText = ret.Value.Address + "," + ret.Value.StreetNumber;
                     //_markers_overlay[_markers_overlay.Count - 1].Markers[0].ToolTip.Foreground
                     _markers_overlay[_markers_overlay.Count - 1].Markers[0].ToolTipMode = MarkerTooltipMode.Always;
                 }
-
-
+                
                 mymap.UpdateMarkerLocalPosition(_markers_overlay[_markers_overlay.Count - 1].Markers[0]);
                 mymap.Overlays.Add(_markers_overlay[_markers_overlay.Count - 1]);
 
