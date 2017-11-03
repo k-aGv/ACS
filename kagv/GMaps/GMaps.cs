@@ -115,7 +115,7 @@ namespace kagv {
                 _markers_overlay[_markers_overlay.Count - 1].Markers.Add(
                     new GMap.NET.WindowsForms.Markers.GMarkerGoogle(
                         final, 
-                        GMap.NET.WindowsForms.Markers.GMarkerGoogleType.arrow));
+                        GMap.NET.WindowsForms.Markers.GMarkerGoogleType.green));
                 mymap.UpdateMarkerLocalPosition(_markers_overlay[_markers_overlay.Count - 1].Markers[0]);
                 mymap.Overlays.Add(_markers_overlay[_markers_overlay.Count - 1]);
 
