@@ -25,7 +25,8 @@ namespace kagv
             _writer.WriteLine(tb_ApiKey.Text);
             _writer.Close();
             MessageBox.Show("The application will now restart in order for\n" +
-                "the ApiKey you applied to be parsed.");
+                "the ApiKey you applied to be parsed.The key's validity will\n"+
+                "be checked while using the API itself");
             Application.Restart();
         }
 
