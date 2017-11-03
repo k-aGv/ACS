@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ApiKey));
             this.label1 = new System.Windows.Forms.Label();
             this.tb_ApiKey = new System.Windows.Forms.TextBox();
             this.btn_OK = new System.Windows.Forms.Button();
@@ -94,6 +95,7 @@
             this.Controls.Add(this.btn_OK);
             this.Controls.Add(this.tb_ApiKey);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ApiKey";
             this.Text = "ApiKey";
             this.ResumeLayout(false);
