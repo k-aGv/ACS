@@ -98,7 +98,7 @@ namespace kagv {
             //set the label to the bottom
             label1.Location = new Point(10, mymap.Location.Y + mymap.Height + 1);
         }
-
+       
         private void mymap_MouseClick(object sender, MouseEventArgs e) {
             
             if (e.Button == MouseButtons.Left && !mymap.IsDragging) //place markers
@@ -116,6 +116,19 @@ namespace kagv {
                     new GMap.NET.WindowsForms.Markers.GMarkerGoogle(
                         final, 
                         GMap.NET.WindowsForms.Markers.GMarkerGoogleType.green));
+
+                double remoteLat = mymap.FromLocalToLatLng(e.X, e.Y).Lat;
+                double remoteLng = mymap.FromLocalToLatLng(e.X, e.Y).Lng;
+               
+                GeoCoderStatusCode status;
+                var ret = GMap.NET.MapProviders.GMapProviders.GoogleMap.GetPlacemark(_markers_overlay[_markers_overlay.Count - 1].Markers[0].Position, out status);
+                if (status == GeoCoderStatusCode.G_GEO_SUCCESS && ret != null) {
+                    _markers_overlay[_markers_overlay.Count - 1].Markers[0].ToolTipText = ret.Value.Address;
+                    //_markers_overlay[_markers_overlay.Count - 1].Markers[0].ToolTip.Foreground
+                    _markers_overlay[_markers_overlay.Count - 1].Markers[0].ToolTipMode = MarkerTooltipMode.Always;
+                }
+
+
                 mymap.UpdateMarkerLocalPosition(_markers_overlay[_markers_overlay.Count - 1].Markers[0]);
                 mymap.Overlays.Add(_markers_overlay[_markers_overlay.Count - 1]);
 
