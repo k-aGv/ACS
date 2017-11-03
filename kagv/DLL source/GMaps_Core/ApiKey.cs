@@ -24,10 +24,12 @@ namespace kagv
             StreamWriter _writer = new StreamWriter("apikey.txt");
             _writer.WriteLine(tb_ApiKey.Text);
             _writer.Close();
+            DialogResult _result = 
             MessageBox.Show("The application will now restart in order for\n" +
                 "the ApiKey you applied to be parsed.The key's validity will\n"+
-                "be checked while using the API itself");
-            Application.Restart();
+                "be checked while using the API itself","",MessageBoxButtons.OK,MessageBoxIcon.Information);
+            if (_result == DialogResult.OK)
+                Application.Restart();
         }
 
         private void btn_Exit_Click(object sender, EventArgs e)
