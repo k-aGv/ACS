@@ -118,10 +118,10 @@
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
-    <Compile Include="ApiKey.cs">
+    <Compile Include="DLL source\GMaps_Core\ApiKey.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ApiKey.Designer.cs">
+    <Compile Include="DLL source\GMaps_Core\ApiKey.Designer.cs">
       <DependentUpon>ApiKey.cs</DependentUpon>
     </Compile>
     <Compile Include="DLL source\GMaps_Core\GMap.NET.CacheProviders\MemoryCache.cs" />
@@ -406,7 +406,7 @@
     <EmbeddedResource Include="ACSAlgorithm.resx">
       <DependentUpon>ACSAlgorithm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ApiKey.resx">
+    <EmbeddedResource Include="DLL source\GMaps_Core\ApiKey.resx">
       <DependentUpon>ApiKey.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DLL source\GMaps_Forms\GMap.NET.WindowsForms\TilePrefetcher.resx">
