@@ -38,5 +38,10 @@ namespace kagv
         {
             System.Diagnostics.Process.Start("https://developers.google.com/maps/documentation/javascript/get-api-key");
         }
+
+        private void ApiKey_Load(object sender, EventArgs e) {
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+        }
     }
 }

@@ -98,6 +98,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ApiKey";
             this.Text = "ApiKey";
+            this.Load += new System.EventHandler(this.ApiKey_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
