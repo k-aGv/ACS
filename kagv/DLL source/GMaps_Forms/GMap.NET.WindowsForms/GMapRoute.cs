@@ -122,14 +122,21 @@ namespace GMap.NET.WindowsForms {
             }
         }
 
-        public static readonly Pen DefaultStroke = new Pen(Color.FromArgb(144, Color.MidnightBlue));
-
+        public static readonly int DefaultTransparency = 144;
+        public static readonly Pen DefaultStroke = new Pen(Color.FromArgb(DefaultTransparency, Color.MidnightBlue));
+        
 
         /// <summary>
         /// specifies how the outline is painted
         /// </summary>
         [NonSerialized]
         public Pen Stroke = DefaultStroke;
+
+        /// <summary>
+        /// Specifies the color transparency
+        /// </summary>
+        [NonSerialized]
+        public int StrokeTransparency = DefaultTransparency;
 
         public readonly List<GPoint> LocalPoints = new List<GPoint>();
 
