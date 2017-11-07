@@ -111,18 +111,13 @@ namespace kagv {
                 Destinations.Add(final);
                 
                 _markers_overlay.Add(new GMapOverlay("Marker" + Convert.ToString(Destinations.Count - 1)));
-
                 _markers_overlay[_markers_overlay.Count - 1].Markers.Add(
                     new GMap.NET.WindowsForms.Markers.GMarkerGoogle(
                         final, 
                         GMap.NET.WindowsForms.Markers.GMarkerGoogleType.green));
-
-                double remoteLat = mymap.FromLocalToLatLng(e.X, e.Y).Lat;
-                double remoteLng = mymap.FromLocalToLatLng(e.X, e.Y).Lng;
-               
+                
                 //GoogleSatelliteMap is more accurate while trying to find addresses
-                GeoCoderStatusCode status;
-                var ret = GMap.NET.MapProviders.GMapProviders.GoogleSatelliteMap.GetPlacemark(_markers_overlay[_markers_overlay.Count - 1].Markers[0].Position, out status);
+                var ret = GMap.NET.MapProviders.GMapProviders.GoogleSatelliteMap.GetPlacemark(_markers_overlay[_markers_overlay.Count - 1].Markers[0].Position, out GeoCoderStatusCode status);
                 if (status == GeoCoderStatusCode.G_GEO_SUCCESS && ret != null) {
                     _markers_overlay[_markers_overlay.Count - 1].Markers[0].ToolTipText = ret.Value.Address;
                     //_markers_overlay[_markers_overlay.Count - 1].Markers[0].ToolTip.Foreground
@@ -187,7 +182,6 @@ namespace kagv {
             lb_heightlat.Text = "HeightLat:\r\n" + mymap.ViewArea.HeightLat + "";
 
             lb_coords.Text = "Current coordinates:\r\n" + "X/Lat:" + remoteLat + "\r\n" + "Y/Lng:" + remoteLng;
-            mymap.Refresh();
         }
 
         private void getScreenShotToolStripMenuItem_Click(object sender, EventArgs e) {
