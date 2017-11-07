@@ -124,7 +124,7 @@ namespace kagv {
                 GeoCoderStatusCode status;
                 var ret = GMap.NET.MapProviders.GMapProviders.GoogleSatelliteMap.GetPlacemark(_markers_overlay[_markers_overlay.Count - 1].Markers[0].Position, out status);
                 if (status == GeoCoderStatusCode.G_GEO_SUCCESS && ret != null) {
-                    _markers_overlay[_markers_overlay.Count - 1].Markers[0].ToolTipText = ret.Value.Address + "," + ret.Value.StreetNumber;
+                    _markers_overlay[_markers_overlay.Count - 1].Markers[0].ToolTipText = ret.Value.Address+"EEEEEEEEEEE";
                     //_markers_overlay[_markers_overlay.Count - 1].Markers[0].ToolTip.Foreground
                     _markers_overlay[_markers_overlay.Count - 1].Markers[0].ToolTipMode = MarkerTooltipMode.Always;
                 }
