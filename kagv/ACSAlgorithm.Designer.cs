@@ -51,6 +51,8 @@
             this.NumIts = new System.Windows.Forms.NumericUpDown();
             this.gb_parameters = new System.Windows.Forms.GroupBox();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.cb_bechmark = new System.Windows.Forms.CheckBox();
+            this.cb_lengths = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.avalue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bvalue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xvalue)).BeginInit();
@@ -80,7 +82,7 @@
             // 
             this.ACS.Location = new System.Drawing.Point(12, 12);
             this.ACS.Name = "ACS";
-            this.ACS.Size = new System.Drawing.Size(122, 23);
+            this.ACS.Size = new System.Drawing.Size(108, 23);
             this.ACS.TabIndex = 1;
             this.ACS.Text = "Ant Colony System";
             this.ACS.UseVisualStyleBackColor = true;
@@ -89,7 +91,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(9, 285);
+            this.label8.Location = new System.Drawing.Point(9, 323);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(29, 13);
             this.label8.TabIndex = 39;
@@ -98,7 +100,7 @@
             // tb_error
             // 
             this.tb_error.Enabled = false;
-            this.tb_error.Location = new System.Drawing.Point(76, 282);
+            this.tb_error.Location = new System.Drawing.Point(76, 320);
             this.tb_error.Name = "tb_error";
             this.tb_error.ReadOnly = true;
             this.tb_error.Size = new System.Drawing.Size(100, 20);
@@ -129,7 +131,7 @@
             // Length
             // 
             this.Length.AutoSize = true;
-            this.Length.Location = new System.Drawing.Point(9, 256);
+            this.Length.Location = new System.Drawing.Point(9, 294);
             this.Length.Name = "Length";
             this.Length.Size = new System.Drawing.Size(40, 13);
             this.Length.TabIndex = 35;
@@ -138,7 +140,7 @@
             // tb_length
             // 
             this.tb_length.Enabled = false;
-            this.tb_length.Location = new System.Drawing.Point(76, 256);
+            this.tb_length.Location = new System.Drawing.Point(76, 294);
             this.tb_length.Name = "tb_length";
             this.tb_length.ReadOnly = true;
             this.tb_length.Size = new System.Drawing.Size(100, 20);
@@ -327,7 +329,7 @@
             this.gb_parameters.Controls.Add(this.lb_q0);
             this.gb_parameters.Controls.Add(this.lb_rateLocal);
             this.gb_parameters.Controls.Add(this.lb_b);
-            this.gb_parameters.Location = new System.Drawing.Point(12, 41);
+            this.gb_parameters.Location = new System.Drawing.Point(12, 79);
             this.gb_parameters.Name = "gb_parameters";
             this.gb_parameters.Size = new System.Drawing.Size(200, 202);
             this.gb_parameters.TabIndex = 42;
@@ -356,11 +358,37 @@
             this.chart1.TabIndex = 45;
             this.chart1.Text = "chart2";
             // 
+            // cb_bechmark
+            // 
+            this.cb_bechmark.AutoSize = true;
+            this.cb_bechmark.Location = new System.Drawing.Point(12, 64);
+            this.cb_bechmark.Name = "cb_bechmark";
+            this.cb_bechmark.Size = new System.Drawing.Size(109, 17);
+            this.cb_bechmark.TabIndex = 46;
+            this.cb_bechmark.Text = "Read Benchmark";
+            this.cb_bechmark.UseVisualStyleBackColor = true;
+            this.cb_bechmark.CheckedChanged += new System.EventHandler(this.cb_bechmark_CheckedChanged);
+            // 
+            // cb_lengths
+            // 
+            this.cb_lengths.AutoSize = true;
+            this.cb_lengths.Checked = true;
+            this.cb_lengths.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cb_lengths.Location = new System.Drawing.Point(12, 41);
+            this.cb_lengths.Name = "cb_lengths";
+            this.cb_lengths.Size = new System.Drawing.Size(102, 17);
+            this.cb_lengths.TabIndex = 47;
+            this.cb_lengths.Text = "Read Distances";
+            this.cb_lengths.UseVisualStyleBackColor = true;
+            this.cb_lengths.CheckedChanged += new System.EventHandler(this.cb_lengths_CheckedChanged);
+            // 
             // ACSAlgorithm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(675, 308);
+            this.ClientSize = new System.Drawing.Size(675, 343);
+            this.Controls.Add(this.cb_lengths);
+            this.Controls.Add(this.cb_bechmark);
             this.Controls.Add(this.chart1);
             this.Controls.Add(this.calc_stop_BTN);
             this.Controls.Add(this.ACS);
@@ -416,5 +444,7 @@
         private System.Windows.Forms.NumericUpDown NumIts;
         private System.Windows.Forms.GroupBox gb_parameters;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.CheckBox cb_bechmark;
+        private System.Windows.Forms.CheckBox cb_lengths;
     }
 }

@@ -424,7 +424,7 @@ namespace kagv {
 
 
         }
-        private double[,] ReadFile(string filename) {
+        private double[,] ReadBenchmark(string filename) {
             double[,] _Customers;
 
             //handle raw files from TCS website
@@ -531,12 +531,65 @@ namespace kagv {
             chart1.Size = new Size(600, (pb.Location.Y + pb.Size.Height) - 25);
             Size = new Size((chart1.Location.X + chart1.Width + 25), pb.Location.Y + pb.Size.Height + 50);
 
+            if(cb_lengths.Checked)
+                RunACS(ReadLengths(filename));
+            
+            if(cb_bechmark.Checked)
+                RunACS(ReadBenchmark(filename));
 
 
+        }
 
-            RunACS(ReadFile(filename));
+        private double[,] ReadLengths(string filename)
+        {
+            double[,] _Customers;
+            StreamReader streamReader = new StreamReader(filename);
+
+            int SizeCustomers = 0;
+            do
+            {
+                if (streamReader.ReadLine() != "")
+                    SizeCustomers++;
+            } while (!streamReader.EndOfStream);
+            
+            streamReader.Close();
+            int _customerSize = Convert.ToInt32(Math.Sqrt(SizeCustomers));
+            _Customers = new double[_customerSize,_customerSize];
+
+            streamReader = new StreamReader(filename);
+            char[] delim = { ':' };
+            string _line = "";
+            string[] _info;
+            int i = 0;
+            int j = 0;
+            do
+            {
+                _line = streamReader.ReadLine();
+                if (_line != "")
+                {
+                    _info = _line.Split(delim, StringSplitOptions.RemoveEmptyEntries);
+                    _Customers[i, j] = Convert.ToDouble(_info[1]);
+                    j++;
 
 
+                    if (j == _customerSize)
+                    {
+                        j = 0;
+                        i++;
+                    }
+                }
+            } while (i<_customerSize);
+            /*
+            StreamWriter _writer = new StreamWriter("justfordebugpurposes.txt");
+            for (int p = 0; p < _customerSize; p++)
+            {
+                for (int k = 0; k < _customerSize; k++)
+                    _writer.WriteLine(_Customers[p, k] + "\n");
+                _writer.WriteLine("\n");
+            }
+
+            _writer.Close();*/
+            return _Customers;
         }
 
         private void Ants_Load(object sender, EventArgs e) {
@@ -593,6 +646,16 @@ namespace kagv {
         private void ACSAlgorithm_FormClosing(object sender, FormClosingEventArgs e) {
             if (File.Exists("_tmpMap.txt"))
                 File.Delete("_tmpMap.txt");
+        }
+
+        private void cb_bechmark_CheckedChanged(object sender, EventArgs e)
+        {
+            cb_lengths.Checked = !cb_bechmark.Checked;
+        }
+
+        private void cb_lengths_CheckedChanged(object sender, EventArgs e)
+        {
+            cb_bechmark.Checked = !cb_lengths.Checked;
         }
     }
 }
