@@ -31,7 +31,7 @@
             this.gb_coords = new System.Windows.Forms.GroupBox();
             this.combo_scale = new System.Windows.Forms.ComboBox();
             this.cb_scale = new System.Windows.Forms.CheckBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btn_move = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.lb_navigate = new System.Windows.Forms.Label();
             this.lb_coords = new System.Windows.Forms.Label();
@@ -48,7 +48,11 @@
             this.getScreenShotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showCrossToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zoomOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reversedWheelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TargetTheMouseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TargetTheMouseAndChangeCenterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TargetTheCenterOfMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.routeFindingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.avoidHighwaysToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.avoidTollsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -106,7 +110,7 @@
             // 
             this.gb_coords.Controls.Add(this.combo_scale);
             this.gb_coords.Controls.Add(this.cb_scale);
-            this.gb_coords.Controls.Add(this.button2);
+            this.gb_coords.Controls.Add(this.btn_move);
             this.gb_coords.Controls.Add(this.textBox1);
             this.gb_coords.Controls.Add(this.lb_navigate);
             this.gb_coords.Controls.Add(this.lb_coords);
@@ -145,15 +149,15 @@
             this.cb_scale.UseVisualStyleBackColor = true;
             this.cb_scale.CheckedChanged += new System.EventHandler(this.cb_scale_CheckedChanged);
             // 
-            // button2
+            // btn_move
             // 
-            this.button2.Location = new System.Drawing.Point(98, 247);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(64, 40);
-            this.button2.TabIndex = 10;
-            this.button2.Text = "Move to location";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.btn_move.Location = new System.Drawing.Point(98, 247);
+            this.btn_move.Name = "btn_move";
+            this.btn_move.Size = new System.Drawing.Size(64, 40);
+            this.btn_move.TabIndex = 10;
+            this.btn_move.Text = "Move to location";
+            this.btn_move.UseVisualStyleBackColor = true;
+            this.btn_move.Click += new System.EventHandler(this.button2_Click);
             // 
             // textBox1
             // 
@@ -274,7 +278,7 @@
             // 
             this.preferencesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.showCrossToolStripMenuItem,
-            this.reversedWheelToolStripMenuItem,
+            this.zoomOptionsToolStripMenuItem,
             this.routeFindingToolStripMenuItem});
             this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
             this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(80, 20);
@@ -285,16 +289,50 @@
             this.showCrossToolStripMenuItem.Checked = true;
             this.showCrossToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.showCrossToolStripMenuItem.Name = "showCrossToolStripMenuItem";
-            this.showCrossToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.showCrossToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.showCrossToolStripMenuItem.Text = "Show Cross";
             this.showCrossToolStripMenuItem.Click += new System.EventHandler(this.showCrossToolStripMenuItem_Click);
+            // 
+            // zoomOptionsToolStripMenuItem
+            // 
+            this.zoomOptionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.reversedWheelToolStripMenuItem,
+            this.TargetTheMouseToolStripMenuItem,
+            this.TargetTheMouseAndChangeCenterToolStripMenuItem,
+            this.TargetTheCenterOfMapToolStripMenuItem});
+            this.zoomOptionsToolStripMenuItem.Name = "zoomOptionsToolStripMenuItem";
+            this.zoomOptionsToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.zoomOptionsToolStripMenuItem.Text = "Zoom options";
             // 
             // reversedWheelToolStripMenuItem
             // 
             this.reversedWheelToolStripMenuItem.Name = "reversedWheelToolStripMenuItem";
-            this.reversedWheelToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.reversedWheelToolStripMenuItem.Size = new System.Drawing.Size(303, 22);
             this.reversedWheelToolStripMenuItem.Text = "Reversed Wheel";
-            this.reversedWheelToolStripMenuItem.Click += new System.EventHandler(this.reversedWheelToolStripMenuItem_Click);
+            this.reversedWheelToolStripMenuItem.Click += new System.EventHandler(this.reversedWheelToolStripMenuItem1_Click);
+            // 
+            // TargetTheMouseToolStripMenuItem
+            // 
+            this.TargetTheMouseToolStripMenuItem.Checked = true;
+            this.TargetTheMouseToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.TargetTheMouseToolStripMenuItem.Name = "TargetTheMouseToolStripMenuItem";
+            this.TargetTheMouseToolStripMenuItem.Size = new System.Drawing.Size(303, 22);
+            this.TargetTheMouseToolStripMenuItem.Text = "Target the mouse";
+            this.TargetTheMouseToolStripMenuItem.Click += new System.EventHandler(this.TargetTheMouseToolStripMenuItem_Click);
+            // 
+            // TargetTheMouseAndChangeCenterToolStripMenuItem
+            // 
+            this.TargetTheMouseAndChangeCenterToolStripMenuItem.Name = "TargetTheMouseAndChangeCenterToolStripMenuItem";
+            this.TargetTheMouseAndChangeCenterToolStripMenuItem.Size = new System.Drawing.Size(303, 22);
+            this.TargetTheMouseAndChangeCenterToolStripMenuItem.Text = "Target the mouse and make it map\'s center";
+            this.TargetTheMouseAndChangeCenterToolStripMenuItem.Click += new System.EventHandler(this.TargetTheMouseAndChangeCenterToolStripMenuItem_Click);
+            // 
+            // TargetTheCenterOfMapToolStripMenuItem
+            // 
+            this.TargetTheCenterOfMapToolStripMenuItem.Name = "TargetTheCenterOfMapToolStripMenuItem";
+            this.TargetTheCenterOfMapToolStripMenuItem.Size = new System.Drawing.Size(303, 22);
+            this.TargetTheCenterOfMapToolStripMenuItem.Text = "Target the center of map";
+            this.TargetTheCenterOfMapToolStripMenuItem.Click += new System.EventHandler(this.TargetTheCenterOfMapToolStripMenuItem_Click);
             // 
             // routeFindingToolStripMenuItem
             // 
@@ -304,7 +342,7 @@
             this.useWalkingModeToolStripMenuItem,
             this.metricToolStripMenuItem});
             this.routeFindingToolStripMenuItem.Name = "routeFindingToolStripMenuItem";
-            this.routeFindingToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.routeFindingToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.routeFindingToolStripMenuItem.Text = "Route finding...";
             // 
             // avoidHighwaysToolStripMenuItem
@@ -409,7 +447,6 @@
         private System.Windows.Forms.ToolStripMenuItem getScreenShotToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showCrossToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem reversedWheelToolStripMenuItem;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label pb_calculated;
         private System.Windows.Forms.ProgressBar pb;
@@ -418,10 +455,15 @@
         private System.Windows.Forms.ToolStripMenuItem avoidTollsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem useWalkingModeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem metricToolStripMenuItem;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btn_move;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label lb_navigate;
         private System.Windows.Forms.ComboBox combo_scale;
         private System.Windows.Forms.CheckBox cb_scale;
+        private System.Windows.Forms.ToolStripMenuItem zoomOptionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reversedWheelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem TargetTheMouseAndChangeCenterToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem TargetTheMouseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem TargetTheCenterOfMapToolStripMenuItem;
     }
 }

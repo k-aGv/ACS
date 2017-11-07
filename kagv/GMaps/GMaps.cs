@@ -86,6 +86,7 @@ namespace kagv {
             mymap.MinZoom = 0;
             mymap.MaxZoom = 18;
             mymap.Zoom = _zoomFactor;
+            mymap.MouseWheelZoomType = MouseWheelZoomType.MousePositionWithoutCenter;
             mymap.Overlays.Add(myobjects);
             mymap.DragButton = MouseButtons.Left;
             mymap.InvertedMouseWheelZooming = false;
@@ -171,7 +172,7 @@ namespace kagv {
 
             mymap.Refresh();
         }
-
+        
         private void mymap_MouseMove(object sender, MouseEventArgs e) {
             //latitude = width
             //longitude = height
@@ -185,7 +186,7 @@ namespace kagv {
             lb_lng.Text = "Lng:\r\n" + mymap.Position.Lng + "";
             lb_widthlng.Text = "WidthLng:\r\n" + mymap.ViewArea.WidthLng + "";
             lb_heightlat.Text = "HeightLat:\r\n" + mymap.ViewArea.HeightLat + "";
-
+            
             lb_coords.Text = "Current coordinates:\r\n" + "X/Lat:" + remoteLat + "\r\n" + "Y/Lng:" + remoteLng;
         }
 
@@ -203,12 +204,7 @@ namespace kagv {
             mymap.ShowCenter = showCrossToolStripMenuItem.Checked;
             mymap.Refresh();
         }
-
-        private void reversedWheelToolStripMenuItem_Click(object sender, EventArgs e) {
-            reversedWheelToolStripMenuItem.Checked = !reversedWheelToolStripMenuItem.Checked;
-            mymap.InvertedMouseWheelZooming = reversedWheelToolStripMenuItem.Checked;
-            mymap.Refresh();
-        }
+        
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -264,6 +260,11 @@ namespace kagv {
 
         private void button2_Click(object sender, EventArgs e)
         {
+            if(textBox1.Text=="")
+            {
+                MessageBox.Show("No destination was given.", "Bad destination request...", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
             var coords = GMap.NET.MapProviders.GMapProviders.GoogleMap.GetPoint(textBox1.Text, out GeoCoderStatusCode _e);
             if (coords.HasValue && _e.Equals(GeoCoderStatusCode.G_GEO_SUCCESS))
             {
@@ -286,6 +287,7 @@ namespace kagv {
         {
             _zoomFactor = mymap.Zoom;
         }
+
         private double getZoomScale()
         {
             int scale=8;
@@ -301,9 +303,38 @@ namespace kagv {
                     scale = 6;
                     break;
             }
-
-
             return scale;
+        }
+
+        private void reversedWheelToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            reversedWheelToolStripMenuItem.Checked = !reversedWheelToolStripMenuItem.Checked;
+            mymap.InvertedMouseWheelZooming = reversedWheelToolStripMenuItem.Checked;
+            mymap.Refresh();
+        }
+
+        private void TargetTheMouseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            mymap.MouseWheelZoomType = MouseWheelZoomType.MousePositionWithoutCenter;
+            TargetTheMouseToolStripMenuItem.Checked = true;
+            TargetTheMouseAndChangeCenterToolStripMenuItem.Checked = false;
+            TargetTheCenterOfMapToolStripMenuItem.Checked = false;
+        }
+
+        private void TargetTheMouseAndChangeCenterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            mymap.MouseWheelZoomType = MouseWheelZoomType.MousePositionAndCenter;
+            TargetTheMouseToolStripMenuItem.Checked = false;
+            TargetTheMouseAndChangeCenterToolStripMenuItem.Checked = true;
+            TargetTheCenterOfMapToolStripMenuItem.Checked = false;
+        }
+
+        private void TargetTheCenterOfMapToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            mymap.MouseWheelZoomType = MouseWheelZoomType.ViewCenter;
+            TargetTheMouseToolStripMenuItem.Checked = false;
+            TargetTheMouseAndChangeCenterToolStripMenuItem.Checked = false;
+            TargetTheCenterOfMapToolStripMenuItem.Checked = true;
         }
     }
 }
