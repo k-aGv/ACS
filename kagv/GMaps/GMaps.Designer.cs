@@ -29,6 +29,11 @@
             this.pb = new System.Windows.Forms.ProgressBar();
             this.button1 = new System.Windows.Forms.Button();
             this.gb_coords = new System.Windows.Forms.GroupBox();
+            this.combo_scale = new System.Windows.Forms.ComboBox();
+            this.cb_scale = new System.Windows.Forms.CheckBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.lb_navigate = new System.Windows.Forms.Label();
             this.lb_coords = new System.Windows.Forms.Label();
             this.lb_heightlat = new System.Windows.Forms.Label();
             this.lb_widthlng = new System.Windows.Forms.Label();
@@ -65,7 +70,7 @@
             this.gb_settings.Controls.Add(this.gb_provider);
             this.gb_settings.Location = new System.Drawing.Point(895, 12);
             this.gb_settings.Name = "gb_settings";
-            this.gb_settings.Size = new System.Drawing.Size(167, 562);
+            this.gb_settings.Size = new System.Drawing.Size(181, 562);
             this.gb_settings.TabIndex = 4;
             this.gb_settings.TabStop = false;
             this.gb_settings.Text = "Settings";
@@ -73,7 +78,7 @@
             // pb_calculated
             // 
             this.pb_calculated.AutoSize = true;
-            this.pb_calculated.Location = new System.Drawing.Point(6, 392);
+            this.pb_calculated.Location = new System.Drawing.Point(7, 425);
             this.pb_calculated.Name = "pb_calculated";
             this.pb_calculated.Size = new System.Drawing.Size(93, 13);
             this.pb_calculated.TabIndex = 11;
@@ -81,7 +86,7 @@
             // 
             // pb
             // 
-            this.pb.Location = new System.Drawing.Point(7, 422);
+            this.pb.Location = new System.Drawing.Point(8, 455);
             this.pb.Name = "pb";
             this.pb.Size = new System.Drawing.Size(154, 23);
             this.pb.Step = 1;
@@ -89,7 +94,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(6, 364);
+            this.button1.Location = new System.Drawing.Point(7, 397);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(149, 23);
             this.button1.TabIndex = 7;
@@ -99,6 +104,11 @@
             // 
             // gb_coords
             // 
+            this.gb_coords.Controls.Add(this.combo_scale);
+            this.gb_coords.Controls.Add(this.cb_scale);
+            this.gb_coords.Controls.Add(this.button2);
+            this.gb_coords.Controls.Add(this.textBox1);
+            this.gb_coords.Controls.Add(this.lb_navigate);
             this.gb_coords.Controls.Add(this.lb_coords);
             this.gb_coords.Controls.Add(this.lb_heightlat);
             this.gb_coords.Controls.Add(this.lb_widthlng);
@@ -106,15 +116,65 @@
             this.gb_coords.Controls.Add(this.lb_lat);
             this.gb_coords.Location = new System.Drawing.Point(7, 82);
             this.gb_coords.Name = "gb_coords";
-            this.gb_coords.Size = new System.Drawing.Size(148, 276);
+            this.gb_coords.Size = new System.Drawing.Size(168, 293);
             this.gb_coords.TabIndex = 6;
             this.gb_coords.TabStop = false;
             this.gb_coords.Text = "Coordinates";
             // 
+            // combo_scale
+            // 
+            this.combo_scale.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.combo_scale.FormattingEnabled = true;
+            this.combo_scale.Items.AddRange(new object[] {
+            "Street",
+            "City",
+            "Country"});
+            this.combo_scale.Location = new System.Drawing.Point(3, 266);
+            this.combo_scale.Name = "combo_scale";
+            this.combo_scale.Size = new System.Drawing.Size(90, 21);
+            this.combo_scale.TabIndex = 12;
+            // 
+            // cb_scale
+            // 
+            this.cb_scale.AutoSize = true;
+            this.cb_scale.Location = new System.Drawing.Point(3, 247);
+            this.cb_scale.Name = "cb_scale";
+            this.cb_scale.Size = new System.Drawing.Size(81, 17);
+            this.cb_scale.TabIndex = 11;
+            this.cb_scale.Text = "Scale zoom";
+            this.cb_scale.UseVisualStyleBackColor = true;
+            this.cb_scale.CheckedChanged += new System.EventHandler(this.cb_scale_CheckedChanged);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(98, 247);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(64, 40);
+            this.button2.TabIndex = 10;
+            this.button2.Text = "Move to location";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(3, 221);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(136, 20);
+            this.textBox1.TabIndex = 9;
+            // 
+            // lb_navigate
+            // 
+            this.lb_navigate.AutoSize = true;
+            this.lb_navigate.Location = new System.Drawing.Point(3, 205);
+            this.lb_navigate.Name = "lb_navigate";
+            this.lb_navigate.Size = new System.Drawing.Size(83, 13);
+            this.lb_navigate.TabIndex = 8;
+            this.lb_navigate.Text = "Location to find:";
+            // 
             // lb_coords
             // 
             this.lb_coords.AutoSize = true;
-            this.lb_coords.Location = new System.Drawing.Point(6, 219);
+            this.lb_coords.Location = new System.Drawing.Point(6, 153);
             this.lb_coords.Name = "lb_coords";
             this.lb_coords.Size = new System.Drawing.Size(103, 13);
             this.lb_coords.TabIndex = 7;
@@ -123,7 +183,7 @@
             // lb_heightlat
             // 
             this.lb_heightlat.AutoSize = true;
-            this.lb_heightlat.Location = new System.Drawing.Point(6, 168);
+            this.lb_heightlat.Location = new System.Drawing.Point(6, 114);
             this.lb_heightlat.Name = "lb_heightlat";
             this.lb_heightlat.Size = new System.Drawing.Size(56, 13);
             this.lb_heightlat.TabIndex = 0;
@@ -132,7 +192,7 @@
             // lb_widthlng
             // 
             this.lb_widthlng.AutoSize = true;
-            this.lb_widthlng.Location = new System.Drawing.Point(6, 124);
+            this.lb_widthlng.Location = new System.Drawing.Point(6, 78);
             this.lb_widthlng.Name = "lb_widthlng";
             this.lb_widthlng.Size = new System.Drawing.Size(56, 13);
             this.lb_widthlng.TabIndex = 0;
@@ -141,7 +201,7 @@
             // lb_lng
             // 
             this.lb_lng.AutoSize = true;
-            this.lb_lng.Location = new System.Drawing.Point(6, 79);
+            this.lb_lng.Location = new System.Drawing.Point(6, 46);
             this.lb_lng.Name = "lb_lng";
             this.lb_lng.Size = new System.Drawing.Size(28, 13);
             this.lb_lng.TabIndex = 0;
@@ -150,7 +210,7 @@
             // lb_lat
             // 
             this.lb_lat.AutoSize = true;
-            this.lb_lat.Location = new System.Drawing.Point(6, 35);
+            this.lb_lat.Location = new System.Drawing.Point(6, 16);
             this.lb_lat.Name = "lb_lat";
             this.lb_lat.Size = new System.Drawing.Size(25, 13);
             this.lb_lat.TabIndex = 0;
@@ -161,7 +221,7 @@
             this.gb_provider.Controls.Add(this.cb_provider);
             this.gb_provider.Location = new System.Drawing.Point(7, 19);
             this.gb_provider.Name = "gb_provider";
-            this.gb_provider.Size = new System.Drawing.Size(154, 57);
+            this.gb_provider.Size = new System.Drawing.Size(168, 57);
             this.gb_provider.TabIndex = 5;
             this.gb_provider.TabStop = false;
             this.gb_provider.Text = "Map provider";
@@ -171,7 +231,7 @@
             this.cb_provider.FormattingEnabled = true;
             this.cb_provider.Location = new System.Drawing.Point(6, 19);
             this.cb_provider.Name = "cb_provider";
-            this.cb_provider.Size = new System.Drawing.Size(142, 21);
+            this.cb_provider.Size = new System.Drawing.Size(156, 21);
             this.cb_provider.TabIndex = 4;
             this.cb_provider.SelectedIndexChanged += new System.EventHandler(this.cb_provider_SelectedIndexChanged);
             // 
@@ -191,7 +251,7 @@
             this.preferencesToolStripMenuItem});
             this.ms_Settings.Location = new System.Drawing.Point(0, 0);
             this.ms_Settings.Name = "ms_Settings";
-            this.ms_Settings.Size = new System.Drawing.Size(1074, 24);
+            this.ms_Settings.Size = new System.Drawing.Size(1088, 24);
             this.ms_Settings.TabIndex = 7;
             this.ms_Settings.Text = "menuStrip1";
             // 
@@ -299,6 +359,7 @@
             this.mymap.Size = new System.Drawing.Size(877, 609);
             this.mymap.TabIndex = 3;
             this.mymap.Zoom = 0D;
+            this.mymap.OnMapZoomChanged += new GMap.NET.MapZoomChanged(this.mymap_OnMapZoomChanged);
             this.mymap.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.mymap_KeyPress);
             this.mymap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.mymap_MouseClick);
             this.mymap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mymap_MouseMove);
@@ -307,7 +368,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1074, 660);
+            this.ClientSize = new System.Drawing.Size(1088, 660);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.gb_settings);
             this.Controls.Add(this.mymap);
@@ -357,5 +418,10 @@
         private System.Windows.Forms.ToolStripMenuItem avoidTollsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem useWalkingModeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem metricToolStripMenuItem;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label lb_navigate;
+        private System.Windows.Forms.ComboBox combo_scale;
+        private System.Windows.Forms.CheckBox cb_scale;
     }
 }

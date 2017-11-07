@@ -41,6 +41,7 @@ namespace kagv {
         List<PointLatLng> Destinations = new List<PointLatLng>();
         List<List<double>> Lengths = new List<List<double>>();
         List<GMapOverlay> _markers_overlay = new List<GMapOverlay>();
+        double _zoomFactor;
 
         public void ReloadMap() {
             gmaps_Load(new object(), new EventArgs());
@@ -59,6 +60,7 @@ namespace kagv {
             int BoardersWidth = 2 * SystemInformation.Border3DSize.Width;
             Location = new Point(s.WorkingArea.X, s.WorkingArea.Y);
             Size = new Size(usableSizeWidth, usableSizeHeight);
+            _zoomFactor = 8;
 
 
             gb_settings.Location = new Point(Size.Width - gb_settings.Width - BoardersWidth - margin, gb_settings.Location.Y);
@@ -83,10 +85,13 @@ namespace kagv {
             mymap.SetPositionByKeywords("greece,thessaloniki");
             mymap.MinZoom = 0;
             mymap.MaxZoom = 18;
-            mymap.Zoom = 8;
+            mymap.Zoom = _zoomFactor;
             mymap.Overlays.Add(myobjects);
             mymap.DragButton = MouseButtons.Left;
             mymap.InvertedMouseWheelZooming = false;
+
+            cb_scale.Checked = true;
+            combo_scale.SelectedIndex = 1; //city scale as default
 
 
             //its not a joke ->
@@ -255,6 +260,50 @@ namespace kagv {
                 mymap.SelectedArea = new RectLatLng(0, 0, 0, 0);
                 mymap.Refresh();
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var coords = GMap.NET.MapProviders.GMapProviders.GoogleMap.GetPoint(textBox1.Text, out GeoCoderStatusCode _e);
+            if (coords.HasValue && _e.Equals(GeoCoderStatusCode.G_GEO_SUCCESS))
+            {
+                mymap.SetPositionByKeywords(textBox1.Text);
+                if (combo_scale.Enabled)
+                    mymap.Zoom = getZoomScale();
+                else
+                    mymap.Zoom = _zoomFactor;
+            }
+            else
+                MessageBox.Show("Destination \"" + textBox1.Text + "\" could not be found.","Bad destination request...",MessageBoxButtons.OK,MessageBoxIcon.Error);
+        }
+
+        private void cb_scale_CheckedChanged(object sender, EventArgs e)
+        {
+            combo_scale.Enabled = cb_scale.Checked;
+        }
+        
+        private void mymap_OnMapZoomChanged()
+        {
+            _zoomFactor = mymap.Zoom;
+        }
+        private double getZoomScale()
+        {
+            int scale=8;
+            switch (combo_scale.SelectedIndex)
+            {
+                case 0:
+                    scale = 16;
+                    break;
+                case 1:
+                    scale = 11;
+                    break;
+                case 2:
+                    scale = 6;
+                    break;
+            }
+
+
+            return scale;
         }
     }
 }
