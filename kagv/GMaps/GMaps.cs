@@ -257,7 +257,7 @@ namespace kagv {
         }
 
         private void mymap_KeyPress(object sender, KeyPressEventArgs e) {
-            if (mymap.Focused) {
+            if (mymap.Focused && e.KeyChar == '\x1B') { // =(char)27 . ESC ASCII code
                 mymap.SelectedArea = new RectLatLng(0, 0, 0, 0);
                 mymap.Refresh();
             }
