@@ -46,6 +46,7 @@ namespace kagv {
 
             if (sfd_exportmap.ShowDialog() == DialogResult.OK) {
                 StreamWriter _writer = new StreamWriter(sfd_exportmap.FileName);
+                _writer.WriteLine("{Benchmarks}");
                 for (int i = 0; i < Globals._HeightBlocks; i++)
                     for (int j = 0; j < Globals._WidthBlocks; j++)
                         if (m_rectangles[j][i].boxType == BoxType.Load) {

@@ -221,6 +221,8 @@ namespace kagv {
 
             Lengths = new List<List<double>>();
             StreamWriter _writer = new StreamWriter("routeDistances.txt");
+            _writer.WriteLine("{Distances}");
+
             pb.Maximum = Destinations.Count * Destinations.Count;
             int interval = 0;
 

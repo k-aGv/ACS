@@ -16,6 +16,7 @@ namespace kagv {
             }
 
             StreamWriter _writer = new StreamWriter("_tmpMap.txt");
+            _writer.WriteLine("{Benchmarks}");
             for (int i = 0; i < Globals._HeightBlocks; i++)
                 for (int j = 0; j < Globals._WidthBlocks; j++)
                     if (m_rectangles[j][i].boxType == BoxType.Load) {

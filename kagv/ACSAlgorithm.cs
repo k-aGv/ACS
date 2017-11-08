@@ -43,6 +43,12 @@ namespace kagv {
         bool stopped = false;
 
         private void RunACS(double[,] Customers) {
+
+            if (Customers == null) {
+                Stop();
+                return;
+            }
+
             double BestLength = 0;
             int Iteration;
             double Sump;
@@ -438,7 +444,10 @@ namespace kagv {
             double[,] t = null;
 
             double[,] Customers = ReadDistances(DistancesFilename);
-
+            if (Customers == null) {
+                Stop();
+                return;
+            }
             int SizeCustomers = Customers.GetLength(0);
 
             try {
@@ -809,10 +818,18 @@ namespace kagv {
 
         private double[,] ReadBenchmark(string BenchMarkFilename) {
             double[,] _Customers;
+            StreamReader _DistanceCheck = new StreamReader(BenchMarkFilename);
+            if (!_DistanceCheck.ReadLine().Contains("{Benchmarks")) {
+                MessageBox.Show("Incorrect input file chosen", "Choose file...", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _DistanceCheck.Close();
+                return null;
+            }
+
 
             //handle raw files from TCS website
             bool wasRAW = false;
             StreamReader _tmpReader = new StreamReader(BenchMarkFilename);
+            _tmpReader.ReadLine();
             string filenameRAW = BenchMarkFilename.Remove(BenchMarkFilename.Length - 4) + "_fromRAW.txt"; //-4 to remove .txt extension
             if (_tmpReader.ReadLine().Contains("NAME :")) { // check if the file format is same as TCS website
                 MessageBox.Show("RAW file selected...");
@@ -839,7 +856,6 @@ namespace kagv {
 
             }
             //end of handling
-
             StreamReader streamReader;
             if (wasRAW)
                 streamReader = new StreamReader(filenameRAW);
@@ -847,11 +863,11 @@ namespace kagv {
                 streamReader = new StreamReader(BenchMarkFilename);
 
             int SizeCustomers = 0;
+            streamReader.ReadLine(); //skips the {Benchmarks} line
             do {
                 if (streamReader.ReadLine() != "")
                     SizeCustomers++;
             } while (!streamReader.EndOfStream);
-
             streamReader.Close();
 
             _Customers = new double[SizeCustomers, 3];
@@ -866,6 +882,7 @@ namespace kagv {
                 streamReader = new StreamReader(filenameRAW);
             else
                 streamReader = new StreamReader(BenchMarkFilename);
+            streamReader.ReadLine();
             do {
                 _line1 = streamReader.ReadLine();
                 if (_line1 != "") {
@@ -890,9 +907,13 @@ namespace kagv {
         }
 
         private double[,] ReadDistances(string DistancesFilename) {
+            
             double[,] _Customers;
             StreamReader streamReader = new StreamReader(DistancesFilename);
-
+            if(!streamReader.ReadLine().Contains("{Distances}")) {
+                MessageBox.Show("Incorrect input file chosen", "Choose file...", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
+            }
             int SizeCustomers = 0;
             do {
                 if (streamReader.ReadLine() != "")
@@ -911,7 +932,7 @@ namespace kagv {
             int j = 0;
             do {
                 _line = streamReader.ReadLine();
-                if (_line != "") {
+                if (_line != "" && !_line.Contains("{Distances}")) {
                     _info = _line.Split(delim, StringSplitOptions.RemoveEmptyEntries);
                     _Customers[i, j] = Convert.ToDouble(_info[1]);
                     j++;
@@ -966,8 +987,6 @@ namespace kagv {
 
             if (cb_bechmark.Checked)
                 RunACS(ReadBenchmark(filename));
-
-
         }
 
         private void Ants_Load(object sender, EventArgs e) {
@@ -1001,10 +1020,18 @@ namespace kagv {
         }
 
         private void calc_stop_BTN_Click(object sender, EventArgs e) {
-            var result = MessageBox.Show("Stop the calculations?",
-                "Stop requested.",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
+            Stop();
+        }
+
+        private void Stop() {
+            System.Diagnostics.StackTrace stackTrace = new System.Diagnostics.StackTrace();
+            var result = new DialogResult();
+            
+            if (!stackTrace.GetFrame(1).GetMethod().Name.Contains("RunACS"))
+                result = MessageBox.Show("Stop the calculations?",
+                    "Stop requested.",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
 
             if (result == DialogResult.No)
                 return;
