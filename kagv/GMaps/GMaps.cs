@@ -174,6 +174,10 @@ namespace kagv {
         }
         
         private void mymap_MouseMove(object sender, MouseEventArgs e) {
+            if ( e.Button == MouseButtons.Right) {
+                mymap.Refresh();
+                return;
+            }
             //latitude = width
             //longitude = height
             //THERE IS A FUNCTION mymap.FromLatLngToLocal :D :D :D
@@ -188,6 +192,7 @@ namespace kagv {
             lb_heightlat.Text = "HeightLat:\r\n" + mymap.ViewArea.HeightLat + "";
             
             lb_coords.Text = "Current coordinates:\r\n" + "X/Lat:" + remoteLat + "\r\n" + "Y/Lng:" + remoteLng;
+            
         }
 
         private void getScreenShotToolStripMenuItem_Click(object sender, EventArgs e) {
