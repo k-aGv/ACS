@@ -53,6 +53,7 @@
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.cb_bechmark = new System.Windows.Forms.CheckBox();
             this.cb_lengths = new System.Windows.Forms.CheckBox();
+            this.cb_fromFile = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.avalue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bvalue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xvalue)).BeginInit();
@@ -382,11 +383,23 @@
             this.cb_lengths.UseVisualStyleBackColor = true;
             this.cb_lengths.CheckedChanged += new System.EventHandler(this.cb_lengths_CheckedChanged);
             // 
+            // cb_fromFile
+            // 
+            this.cb_fromFile.AutoSize = true;
+            this.cb_fromFile.Location = new System.Drawing.Point(123, 41);
+            this.cb_fromFile.Name = "cb_fromFile";
+            this.cb_fromFile.Size = new System.Drawing.Size(91, 17);
+            this.cb_fromFile.TabIndex = 48;
+            this.cb_fromFile.Text = "Read from file";
+            this.cb_fromFile.UseVisualStyleBackColor = true;
+            this.cb_fromFile.CheckedChanged += new System.EventHandler(this.cb_fromFile_CheckedChanged);
+            // 
             // ACSAlgorithm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(675, 343);
+            this.Controls.Add(this.cb_fromFile);
             this.Controls.Add(this.cb_lengths);
             this.Controls.Add(this.cb_bechmark);
             this.Controls.Add(this.chart1);
@@ -446,5 +459,6 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.CheckBox cb_bechmark;
         private System.Windows.Forms.CheckBox cb_lengths;
+        private System.Windows.Forms.CheckBox cb_fromFile;
     }
 }

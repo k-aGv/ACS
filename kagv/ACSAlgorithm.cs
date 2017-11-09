@@ -33,14 +33,34 @@ namespace kagv {
         public ACSAlgorithm() {
             InitializeComponent();
         }
+        public ACSAlgorithm(List<List<double>> Distances) {
+            InitializeComponent();
+            if(Distances.Count!=0)
+                _distances = ConvertListToArray(Distances);
+
+        }
+        public ACSAlgorithm(double[,] Distances) {
+            InitializeComponent();
+            _distances = Distances;
+        }
 
 
         ProgressBar pb = new ProgressBar();
         Label pb_Label = new Label();
         Label pb_calculated = new Label();
-        int _width;// = Size.Width;
-        int _heigth;// = Size.Height;
+        double[,] _distances;
+        int _width;
+        int _heigth;
         bool stopped = false;
+
+        private double[,] ConvertListToArray(List<List<double>> ListDist) {
+            double[,] ArrayDist = new double[ListDist.Count,ListDist[0].Count];
+
+            for(int i=0;i<ListDist.Count;i++)
+                for(int j=0;j<ListDist[0].Count;j++)
+                    ArrayDist[i, j] = ListDist[i][j];
+            return ArrayDist;
+        }
 
         private void RunACS(double[,] Customers) {
 
@@ -958,17 +978,31 @@ namespace kagv {
         }
 
         private void ACS_Click(object sender, EventArgs e) {
-
             string filename = "";
-            if (File.Exists("_tmpMap.txt"))
-                filename = "_tmpMap.txt";
-            else {
-                openFileDialog1.Filter = "Text Files(*.txt)|*.txt";
-                if (openFileDialog1.ShowDialog() == DialogResult.OK) {
-                    filename = openFileDialog1.FileName;
-                } else
-                    return;
+            if(cb_bechmark.Checked) {
+                if (File.Exists("_tmpMap.txt"))
+                    filename = "_tmpMap.txt";
+                else {
+                    openFileDialog1.Filter = "Text Files(*.txt)|*.txt";
+                    if (openFileDialog1.ShowDialog() == DialogResult.OK) {
+                        filename = openFileDialog1.FileName;
+                    } else
+                        return;
+                }
             }
+
+            if(cb_lengths.Checked)
+                if (cb_fromFile.Checked) {
+                    openFileDialog1.Filter = "Text Files(*.txt)|*.txt";
+                    if (openFileDialog1.ShowDialog() == DialogResult.OK) {
+                        filename = openFileDialog1.FileName;
+                    } else
+                        return;
+                }
+                else 
+                    filename = "";
+            
+            
             pb.Value = 0;
             pb.Maximum = Convert.ToInt32(NumIts.Value);
             stopped = false;
@@ -982,16 +1016,21 @@ namespace kagv {
             chart1.Size = new Size(600, (pb.Location.Y + pb.Size.Height) - 25);
             Size = new Size((chart1.Location.X + chart1.Width + 25), pb.Location.Y + pb.Size.Height + 50);
 
-            if (cb_lengths.Checked)
-                RunACS(filename);
+            if (filename == "")
+                RunACS(_distances);
+            else {
+                if (cb_lengths.Checked)
+                    RunACS(filename);
 
-            if (cb_bechmark.Checked)
-                RunACS(ReadBenchmark(filename));
+                if (cb_bechmark.Checked)
+                    RunACS(ReadBenchmark(filename));
+            }
         }
 
         private void Ants_Load(object sender, EventArgs e) {
-
-
+            if (_distances==null)
+                cb_fromFile.Checked = true;
+            
             foreach (var leg in chart1.Legends)
                 leg.Enabled = false;
 
@@ -1059,7 +1098,23 @@ namespace kagv {
         }
 
         private void cb_lengths_CheckedChanged(object sender, EventArgs e) {
+            
+            if(_distances==null) {
+                cb_fromFile.Checked = cb_lengths.Checked;
+                cb_fromFile.Enabled = cb_lengths.Checked;
+            }
+            else {
+                cb_fromFile.Enabled = cb_lengths.Checked;
+            }
+
             cb_bechmark.Checked = !cb_lengths.Checked;
+        }
+
+        private void cb_fromFile_CheckedChanged(object sender, EventArgs e) {
+            if (_distances==null) {
+                cb_fromFile.Checked = cb_lengths.Checked;      
+            }
+
         }
     }
 }

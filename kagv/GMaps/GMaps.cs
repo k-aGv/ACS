@@ -33,15 +33,23 @@ using GMap.NET.WindowsForms;
 
 namespace kagv {
     public partial class gmaps : Form {
-        internal readonly GMapOverlay myobjects = new GMapOverlay("objects");
 
         public gmaps() {
             InitializeComponent();
         }
-        List<PointLatLng> Destinations = new List<PointLatLng>();
-        List<List<double>> Lengths = new List<List<double>>();
+        
         List<GMapOverlay> _markers_overlay = new List<GMapOverlay>();
+
+        List<PointLatLng> _Destinations = new List<PointLatLng>();
+        List<List<double>> _Distances = new List<List<double>>();
+
+        public List<List<double>> Distances { get => _Distances; }
+        public List<PointLatLng> Destinations { get => _Destinations; }
+
         double _zoomFactor;
+
+
+
 
         public void ReloadMap() {
             gmaps_Load(new object(), new EventArgs());
@@ -87,7 +95,6 @@ namespace kagv {
             mymap.MaxZoom = 18;
             mymap.Zoom = _zoomFactor;
             mymap.MouseWheelZoomType = MouseWheelZoomType.MousePositionWithoutCenter;
-            mymap.Overlays.Add(myobjects);
             mymap.DragButton = MouseButtons.Left;
             mymap.InvertedMouseWheelZooming = false;
 
@@ -210,40 +217,32 @@ namespace kagv {
             mymap.Refresh();
         }
         
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (Destinations.Count < 2)
-            {
+        private void GetDistances() {
+            if (Destinations.Count < 2) {
                 MessageBox.Show("User must place at least 2 destinations.");
                 return;
             }
 
-            Lengths = new List<List<double>>();
+            _Distances = new List<List<double>>();
             StreamWriter _writer = new StreamWriter("routeDistances.txt");
             _writer.WriteLine("{Distances}");
 
             pb.Maximum = Destinations.Count * Destinations.Count;
             int interval = 0;
 
-            for (int i = 0; i < Destinations.Count; i++)
-            {
+            for (int i = 0; i < Destinations.Count; i++) {
 
-                Lengths.Add(new List<double>());
-                for (int j = 0; j < Destinations.Count; j++)
-                {
+                _Distances.Add(new List<double>());
+                for (int j = 0; j < Destinations.Count; j++) {
                     GDirections _d = new GDirections();
-                    do
-                    {
-                        try
-                        {
+                    do {
+                        try {
                             GMap.NET.MapProviders.GMapProviders.GoogleMap.GetDirections(out _d, Destinations[i], Destinations[j], false, false, false, false, true);
 
-                            Lengths[i].Add(_d.DistanceValue);
+                            _Distances[i].Add(_d.DistanceValue);
 
                             _writer.WriteLine("Distance from " + i + " to " + j + " : " + _d.DistanceValue + "\n");
-                        }
-                        catch { }
+                        } catch { }
                     } while (_d == null);
                     Application.DoEvents();
                     pb_calculated.Text = "Current progress... " + ((100 * interval) / (Destinations.Count * Destinations.Count)) + "%\nDistances calculated: " + interval + "/" + Destinations.Count * Destinations.Count;
@@ -256,6 +255,11 @@ namespace kagv {
             _writer.Close();
             pb_calculated.Text = "Completed... " + ((100 * interval) / (Destinations.Count * Destinations.Count)) + "%\nDistances calculated: " + interval + "/" + Destinations.Count * Destinations.Count;
             pb.PerformStep();
+
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            GetDistances();
         }
 
         private void mymap_KeyPress(object sender, KeyPressEventArgs e) {

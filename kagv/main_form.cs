@@ -41,7 +41,7 @@ namespace kagv {
             MeasureScreen();
             Initialization();//initialize our stuff
         }
-
+        
         //paint event on form.
         //This event is triggered when a paint event or mouse event is happening over the form.
         //mouse clicks ,hovers and clicks are also considered as triggers
@@ -824,10 +824,12 @@ namespace kagv {
             MeasureScreen();
             Initialization();
         }
-
+        
         private void antsToolStripMenuItem_Click(object sender, EventArgs e) {
             ExportLocal();
-            ACSAlgorithm AcsAlgorithm = new ACSAlgorithm();
+            if(Distances==null)
+                Distances = new List<List<double>>();
+            ACSAlgorithm AcsAlgorithm = new ACSAlgorithm(Distances);
             AcsAlgorithm.StartPosition = FormStartPosition.CenterParent;
             AcsAlgorithm.ShowDialog();
         }
@@ -836,10 +838,12 @@ namespace kagv {
             ImportImage();
             menuPanel.Enabled = true;
         }
-
+        
         private void implementGoogleMapsToolStripMenuItem_Click(object sender, EventArgs e) {
-            gmaps maps = new gmaps();
+            maps = new gmaps();
             maps.ShowDialog();
+            if (maps.Distances.Count != 0)
+                Distances = maps.Distances;
         }
 
         private void main_form_Click(object sender, EventArgs e) {

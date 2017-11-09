@@ -79,7 +79,8 @@ namespace kagv {
         Image importedLayout = null;
         Image importedImageFile;
 
-
+        gmaps maps;
+        List<List<double>> Distances;
 
     }
 }
