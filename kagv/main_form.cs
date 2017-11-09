@@ -842,7 +842,7 @@ namespace kagv {
         private void implementGoogleMapsToolStripMenuItem_Click(object sender, EventArgs e) {
             maps = new gmaps();
             maps.ShowDialog();
-            if (maps.Distances.Count != 0)
+            if (maps.Distances!=null)
                 Distances = maps.Distances;
         }
 
