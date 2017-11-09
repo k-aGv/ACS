@@ -27,7 +27,7 @@
             this.gb_settings = new System.Windows.Forms.GroupBox();
             this.pb_calculated = new System.Windows.Forms.Label();
             this.pb = new System.Windows.Forms.ProgressBar();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btn_getDistances = new System.Windows.Forms.Button();
             this.gb_coords = new System.Windows.Forms.GroupBox();
             this.combo_scale = new System.Windows.Forms.ComboBox();
             this.cb_scale = new System.Windows.Forms.CheckBox();
@@ -69,7 +69,7 @@
             // 
             this.gb_settings.Controls.Add(this.pb_calculated);
             this.gb_settings.Controls.Add(this.pb);
-            this.gb_settings.Controls.Add(this.button1);
+            this.gb_settings.Controls.Add(this.btn_getDistances);
             this.gb_settings.Controls.Add(this.gb_coords);
             this.gb_settings.Controls.Add(this.gb_provider);
             this.gb_settings.Location = new System.Drawing.Point(895, 12);
@@ -96,15 +96,15 @@
             this.pb.Step = 1;
             this.pb.TabIndex = 10;
             // 
-            // button1
+            // btn_getDistances
             // 
-            this.button1.Location = new System.Drawing.Point(7, 397);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(149, 23);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Calculate all lengths";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btn_getDistances.Location = new System.Drawing.Point(7, 397);
+            this.btn_getDistances.Name = "btn_getDistances";
+            this.btn_getDistances.Size = new System.Drawing.Size(149, 23);
+            this.btn_getDistances.TabIndex = 7;
+            this.btn_getDistances.Text = "Calculate all lengths";
+            this.btn_getDistances.UseVisualStyleBackColor = true;
+            this.btn_getDistances.Click += new System.EventHandler(this.btn_getDistances_Click);
             // 
             // gb_coords
             // 
@@ -447,7 +447,7 @@
         private System.Windows.Forms.ToolStripMenuItem getScreenShotToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showCrossToolStripMenuItem;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn_getDistances;
         private System.Windows.Forms.Label pb_calculated;
         private System.Windows.Forms.ProgressBar pb;
         private System.Windows.Forms.ToolStripMenuItem routeFindingToolStripMenuItem;

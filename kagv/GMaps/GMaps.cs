@@ -257,10 +257,6 @@ namespace kagv {
             pb.PerformStep();
 
         }
-        private void button1_Click(object sender, EventArgs e)
-        {
-            GetDistances();
-        }
 
         private void mymap_KeyPress(object sender, KeyPressEventArgs e) {
             if (mymap.Focused && e.KeyChar == '\x1B') { // =(char)27 . ESC ASCII code
@@ -346,6 +342,10 @@ namespace kagv {
             TargetTheMouseToolStripMenuItem.Checked = false;
             TargetTheMouseAndChangeCenterToolStripMenuItem.Checked = false;
             TargetTheCenterOfMapToolStripMenuItem.Checked = true;
+        }
+
+        private void btn_getDistances_Click(object sender, EventArgs e) {
+            GetDistances();
         }
     }
 }
