@@ -37,7 +37,7 @@ namespace kagv {
         public gmaps() {
             InitializeComponent();
         }
-        
+
         List<GMapOverlay> _markers_overlay = new List<GMapOverlay>();
 
         List<PointLatLng> _Destinations = new List<PointLatLng>();
@@ -48,14 +48,12 @@ namespace kagv {
 
         double _zoomFactor;
 
-
-
-
         public void ReloadMap() {
             gmaps_Load(new object(), new EventArgs());
         }
+
         private void gmaps_Load(object sender, EventArgs e) {
-            
+
             //calculate margin
             int margin = mymap.Location.X + SystemInformation.Border3DSize.Width;
 
@@ -111,24 +109,24 @@ namespace kagv {
             //set the label to the bottom
             label1.Location = new Point(10, mymap.Location.Y + mymap.Height + 1);
         }
-       
+
         private void mymap_MouseClick(object sender, MouseEventArgs e) {
-            
+
             if (e.Button == MouseButtons.Left && !mymap.IsDragging) //place markers
             {
                 PointLatLng final = new PointLatLng(
-                    mymap.FromLocalToLatLng(e.X, e.Y).Lat, 
+                    mymap.FromLocalToLatLng(e.X, e.Y).Lat,
                     mymap.FromLocalToLatLng(e.X, e.Y).Lng
                     );
 
                 Destinations.Add(final);
-                
+
                 _markers_overlay.Add(new GMapOverlay("Marker" + Convert.ToString(Destinations.Count - 1)));
                 _markers_overlay[_markers_overlay.Count - 1].Markers.Add(
                     new GMap.NET.WindowsForms.Markers.GMarkerGoogle(
-                        final, 
+                        final,
                         GMap.NET.WindowsForms.Markers.GMarkerGoogleType.green));
-                
+
                 //GoogleSatelliteMap is more accurate while trying to find addresses
                 var ret = GMap.NET.MapProviders.GMapProviders.GoogleSatelliteMap.GetPlacemark(_markers_overlay[_markers_overlay.Count - 1].Markers[0].Position, out GeoCoderStatusCode status);
                 if (status == GeoCoderStatusCode.G_GEO_SUCCESS && ret != null) {
@@ -136,12 +134,11 @@ namespace kagv {
                     //_markers_overlay[_markers_overlay.Count - 1].Markers[0].ToolTip.Foreground
                     _markers_overlay[_markers_overlay.Count - 1].Markers[0].ToolTipMode = MarkerTooltipMode.Always;
                 }
-                
+
                 mymap.UpdateMarkerLocalPosition(_markers_overlay[_markers_overlay.Count - 1].Markers[0]);
                 mymap.Overlays.Add(_markers_overlay[_markers_overlay.Count - 1]);
 
-                if (Destinations.Count > 1)
-                {
+                if (Destinations.Count > 1) {
                     GMap.NET.MapProviders.GMapProviders.GoogleMap.GetDirections(
                         out GDirections _d,
                         Destinations[Destinations.Count - 2],
@@ -152,16 +149,13 @@ namespace kagv {
                         false,
                         metricToolStripMenuItem.Checked
                         );
-                    try
-                    {
+                    try {
                         GMapRoute route = new GMapRoute(_d.Route, "Route");
                         GMapOverlay _route_overlay = new GMapOverlay("RouteOverlay");
                         _route_overlay.Routes.Add(route);
                         mymap.UpdateRouteLocalPosition(route);
                         mymap.Overlays.Add(_route_overlay);
-                    }
-                    catch
-                    {
+                    } catch {
                         Destinations.RemoveAt(Destinations.Count - 1);
                         _markers_overlay[_markers_overlay.Count - 1].Markers.Clear();
                     }
@@ -179,9 +173,9 @@ namespace kagv {
 
             mymap.Refresh();
         }
-        
+
         private void mymap_MouseMove(object sender, MouseEventArgs e) {
-            if ( e.Button == MouseButtons.Right) {
+            if (e.Button == MouseButtons.Right) {
                 mymap.Refresh();
                 return;
             }
@@ -197,9 +191,9 @@ namespace kagv {
             lb_lng.Text = "Lng:\r\n" + mymap.Position.Lng + "";
             lb_widthlng.Text = "WidthLng:\r\n" + mymap.ViewArea.WidthLng + "";
             lb_heightlat.Text = "HeightLat:\r\n" + mymap.ViewArea.HeightLat + "";
-            
+
             lb_coords.Text = "Current coordinates:\r\n" + "X/Lat:" + remoteLat + "\r\n" + "Y/Lng:" + remoteLng;
-            
+
         }
 
         private void getScreenShotToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -216,7 +210,7 @@ namespace kagv {
             mymap.ShowCenter = showCrossToolStripMenuItem.Checked;
             mymap.Refresh();
         }
-        
+
         private void GetDistances() {
             if (Destinations.Count < 2) {
                 MessageBox.Show("User must place at least 2 destinations.");
@@ -265,41 +259,33 @@ namespace kagv {
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            if(textBox1.Text=="")
-            {
+        private void button2_Click(object sender, EventArgs e) {
+            if (textBox1.Text == "") {
                 MessageBox.Show("No destination was given.", "Bad destination request...", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             var coords = GMap.NET.MapProviders.GMapProviders.GoogleMap.GetPoint(textBox1.Text, out GeoCoderStatusCode _e);
-            if (coords.HasValue && _e.Equals(GeoCoderStatusCode.G_GEO_SUCCESS))
-            {
+            if (coords.HasValue && _e.Equals(GeoCoderStatusCode.G_GEO_SUCCESS)) {
                 mymap.SetPositionByKeywords(textBox1.Text);
                 if (combo_scale.Enabled)
                     mymap.Zoom = getZoomScale();
                 else
                     mymap.Zoom = _zoomFactor;
-            }
-            else
-                MessageBox.Show("Destination \"" + textBox1.Text + "\" could not be found.","Bad destination request...",MessageBoxButtons.OK,MessageBoxIcon.Error);
+            } else
+                MessageBox.Show("Destination \"" + textBox1.Text + "\" could not be found.", "Bad destination request...", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        private void cb_scale_CheckedChanged(object sender, EventArgs e)
-        {
+        private void cb_scale_CheckedChanged(object sender, EventArgs e) {
             combo_scale.Enabled = cb_scale.Checked;
         }
-        
-        private void mymap_OnMapZoomChanged()
-        {
+
+        private void mymap_OnMapZoomChanged() {
             _zoomFactor = mymap.Zoom;
         }
 
-        private double getZoomScale()
-        {
-            int scale=8;
-            switch (combo_scale.SelectedIndex)
-            {
+        private double getZoomScale() {
+            int scale = 8;
+            switch (combo_scale.SelectedIndex) {
                 case 0:
                     scale = 16;
                     break;
@@ -313,31 +299,27 @@ namespace kagv {
             return scale;
         }
 
-        private void reversedWheelToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
+        private void reversedWheelToolStripMenuItem1_Click(object sender, EventArgs e) {
             reversedWheelToolStripMenuItem.Checked = !reversedWheelToolStripMenuItem.Checked;
             mymap.InvertedMouseWheelZooming = reversedWheelToolStripMenuItem.Checked;
             mymap.Refresh();
         }
 
-        private void TargetTheMouseToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+        private void TargetTheMouseToolStripMenuItem_Click(object sender, EventArgs e) {
             mymap.MouseWheelZoomType = MouseWheelZoomType.MousePositionWithoutCenter;
             TargetTheMouseToolStripMenuItem.Checked = true;
             TargetTheMouseAndChangeCenterToolStripMenuItem.Checked = false;
             TargetTheCenterOfMapToolStripMenuItem.Checked = false;
         }
 
-        private void TargetTheMouseAndChangeCenterToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+        private void TargetTheMouseAndChangeCenterToolStripMenuItem_Click(object sender, EventArgs e) {
             mymap.MouseWheelZoomType = MouseWheelZoomType.MousePositionAndCenter;
             TargetTheMouseToolStripMenuItem.Checked = false;
             TargetTheMouseAndChangeCenterToolStripMenuItem.Checked = true;
             TargetTheCenterOfMapToolStripMenuItem.Checked = false;
         }
 
-        private void TargetTheCenterOfMapToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+        private void TargetTheCenterOfMapToolStripMenuItem_Click(object sender, EventArgs e) {
             mymap.MouseWheelZoomType = MouseWheelZoomType.ViewCenter;
             TargetTheMouseToolStripMenuItem.Checked = false;
             TargetTheMouseAndChangeCenterToolStripMenuItem.Checked = false;

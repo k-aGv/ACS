@@ -35,7 +35,7 @@ namespace kagv {
         }
         public ACSAlgorithm(List<List<double>> Distances) {
             InitializeComponent();
-            if(Distances.Count!=0)
+            if (Distances.Count != 0)
                 _distances = ConvertListToArray(Distances);
 
         }
@@ -43,8 +43,7 @@ namespace kagv {
             InitializeComponent();
             _distances = Distances;
         }
-
-
+        
         ProgressBar pb = new ProgressBar();
         Label pb_Label = new Label();
         Label pb_calculated = new Label();
@@ -54,10 +53,10 @@ namespace kagv {
         bool stopped = false;
 
         private double[,] ConvertListToArray(List<List<double>> ListDist) {
-            double[,] ArrayDist = new double[ListDist.Count,ListDist[0].Count];
+            double[,] ArrayDist = new double[ListDist.Count, ListDist[0].Count];
 
-            for(int i=0;i<ListDist.Count;i++)
-                for(int j=0;j<ListDist[0].Count;j++)
+            for (int i = 0; i < ListDist.Count; i++)
+                for (int j = 0; j < ListDist[0].Count; j++)
                     ArrayDist[i, j] = ListDist[i][j];
             return ArrayDist;
         }
@@ -927,10 +926,10 @@ namespace kagv {
         }
 
         private double[,] ReadDistances(string DistancesFilename) {
-            
+
             double[,] _Customers;
             StreamReader streamReader = new StreamReader(DistancesFilename);
-            if(!streamReader.ReadLine().Contains("{Distances}")) {
+            if (!streamReader.ReadLine().Contains("{Distances}")) {
                 MessageBox.Show("Incorrect input file chosen", "Choose file...", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return null;
             }
@@ -979,7 +978,7 @@ namespace kagv {
 
         private void ACS_Click(object sender, EventArgs e) {
             string filename = "";
-            if(cb_bechmark.Checked) {
+            if (cb_bechmark.Checked) {
                 if (File.Exists("_tmpMap.txt"))
                     filename = "_tmpMap.txt";
                 else {
@@ -991,18 +990,17 @@ namespace kagv {
                 }
             }
 
-            if(cb_lengths.Checked)
+            if (cb_lengths.Checked)
                 if (cb_fromFile.Checked) {
                     openFileDialog1.Filter = "Text Files(*.txt)|*.txt";
                     if (openFileDialog1.ShowDialog() == DialogResult.OK) {
                         filename = openFileDialog1.FileName;
                     } else
                         return;
-                }
-                else 
+                } else
                     filename = "";
-            
-            
+
+
             pb.Value = 0;
             pb.Maximum = Convert.ToInt32(NumIts.Value);
             stopped = false;
@@ -1028,9 +1026,9 @@ namespace kagv {
         }
 
         private void Ants_Load(object sender, EventArgs e) {
-            if (_distances==null)
+            if (_distances == null)
                 cb_fromFile.Checked = true;
-            
+
             foreach (var leg in chart1.Legends)
                 leg.Enabled = false;
 
@@ -1065,7 +1063,7 @@ namespace kagv {
         private void Stop() {
             System.Diagnostics.StackTrace stackTrace = new System.Diagnostics.StackTrace();
             var result = new DialogResult();
-            
+
             if (!stackTrace.GetFrame(1).GetMethod().Name.Contains("RunACS"))
                 result = MessageBox.Show("Stop the calculations?",
                     "Stop requested.",
@@ -1098,12 +1096,11 @@ namespace kagv {
         }
 
         private void cb_lengths_CheckedChanged(object sender, EventArgs e) {
-            
-            if(_distances==null) {
+
+            if (_distances == null) {
                 cb_fromFile.Checked = cb_lengths.Checked;
                 cb_fromFile.Enabled = cb_lengths.Checked;
-            }
-            else {
+            } else {
                 cb_fromFile.Enabled = cb_lengths.Checked;
             }
 
@@ -1111,8 +1108,8 @@ namespace kagv {
         }
 
         private void cb_fromFile_CheckedChanged(object sender, EventArgs e) {
-            if (_distances==null) {
-                cb_fromFile.Checked = cb_lengths.Checked;      
+            if (_distances == null) {
+                cb_fromFile.Checked = cb_lengths.Checked;
             }
 
         }

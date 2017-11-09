@@ -41,7 +41,7 @@ namespace kagv {
             MeasureScreen();
             Initialization();//initialize our stuff
         }
-        
+
         //paint event on form.
         //This event is triggered when a paint event or mouse event is happening over the form.
         //mouse clicks ,hovers and clicks are also considered as triggers
@@ -368,8 +368,7 @@ namespace kagv {
             Redraw();//The main function of this executable.Contains almost every drawing and calculating stuff
                      // Invalidate();
         }
-
-
+        
         private void nUD_AGVs_ValueChanged(object sender, EventArgs e) {
 
             //if we change the AGVs value from numeric updown,do the following
@@ -541,6 +540,7 @@ namespace kagv {
             }
             Redraw();
         }
+
         private void crossCornerOnlyWhenNoObstaclesToolStripMenuItem_Click(object sender, EventArgs e) {
             (sender as ToolStripMenuItem).Checked = !(sender as ToolStripMenuItem).Checked;
             alwaysCrossMenu.Checked = false;
@@ -674,8 +674,7 @@ namespace kagv {
         private void nud_weight_ValueChanged(object sender, EventArgs e) {
             Redraw();
         }
-
-
+        
         private void btn_up_Click(object sender, EventArgs e) {
             Globals._HeightBlocks--;
             Height = (Globals._HeightBlocks + 1) * Globals._BlockSide + Globals._BottomBarOffset;
@@ -824,10 +823,10 @@ namespace kagv {
             MeasureScreen();
             Initialization();
         }
-        
+
         private void antsToolStripMenuItem_Click(object sender, EventArgs e) {
             ExportLocal();
-            if(Distances==null)
+            if (Distances == null)
                 Distances = new List<List<double>>();
             ACSAlgorithm AcsAlgorithm = new ACSAlgorithm(Distances);
             AcsAlgorithm.StartPosition = FormStartPosition.CenterParent;
@@ -838,11 +837,11 @@ namespace kagv {
             ImportImage();
             menuPanel.Enabled = true;
         }
-        
+
         private void implementGoogleMapsToolStripMenuItem_Click(object sender, EventArgs e) {
             maps = new gmaps();
             maps.ShowDialog();
-            if (maps.Distances!=null)
+            if (maps.Distances != null)
                 Distances = maps.Distances;
         }
 
