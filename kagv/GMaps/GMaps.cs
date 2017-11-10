@@ -38,6 +38,15 @@ namespace kagv {
             InitializeComponent();
         }
 
+        public gmaps(int[] _optimal, List<double[,]> _destinations) {
+            InitializeComponent();
+
+            Optimal = _optimal;
+            _Destinations = ConvertListToPointLatLng(_destinations);
+
+            Visualize(Optimal, _Destinations);
+        }
+
         List<GMapOverlay> _markers_overlay = new List<GMapOverlay>();
 
         List<PointLatLng> _Destinations = new List<PointLatLng>();
@@ -46,10 +55,60 @@ namespace kagv {
         public List<List<double>> Distances { get => _Distances; }
         public List<PointLatLng> Destinations { get => _Destinations; }
 
+        int[] Optimal;
+
         double _zoomFactor;
+
+        private List<PointLatLng> ConvertListToPointLatLng(List<double[,]> ListDist) {
+
+            List<PointLatLng> _converted = new List<PointLatLng>();
+            for (int i=0;i<ListDist.Count;i++)
+                _converted.Add(new PointLatLng(ListDist[i][0, 0], ListDist[i][0, 1]));
+            return _converted;
+        }
 
         public void ReloadMap() {
             gmaps_Load(new object(), new EventArgs());
+        }
+
+        private void Visualize(int[] _optimal, List<PointLatLng> _dest) {
+            for (int i = 0; i < _optimal.Length - 1; i++) {
+                GMap.NET.MapProviders.GMapProviders.GoogleMap.GetDirections(
+                    out GDirections _d,
+                    _dest[_optimal[i]],
+                    _dest[_optimal[i + 1]],
+                    avoidHighwaysToolStripMenuItem.Checked,
+                        avoidTollsToolStripMenuItem.Checked,
+                        useWalkingModeToolStripMenuItem.Checked,
+                        false,
+                        metricToolStripMenuItem.Checked
+                    );
+                try {
+                    GMapRoute route = new GMapRoute(_d.Route, "Route " + i);
+                    GMapOverlay _route_overlay = new GMapOverlay("RouteOverlay");
+                    _route_overlay.Routes.Add(route);
+                    mymap.Overlays.Add(_route_overlay);
+
+                    _markers_overlay.Add(new GMapOverlay("Marker" + Convert.ToString(Destinations.Count - 1)));
+                    _markers_overlay[_markers_overlay.Count - 1].Markers.Add(
+                        new GMap.NET.WindowsForms.Markers.GMarkerGoogle(
+                            _dest[_optimal[i+1]],
+                            GMap.NET.WindowsForms.Markers.GMarkerGoogleType.green));
+
+                    var ret = GMap.NET.MapProviders.GMapProviders.GoogleSatelliteMap.GetPlacemark(_markers_overlay[_markers_overlay.Count - 1].Markers[0].Position, out GeoCoderStatusCode status);
+                    if (status == GeoCoderStatusCode.G_GEO_SUCCESS && ret != null) {
+                        _markers_overlay[_markers_overlay.Count - 1].Markers[0].ToolTipText = (i+1)+" "+ret.Value.Address;
+                        _markers_overlay[_markers_overlay.Count - 1].Markers[0].ToolTipMode = MarkerTooltipMode.Always;
+                    }
+
+
+                    mymap.Overlays.Add(_markers_overlay[i]);
+
+
+                    Application.DoEvents();
+                } catch { }
+
+            }
         }
 
         private void gmaps_Load(object sender, EventArgs e) {
@@ -120,7 +179,6 @@ namespace kagv {
                     );
 
                 Destinations.Add(final);
-
                 _markers_overlay.Add(new GMapOverlay("Marker" + Convert.ToString(Destinations.Count - 1)));
                 _markers_overlay[_markers_overlay.Count - 1].Markers.Add(
                     new GMap.NET.WindowsForms.Markers.GMarkerGoogle(

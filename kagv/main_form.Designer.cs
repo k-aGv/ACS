@@ -96,6 +96,7 @@
             this.btn_right = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.vIsualizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPanel.SuspendLayout();
             this.gb_type.SuspendLayout();
             this.gb_settings.SuspendLayout();
@@ -294,6 +295,8 @@
             // 
             // implementGoogleMapsToolStripMenuItem
             // 
+            this.implementGoogleMapsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.vIsualizeToolStripMenuItem});
             this.implementGoogleMapsToolStripMenuItem.Name = "implementGoogleMapsToolStripMenuItem";
             this.implementGoogleMapsToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.implementGoogleMapsToolStripMenuItem.Text = "Implement Google Maps";
@@ -721,6 +724,13 @@
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(190, 17);
             this.toolStripStatusLabel1.Text = "Hold CTRL for grid configuration...";
             // 
+            // vIsualizeToolStripMenuItem
+            // 
+            this.vIsualizeToolStripMenuItem.Name = "vIsualizeToolStripMenuItem";
+            this.vIsualizeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.vIsualizeToolStripMenuItem.Text = "Visualize";
+            this.vIsualizeToolStripMenuItem.Click += new System.EventHandler(this.vIsualizeToolStripMenuItem_Click);
+            // 
             // main_form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -838,6 +848,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem implementGoogleMapsToolStripMenuItem;
         private System.Windows.Forms.Label lb_noSettings;
+        private System.Windows.Forms.ToolStripMenuItem vIsualizeToolStripMenuItem;
     }
 }
 

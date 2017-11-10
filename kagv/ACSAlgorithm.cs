@@ -33,10 +33,12 @@ namespace kagv {
         public ACSAlgorithm() {
             InitializeComponent();
         }
-        public ACSAlgorithm(List<List<double>> Distances) {
+        public ACSAlgorithm(List<List<double>> Distances, List<double[,]> Customers) {
             InitializeComponent();
             if (Distances.Count != 0)
                 _distances = ConvertListToArray(Distances);
+
+            _destinations = ConvertListToArray(Customers);
 
         }
         public ACSAlgorithm(double[,] Distances) {
@@ -48,9 +50,13 @@ namespace kagv {
         Label pb_Label = new Label();
         Label pb_calculated = new Label();
         double[,] _distances;
+        double[,] _destinations;
+        int[] _optimal;
         int _width;
         int _heigth;
         bool stopped = false;
+
+        public int[] Optimal { get => _optimal; }
 
         private double[,] ConvertListToArray(List<List<double>> ListDist) {
             double[,] ArrayDist = new double[ListDist.Count, ListDist[0].Count];
@@ -60,6 +66,19 @@ namespace kagv {
                     ArrayDist[i, j] = ListDist[i][j];
             return ArrayDist;
         }
+
+        private double[,] ConvertListToArray(List<double[,]> ListDist) {
+            double[,] ArrayDist = new double[ListDist.Count, 3];
+
+            for (int i = 0; i < ListDist.Count; i++) {
+                ArrayDist[i, 0] = i;
+                ArrayDist[i, 1] = ListDist[i][0, 0];
+                ArrayDist[i, 2] = ListDist[i][0, 1];
+            }
+
+            return ArrayDist;
+        }
+
 
         private void RunACS(double[,] Customers) {
 
@@ -187,6 +206,8 @@ namespace kagv {
                 }
             }
 
+            BestTour[count + 1] = BestTour[0];
+            NearNb = NearNb + CustomersDistance[BestTour[count], BestTour[count+1]];
 
 
 
@@ -450,7 +471,7 @@ namespace kagv {
 
         }
 
-        private void RunACS(string DistancesFilename) {
+        private void RunACS( string DistancesFilename) {
             double BestLength = 0;
             int Iteration;
             double Sump;
@@ -459,19 +480,21 @@ namespace kagv {
 
 
             double[,] h = null;
-            double[,] CustomersDistance = null;
+            //double[,] CustomersDistance = null;
             double[,] t = null;
 
-            double[,] Customers = ReadDistances(DistancesFilename);
-            if (Customers == null) {
+            //double[,] CustomersDistance = ReadDistances(DistancesFilename);
+            double[,] CustomersDistance = _distances;
+            double[,] Customers = _destinations;
+            if (CustomersDistance == null) {
                 Stop();
                 return;
             }
-            int SizeCustomers = Customers.GetLength(0);
+            int SizeCustomers = CustomersDistance.GetLength(0);
 
             try {
                 h = new double[SizeCustomers, SizeCustomers];
-                CustomersDistance = new double[SizeCustomers, SizeCustomers];
+                //CustomersDistance = new double[SizeCustomers, SizeCustomers];
                 t = new double[SizeCustomers, SizeCustomers];
             } catch (OutOfMemoryException z) {
                 if (z != null) {
@@ -488,23 +511,10 @@ namespace kagv {
 
             for (int i = 0; i < SizeCustomers; i++)
                 for (int j = 0; j < SizeCustomers; j++) {
-                    h[i, j] = 0;
-
+                    
                     if (i == j)
                         CustomersDistance[i, j] = 1000000000000000000;
-                    else {
-                        double x0 = Customers[i, 1];
-                        double y0 = Customers[i, 2];
-
-                        double x1 = Customers[j, 1];
-                        double y1 = Customers[j, 2];
-
-                        double dX = x1 - x0;
-                        double dY = y1 - y0;
-                        double distance = Math.Round(Math.Sqrt(dX * dX + dY * dY));
-                        CustomersDistance[i, j] = distance;
-
-                    }
+                    
                     h[i, j] = 1 / CustomersDistance[i, j];
                 }
 
@@ -575,7 +585,8 @@ namespace kagv {
                 }
             }
 
-
+            BestTour[count + 1] = BestTour[0];
+            NearNb = NearNb + CustomersDistance[BestTour[count], BestTour[count + 1]];
 
 
             for (int i = 0; i < SizeCustomers; i++) {
@@ -787,7 +798,7 @@ namespace kagv {
                     }
                 }
 
-                Temperature = Temperature * 0.9999;
+                Temperature = Temperature * 0.999;
 
 
                 for (int i = 0; i < t.GetLength(0); i++)
@@ -800,12 +811,24 @@ namespace kagv {
 
                 chart1.Series["Trip"].Points.Clear();
 
+                double minimum = Math.Pow(Customers[BestTour[0], 2], 10);
+                for (int i = 1; i < BestTour.Length; i++) {
+                    if (minimum > Customers[BestTour[i], 2]) {
+                        minimum = Customers[BestTour[i], 2];
+                    }
+                }
+
+
+
+                        chart1.ChartAreas[0].AxisY.Minimum =minimum ;
+
+
                 for (int i = 0; i < activesolution.Length - 1; i++)
                     t[activesolution[i], activesolution[i + 1]] = Math.Min(t[activesolution[i], activesolution[i + 1]] + (t[activesolution[i], activesolution[i + 1]] / (tmax + tmin)) * (1 / activeLength), tmax);
 
                 for (int i = 0; i < BestTour.Length; i++)
                     chart1.Series["Trip"].Points.AddXY(Customers[BestTour[i], 1], Customers[BestTour[i], 2]);
-
+                
                 results[Iteration] = BestLength;
                 Iteration = Iteration + 1;
 
@@ -823,14 +846,13 @@ namespace kagv {
             calc_stop_BTN.Enabled = false;
             ACS.Enabled = true;
 
-            double minimum;
-            minimum = Customers[BestTour[0], 2];
+
             for (int i = 1; i < BestTour.Length; i++) {
-                if (minimum > Customers[BestTour[i], 2])
-                    minimum = Customers[BestTour[i], 2];
                 chart1.Series["Trip"].Points.AddXY(Customers[BestTour[i], 1], Customers[BestTour[i], 2]);
 
             }
+
+            _optimal = BestTour;
 
             Application.DoEvents();
         }
@@ -1014,9 +1036,10 @@ namespace kagv {
             chart1.Size = new Size(600, (pb.Location.Y + pb.Size.Height) - 25);
             Size = new Size((chart1.Location.X + chart1.Width + 25), pb.Location.Y + pb.Size.Height + 50);
 
-            if (filename == "")
-                RunACS(_distances);
-            else {
+            if (filename == "") {
+                RunACS(filename);
+                //RunACS(_distances);
+            } else {
                 if (cb_lengths.Checked)
                     RunACS(filename);
 
@@ -1111,6 +1134,10 @@ namespace kagv {
             if (_distances == null) {
                 cb_fromFile.Checked = cb_lengths.Checked;
             }
+
+        }
+
+        private void chart1_Click(object sender, EventArgs e) {
 
         }
     }
