@@ -40,6 +40,27 @@ namespace kagv {
 
         public gmaps(int[] _optimal, List<double[,]> _destinations) {
             InitializeComponent();
+
+            if (_optimal == null || _destinations ==null) {
+                return;
+            }
+
+            mymap.Overlays.Clear();
+            Optimal = _optimal;
+            _Destinations = ConvertListToPointLatLng(_destinations);
+            Visualize(Optimal, _Destinations);
+
+        }
+
+        public gmaps(int[] _optimal, double[,] _destinations) {
+            InitializeComponent();
+            if (_optimal == null || _destinations == null)
+                return;
+
+            mymap.Overlays.Clear();
+            Optimal = _optimal;
+            _Destinations = ConvertArraytoPointLatLngList(_destinations);
+            Visualize(Optimal, _Destinations);
         }
 
         List<GMapOverlay> _markers_overlay = new List<GMapOverlay>();
@@ -53,6 +74,15 @@ namespace kagv {
         int[] Optimal;
 
         double _zoomFactor;
+
+        private List<PointLatLng> ConvertArraytoPointLatLngList(double[,] Destinations) {
+            List<PointLatLng> _converted = new List<PointLatLng>();
+
+            for (int i = 0; i < Destinations.GetLength(0); i++) {
+                _converted.Add(new PointLatLng(Destinations[i, 1], Destinations[i, 2]));
+            }
+            return _converted;
+        }
 
         private List<PointLatLng> ConvertListToPointLatLng(List<double[,]> ListDist) {
 

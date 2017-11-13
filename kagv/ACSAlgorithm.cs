@@ -58,8 +58,13 @@ namespace kagv {
         int _width;
         int _heigth;
         bool stopped = false;
+        bool _RunForBenchmark = false;
+        bool _RunForDistances = false;
 
         public int[] Optimal { get => _optimal; }
+        public bool RunForBenchmark { get => _RunForBenchmark; }
+        public bool RunForDistances { get => _RunForDistances; }
+        public double[,] Destinations { get => _destinations; }
 
         private double[,] ConvertListToArray(List<List<double>> ListDist) {
             double[,] ArrayDist = new double[ListDist.Count, ListDist[0].Count];
@@ -1428,15 +1433,21 @@ namespace kagv {
 
             if (filename == "") {
                 Size = new Size(Size.Width, pb.Location.Y + pb.Size.Height + 50);
+                _RunForDistances = true;
+                _RunForBenchmark = false;
                 RunACS();
             } else {
                 if (cb_lengths.Checked) {
                     Size = new Size(Size.Width, pb.Location.Y + pb.Size.Height + 50);
+                    _RunForDistances = true;
+                    _RunForBenchmark = false;
                     RunACS(filename);
                 }
                 if (cb_bechmark.Checked) {
                     chart1.Size = new Size(600, (pb.Location.Y + pb.Size.Height) - 25);
                     Size = new Size((chart1.Location.X + chart1.Width + 25), pb.Location.Y + pb.Size.Height + 50);
+                    _RunForBenchmark = true;
+                    _RunForDistances = false;
                     RunACS(ReadBenchmark(filename));
                 }
             }

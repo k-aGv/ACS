@@ -831,6 +831,11 @@ namespace kagv {
             acs = new ACSAlgorithm();
             acs.StartPosition = FormStartPosition.CenterParent;
             acs.ShowDialog();
+            if(acs.RunForDistances) {
+                gmaps Gmaps = new gmaps(acs.Optimal,acs.Destinations);
+                Gmaps.ShowDialog();
+            }
+
         }
 
         private void importImageLayoutToolStripMenuItem_Click(object sender, EventArgs e) {
