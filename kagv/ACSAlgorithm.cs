@@ -870,8 +870,8 @@ namespace kagv {
             //double[,] CustomersDistance = null;
             double[,] t = null;
 
-            //double[,] CustomersDistance = ReadDistances(DistancesFilename);
-            double[,] CustomersDistance = _distances;
+            double[,] CustomersDistance = ReadDistances(DistancesFilename);
+            //double[,] CustomersDistance = _distances;
             double[,] Customers = _destinations;
             if (CustomersDistance == null) {
                 Stop();
@@ -1334,7 +1334,7 @@ namespace kagv {
         }
 
         private double[,] ReadDistances(string DistancesFilename) {
-
+            
             double[,] _Customers;
             StreamReader streamReader = new StreamReader(DistancesFilename);
             if (!streamReader.ReadLine().Contains("{Distances}")) {
@@ -1350,9 +1350,10 @@ namespace kagv {
             streamReader.Close();
             SizeCustomers = Convert.ToInt32(Math.Sqrt(SizeCustomers));
             _Customers = new double[SizeCustomers, SizeCustomers];
+            _destinations = new double[SizeCustomers, 3];
 
             streamReader = new StreamReader(DistancesFilename);
-            char[] delim = { ':' };
+            char[] delim = { ':', ',' };
             string _line = "";
             string[] _info;
             int i = 0;
@@ -1360,10 +1361,16 @@ namespace kagv {
             do {
                 _line = streamReader.ReadLine();
                 if (_line != "" && !_line.Contains("{Distances}")) {
-                    _info = _line.Split(delim, StringSplitOptions.RemoveEmptyEntries);
-                    _Customers[i, j] = Convert.ToDouble(_info[1]);
-                    j++;
-
+                    if (_line.Contains("<Destination")) {
+                        _destinations[i, 0] = i;
+                        _destinations[i, 1] = Convert.ToDouble(_line.Split(delim, StringSplitOptions.RemoveEmptyEntries)[1]);
+                        _destinations[i, 2] = Convert.ToDouble(_line.Split(delim, StringSplitOptions.RemoveEmptyEntries)[2]);
+                        
+                    } else {
+                        _info = _line.Split(delim, StringSplitOptions.RemoveEmptyEntries);
+                        _Customers[i, j] = Convert.ToDouble(_info[1]);
+                        j++;
+                    }
 
                     if (j == SizeCustomers) {
                         j = 0;
