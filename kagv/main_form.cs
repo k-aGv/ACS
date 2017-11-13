@@ -823,15 +823,12 @@ namespace kagv {
             MeasureScreen();
             Initialization();
         }
-        
+
 
         private void antsToolStripMenuItem_Click(object sender, EventArgs e) {
             ExportLocal();
-            if (Distances.Count ==0)
-                return;
 
-            Distances = new List<List<double>>();
-            acs = new ACSAlgorithm(Distances, Destinations);
+            acs = new ACSAlgorithm();
             acs.StartPosition = FormStartPosition.CenterParent;
             acs.ShowDialog();
         }
