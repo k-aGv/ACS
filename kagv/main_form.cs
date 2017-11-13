@@ -823,8 +823,7 @@ namespace kagv {
             MeasureScreen();
             Initialization();
         }
-
-
+        
         private void antsToolStripMenuItem_Click(object sender, EventArgs e) {
             ExportLocal();
 
@@ -835,7 +834,6 @@ namespace kagv {
                 gmaps Gmaps = new gmaps(acs.Optimal,acs.Destinations);
                 Gmaps.ShowDialog();
             }
-
         }
 
         private void importImageLayoutToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -846,17 +844,6 @@ namespace kagv {
         private void implementGoogleMapsToolStripMenuItem_Click(object sender, EventArgs e) {
             maps = new gmaps();
             maps.ShowDialog();
-            if (maps.Distances != null)
-                Distances = maps.Distances;
-
-            if (maps.Destinations != null) {
-                for (int i = 0; i < maps.Destinations.Count; i++) {
-                    double[,] _tmp = new double[1, 2];
-                    _tmp[0, 0] = maps.Destinations[i].Lat;
-                    _tmp[0, 1] = maps.Destinations[i].Lng;
-                    Destinations.Add(_tmp);
-                }
-            }
         }
 
         private void main_form_Click(object sender, EventArgs e) {

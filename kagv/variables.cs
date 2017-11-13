@@ -81,8 +81,6 @@ namespace kagv {
 
         ACSAlgorithm acs;
         gmaps maps;
-        List<List<double>> Distances;
-        List<double[,]> Destinations = new List<double[,]>();
 
     }
 }
