@@ -401,7 +401,8 @@ namespace kagv {
 
             ACSAlgorithm acs = new ACSAlgorithm(Distances, ConvertPointLatLngToList(Destinations));
             acs.ShowDialog();
-
+            if (acs.Optimal == null)
+                return;
             mymap.Overlays.Clear();
             Optimal = acs.Optimal;
             Visualize(Optimal, Destinations);
