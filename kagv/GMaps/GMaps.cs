@@ -297,6 +297,7 @@ namespace kagv {
             for (int i = 0; i < Destinations.Count; i++) {
 
                 _Distances.Add(new List<double>());
+                _writer.WriteLine("<Destination " + (i + 1) + ">: " + Destinations[i].Lat +" , "+Destinations[i].Lng);
                 for (int j = 0; j < Destinations.Count; j++) {
                     GDirections _d = new GDirections();
                     do {
