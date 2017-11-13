@@ -429,8 +429,7 @@ namespace kagv {
 
                 tmax = (1 / ((1 - r))) * (1 / BestLength);
                 tmin = tmax * (1 - Math.Pow(0.05, 1 / SizeCustomers)) / ((SizeCustomers / 2 - 1) * Math.Pow(0.05, 1 / SizeCustomers));
-
-                chart1.Series["Trip"].Points.Clear();
+                
 
                 double minimum = Math.Pow(Customers[BestTour[0], 2], 10);
                 for (int i = 1; i < BestTour.Length; i++) {
@@ -439,17 +438,10 @@ namespace kagv {
                     }
                 }
 
-
-
-                chart1.ChartAreas[0].AxisY.Minimum = minimum;
-
-
+                
                 for (int i = 0; i < activesolution.Length - 1; i++)
                     t[activesolution[i], activesolution[i + 1]] = Math.Min(t[activesolution[i], activesolution[i + 1]] + (t[activesolution[i], activesolution[i + 1]] / (tmax + tmin)) * (1 / activeLength), tmax);
-
-                for (int i = 0; i < BestTour.Length; i++)
-                    chart1.Series["Trip"].Points.AddXY(Customers[BestTour[i], 1], Customers[BestTour[i], 2]);
-
+                
                 results[Iteration] = BestLength;
                 Iteration = Iteration + 1;
 
@@ -468,10 +460,7 @@ namespace kagv {
             ACS.Enabled = true;
 
 
-            for (int i = 1; i < BestTour.Length; i++) {
-                chart1.Series["Trip"].Points.AddXY(Customers[BestTour[i], 1], Customers[BestTour[i], 2]);
-            }
-
+            
             _optimal = BestTour;
 
             Application.DoEvents();
@@ -886,36 +875,21 @@ namespace kagv {
                 return;
             }
             int SizeCustomers = CustomersDistance.GetLength(0);
-
-            try {
-                h = new double[SizeCustomers, SizeCustomers];
-                //CustomersDistance = new double[SizeCustomers, SizeCustomers];
-                t = new double[SizeCustomers, SizeCustomers];
-            } catch (OutOfMemoryException z) {
-                if (z != null) {
-                    var totalGBRam = Convert.ToInt32((new Microsoft.VisualBasic.Devices.ComputerInfo().TotalPhysicalMemory / (Math.Pow(1024, 3))) + 0.5);
-                    MessageBox.Show("The benchmark file is large for this system.\r\nYour declared arrays cant be declared in " + totalGBRam + " GBs of RAM\r\nOut of memory...Exiting application", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Application.Exit();
-                }
-            }
+            
+            h = new double[SizeCustomers, SizeCustomers];
+            t = new double[SizeCustomers, SizeCustomers];
             double NearNb = 0;
             double t0 = 0;
             int[] BestTour = new int[SizeCustomers + 1];
-
-
-
+            
             for (int i = 0; i < SizeCustomers; i++)
                 for (int j = 0; j < SizeCustomers; j++) {
-                    
                     if (i == j)
                         CustomersDistance[i, j] = 1000000000000000000;
-                    
                     h[i, j] = 1 / CustomersDistance[i, j];
                 }
 
-
-
-
+            
             int NumItsMax = Convert.ToInt32(NumIts.Value);
             Random rand = new Random();
             double m = Convert.ToDouble(Ants.Value);
@@ -925,9 +899,7 @@ namespace kagv {
             double x = Convert.ToDouble(xvalue.Value);
             double a = Convert.ToDouble(avalue.Value);
 
-
-
-
+            
             int NextNode = 0;
             double[] results = new double[NumItsMax];
 
@@ -940,19 +912,18 @@ namespace kagv {
             List<int> NBUnvisited = new List<int>();
             BestTour[0] = Startingnode;
 
-            for (int l = 0; l < SizeCustomers; l++) {
+            for (int l = 0; l < SizeCustomers; l++)
                 NBUnvisited.Add(l);
 
-            }
             NBUnvisited.Remove(Startingnode);
             for (int i = 0; i < NBUnvisited.Count; i++) {
-
                 if (min > CustomersDistance[Startingnode, NBUnvisited[i]]) {
                     min = CustomersDistance[Startingnode, NBUnvisited[i]];
                     NextNode = NBUnvisited[i];
                 }
 
             }
+
             NearNb = NearNb + CustomersDistance[Startingnode, NextNode];
             NBUnvisited.Remove(NextNode);
             BestTour[1] = NextNode;
@@ -975,25 +946,19 @@ namespace kagv {
                 NBUnvisited.Remove(NextNode);
                 BestTour[count] = NextNode;
                 Startingnode = NextNode;
-                if (NBUnvisited.Count == 0) {
+                if (NBUnvisited.Count == 0)
                     listempty = true;
-                }
             }
 
             BestTour[count + 1] = BestTour[0];
             NearNb = NearNb + CustomersDistance[BestTour[count], BestTour[count + 1]];
 
 
-            for (int i = 0; i < SizeCustomers; i++) {
-
+            for (int i = 0; i < SizeCustomers; i++)
                 for (int j = 0; j < SizeCustomers; j++) {
-
-
                     t0 = (1 / ((NearNb * m)));
                     t[i, j] = t0;
-
                 }
-            }
 
 
             Iteration = 1;
@@ -1004,16 +969,17 @@ namespace kagv {
 
 
             double[] TotalRandomLength = new double[500];
+
             for (int g = 0; g < 500; g++) {
                 double RandomLength = 0;
                 List<int> RandomUnvisited = new List<int>();
                 int Start = RandomNumber.Between(0, SizeCustomers - 1);
                 int[] Randomtour = new int[SizeCustomers + 1];
                 Randomtour[0] = Start;
-                for (int l = 0; l < SizeCustomers; l++) {
+
+                for (int l = 0; l < SizeCustomers; l++)
                     RandomUnvisited.Add(l);
 
-                }
                 RandomUnvisited.Remove(Start);
 
                 bool randomlistempty = false;
@@ -1046,9 +1012,8 @@ namespace kagv {
             DC = DC / meancount;
 
             double SDC = 0;
-            for (int g = 0; g < 499; g++) {
+            for (int g = 0; g < 499; g++)
                 SDC = SDC + Math.Pow((TotalRandomLength[g] - TotalRandomLength[g + 1]) - DC, 2);
-            }
 
             SDC = Math.Sqrt((SDC / meancount));
 
@@ -1123,8 +1088,7 @@ namespace kagv {
                         tour[trip + 1] = nextmove;
                         Unvisited.Remove(tour[trip + 1]);
 
-
-
+                        
                         t[c, tour[trip + 1]] = Math.Max(t[c, tour[trip + 1]] * (1 - x) + x * t0, tmin);
                     }
 
@@ -1163,11 +1127,8 @@ namespace kagv {
                                 v = touriteration.Length - 1;
                                 i = touriteration.Length - 2;
                                 improve = 0;
-                            } else {
+                            } else
                                 improve++;
-                            }
-
-
                         }
 
                 }
@@ -1204,26 +1165,11 @@ namespace kagv {
                 tmax = (1 / ((1 - r))) * (1 / BestLength);
                 tmin = tmax * (1 - Math.Pow(0.05, 1 / SizeCustomers)) / ((SizeCustomers / 2 - 1) * Math.Pow(0.05, 1 / SizeCustomers));
 
-                chart1.Series["Trip"].Points.Clear();
-
-                double minimum = Math.Pow(Customers[BestTour[0], 2], 10);
-                for (int i = 1; i < BestTour.Length; i++) {
-                    if (minimum > Customers[BestTour[i], 2]) {
-                        minimum = Customers[BestTour[i], 2];
-                    }
-                }
-
-
-
-                        chart1.ChartAreas[0].AxisY.Minimum =minimum ;
-
-
+                
                 for (int i = 0; i < activesolution.Length - 1; i++)
                     t[activesolution[i], activesolution[i + 1]] = Math.Min(t[activesolution[i], activesolution[i + 1]] + (t[activesolution[i], activesolution[i + 1]] / (tmax + tmin)) * (1 / activeLength), tmax);
 
-                for (int i = 0; i < BestTour.Length; i++)
-                    chart1.Series["Trip"].Points.AddXY(Customers[BestTour[i], 1], Customers[BestTour[i], 2]);
-                
+               
                 results[Iteration] = BestLength;
                 Iteration = Iteration + 1;
 
@@ -1240,12 +1186,7 @@ namespace kagv {
             pb_calculated.Text = "Calculation completed... " + ((100 * Iteration) / NumItsMax) + "%\nIterations occured: " + Iteration + "/" + NumItsMax;
             calc_stop_BTN.Enabled = false;
             ACS.Enabled = true;
-
-
-            for (int i = 1; i < BestTour.Length; i++) {
-                chart1.Series["Trip"].Points.AddXY(Customers[BestTour[i], 1], Customers[BestTour[i], 2]);
-            }
-
+            
             _optimal = BestTour;
 
             Application.DoEvents();
