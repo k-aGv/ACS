@@ -823,19 +823,17 @@ namespace kagv {
             MeasureScreen();
             Initialization();
         }
-
-        int[] Optimal;
+        
 
         private void antsToolStripMenuItem_Click(object sender, EventArgs e) {
             ExportLocal();
-            if (Distances == null)
-                Distances = new List<List<double>>();
+            if (Distances.Count ==0)
+                return;
+
+            Distances = new List<List<double>>();
             acs = new ACSAlgorithm(Distances, Destinations);
             acs.StartPosition = FormStartPosition.CenterParent;
             acs.ShowDialog();
-
-            Optimal = acs.Optimal;
-
         }
 
         private void importImageLayoutToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -861,11 +859,6 @@ namespace kagv {
 
         private void main_form_Click(object sender, EventArgs e) {
             if (importedImageFile == null) MessageBox.Show("Did you import a Google Maps layout?\r\nPlease select Grid/Implement Google Maps to create an image layout", "", MessageBoxButtons.OK, MessageBoxIcon.Question);
-        }
-
-        private void vIsualizeToolStripMenuItem_Click(object sender, EventArgs e) {
-            maps = new gmaps(Optimal, Destinations);
-            maps.ShowDialog();
         }
     }
 

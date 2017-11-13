@@ -33,19 +33,22 @@ namespace kagv {
         public ACSAlgorithm() {
             InitializeComponent();
         }
-        public ACSAlgorithm(List<List<double>> Distances, List<double[,]> Customers) {
-            InitializeComponent();
-            if (Distances.Count != 0)
-                _distances = ConvertListToArray(Distances);
-
-            _destinations = ConvertListToArray(Customers);
-
-        }
         public ACSAlgorithm(double[,] Distances) {
             InitializeComponent();
             _distances = Distances;
         }
+        public ACSAlgorithm(List<List<double>> Distances, List<double[,]> Customers) {
+            InitializeComponent();
+
+            if (Distances.Count == 0 || Customers.Count == 0) {
+                MessageBox.Show("No data to analyze.");
+                return;
+            }
+            _distances = ConvertListToArray(Distances);
+            _destinations = ConvertListToArray(Customers);
+        }
         
+
         ProgressBar pb = new ProgressBar();
         Label pb_Label = new Label();
         Label pb_calculated = new Label();
@@ -849,7 +852,6 @@ namespace kagv {
 
             for (int i = 1; i < BestTour.Length; i++) {
                 chart1.Series["Trip"].Points.AddXY(Customers[BestTour[i], 1], Customers[BestTour[i], 2]);
-
             }
 
             _optimal = BestTour;
@@ -1049,7 +1051,7 @@ namespace kagv {
         }
 
         private void Ants_Load(object sender, EventArgs e) {
-            if (_distances == null)
+            if (_distances == null) 
                 cb_fromFile.Checked = true;
 
             foreach (var leg in chart1.Legends)
