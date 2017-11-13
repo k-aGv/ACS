@@ -58,9 +58,7 @@ namespace kagv {
                 return;
 
             mymap.Overlays.Clear();
-            Optimal = _optimal;
-            _Destinations = ConvertArraytoPointLatLngList(_destinations);
-            Visualize(Optimal, _Destinations);
+            Visualize(_optimal, ConvertArraytoPointLatLngList(_destinations));
         }
 
         List<GMapOverlay> _markers_overlay = new List<GMapOverlay>();
@@ -111,7 +109,7 @@ namespace kagv {
 
         private void Visualize(int[] _optimal, List<PointLatLng> _dest) {
 
-            for (int i = 0; i < Destinations.Count; i++) {
+            for (int i = 0; i < _dest.Count; i++) {
                 GMap.NET.MapProviders.GMapProviders.GoogleMap.GetDirections(
                     out GDirections _d,
                     _dest[_optimal[i]],
@@ -148,7 +146,7 @@ namespace kagv {
 
 
                     Application.DoEvents();
-                } catch { MessageBox.Show("fail"); }
+                } catch { MessageBox.Show("An unexpected errorhas occured. Possible internet \nconnection problem."); }
 
             }
         }
