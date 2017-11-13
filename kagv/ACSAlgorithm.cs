@@ -1035,18 +1035,19 @@ namespace kagv {
             ACS.Enabled = false;
             tb_length.Text = "";
 
-            chart1.Size = new Size(600, (pb.Location.Y + pb.Size.Height) - 25);
-            Size = new Size((chart1.Location.X + chart1.Width + 25), pb.Location.Y + pb.Size.Height + 50);
-
             if (filename == "") {
-                RunACS(filename);
-                //RunACS(_distances);
+                Size = new Size(Size.Width, pb.Location.Y + pb.Size.Height + 50);
+                RunACS("");
             } else {
-                if (cb_lengths.Checked)
+                if (cb_lengths.Checked) {
+                    Size = new Size(Size.Width, pb.Location.Y + pb.Size.Height + 50);
                     RunACS(filename);
-
-                if (cb_bechmark.Checked)
+                }
+                if (cb_bechmark.Checked) {
+                    chart1.Size = new Size(600, (pb.Location.Y + pb.Size.Height) - 25);
+                    Size = new Size((chart1.Location.X + chart1.Width + 25), pb.Location.Y + pb.Size.Height + 50);
                     RunACS(ReadBenchmark(filename));
+                }
             }
         }
 
