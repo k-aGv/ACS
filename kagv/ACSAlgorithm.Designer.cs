@@ -358,7 +358,6 @@
             this.chart1.Size = new System.Drawing.Size(416, 327);
             this.chart1.TabIndex = 45;
             this.chart1.Text = "chart2";
-            this.chart1.Click += new System.EventHandler(this.chart1_Click);
             // 
             // cb_bechmark
             // 

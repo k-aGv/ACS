@@ -52,20 +52,27 @@ namespace kagv {
         ProgressBar pb = new ProgressBar();
         Label pb_Label = new Label();
         Label pb_calculated = new Label();
+
         double[,] _distances;
-        double[,] _destinations;
-        int[] _optimal;
+
         int _width;
         int _heigth;
         bool stopped = false;
-        bool _RunForBenchmark = false;
-        bool _RunForDistances = false;
 
-        public int[] Optimal { get => _optimal; }
-        public bool RunForBenchmark { get => _RunForBenchmark; }
-        public bool RunForDistances { get => _RunForDistances; }
+        double[,] _destinations;
         public double[,] Destinations { get => _destinations; }
 
+        int[] _optimal;
+        public int[] Optimal { get => _optimal; }
+
+        bool _RunForBenchmark = false;
+        public bool RunForBenchmark { get => _RunForBenchmark; }
+
+        bool _RunForDistances = false;
+        public bool RunForDistances { get => _RunForDistances; }
+
+        
+        
         private double[,] ConvertListToArray(List<List<double>> ListDist) {
             double[,] ArrayDist = new double[ListDist.Count, ListDist[0].Count];
 
@@ -96,10 +103,8 @@ namespace kagv {
 
 
             double[,] h = null;
-            //double[,] CustomersDistance = null;
             double[,] t = null;
-
-            //double[,] CustomersDistance = ReadDistances(DistancesFilename);
+            
             double[,] CustomersDistance = _distances;
             double[,] Customers = _destinations;
             if (CustomersDistance == null) {
@@ -872,11 +877,9 @@ namespace kagv {
 
 
             double[,] h = null;
-            //double[,] CustomersDistance = null;
             double[,] t = null;
 
             double[,] CustomersDistance = ReadDistances(DistancesFilename);
-            //double[,] CustomersDistance = _distances;
             double[,] Customers = _destinations;
             if (CustomersDistance == null) {
                 Stop();
@@ -1528,22 +1531,15 @@ namespace kagv {
             if (_distances == null) {
                 cb_fromFile.Checked = cb_lengths.Checked;
                 cb_fromFile.Enabled = cb_lengths.Checked;
-            } else {
+            } else
                 cb_fromFile.Enabled = cb_lengths.Checked;
-            }
 
             cb_bechmark.Checked = !cb_lengths.Checked;
         }
 
         private void cb_fromFile_CheckedChanged(object sender, EventArgs e) {
-            if (_distances == null) {
+            if (_distances == null)
                 cb_fromFile.Checked = cb_lengths.Checked;
-            }
-
-        }
-
-        private void chart1_Click(object sender, EventArgs e) {
-
         }
     }
 }
