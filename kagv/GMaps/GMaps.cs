@@ -80,8 +80,8 @@ namespace kagv {
         }
 
         private void Visualize(int[] _optimal, List<PointLatLng> _dest) {
-            
-            for (int i = 0; i < _optimal.Length - 1; i++) {
+
+            for (int i = 0; i < Destinations.Count; i++) {
                 GMap.NET.MapProviders.GMapProviders.GoogleMap.GetDirections(
                     out GDirections _d,
                     _dest[_optimal[i]],
@@ -93,30 +93,32 @@ namespace kagv {
                         metricToolStripMenuItem.Checked
                     );
                 try {
+
                     GMapRoute route = new GMapRoute(_d.Route, "Route " + i);
-                    GMapOverlay _route_overlay = new GMapOverlay("RouteOverlay");
+                    GMapOverlay _route_overlay = new GMapOverlay("RouteOverlay " + i);
+
                     _route_overlay.Routes.Add(route);
                     mymap.UpdateRouteLocalPosition(route);
                     mymap.Overlays.Add(_route_overlay);
 
                     _markers_overlay.Add(new GMapOverlay("Marker" + i));
-                    _markers_overlay[i].Markers.Add(
-                        new GMap.NET.WindowsForms.Markers.GMarkerGoogle(
-                            _dest[_optimal[i+1]],
+                    _route_overlay.Markers.Add(new GMap.NET.WindowsForms.Markers.GMarkerGoogle(
+                            _dest[_optimal[i + 1]],
                             GMap.NET.WindowsForms.Markers.GMarkerGoogleType.green));
 
-                    var ret = GMap.NET.MapProviders.GMapProviders.GoogleSatelliteMap.GetPlacemark(_markers_overlay[i].Markers[0].Position, out GeoCoderStatusCode status);
+
+                    var ret = GMap.NET.MapProviders.GMapProviders.GoogleSatelliteMap.GetPlacemark(_route_overlay.Markers[0].Position, out GeoCoderStatusCode status);
                     if (status == GeoCoderStatusCode.G_GEO_SUCCESS && ret != null) {
-                        _markers_overlay[i].Markers[0].ToolTipText = (i+1)+" "+ret.Value.Address;
-                        _markers_overlay[i].Markers[0].ToolTipMode = MarkerTooltipMode.Always;
+                        _route_overlay.Markers[0].ToolTipText = (i + 1) + " " + ret.Value.Address;
+                        _route_overlay.Markers[0].ToolTipMode = MarkerTooltipMode.Always;
                     }
 
-                    mymap.UpdateMarkerLocalPosition(_markers_overlay[i].Markers[0]);
-                    mymap.Overlays.Add(_markers_overlay[i]);
+                    mymap.UpdateMarkerLocalPosition(_route_overlay.Markers[0]);
+                    mymap.Overlays.Add(_route_overlay);
 
-                    
+
                     Application.DoEvents();
-                } catch { }
+                } catch { MessageBox.Show("fail"); }
 
             }
         }
