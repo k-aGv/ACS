@@ -106,8 +106,9 @@ namespace kagv {
 
             return ArrayDist;
         }
-
+        /*
         private void RunACS() {
+
             double BestLength = 0;
             int Iteration;
             double Sump;
@@ -870,7 +871,7 @@ namespace kagv {
 
         }
         */
-        private void RunACS(double[,] Customers) {
+        private void RunACS() {
             double BestLength = 0;
             int Iteration;
             double Sump;
@@ -879,7 +880,8 @@ namespace kagv {
 
 
             double[,] h = null;
-            double[,] CustomersDistance = null;
+            double[,] CustomersDistance = _distances;
+            double[,] Customers = _destinations;
             double[,] t = null;
 
             int SizeCustomers = Customers.GetLength(0);
@@ -964,19 +966,6 @@ namespace kagv {
 
                     if (i == j)
                         CustomersDistance[i, j] = 1000000000000000000;
-                    else {
-                        double x0 = Customers[i, 1];
-                        double y0 = Customers[i, 2];
-
-                        double x1 = Customers[j, 1];
-                        double y1 = Customers[j, 2];
-
-                        double dX = x1 - x0;
-                        double dY = y1 - y0;
-                        double distance = (Math.Sqrt(dX * dX + dY * dY));
-                        CustomersDistance[i, j] = distance;
-
-                    }
 
 
                     h[i, j] = 1 / CustomersDistance[i, j];
