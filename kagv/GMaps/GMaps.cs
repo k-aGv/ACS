@@ -204,7 +204,7 @@ namespace kagv {
             mymap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
 
             //resize GB ...just A E S T H I T I C 
-            gb_settings.Size = new Size(gb_settings.Size.Width, mymap.Height);
+            //gb_settings.Size = new Size(gb_settings.Size.Width, mymap.Height);
             //set the label to the bottom
             label1.Location = new Point(10, mymap.Location.Y + mymap.Height + 1);
         }
@@ -308,7 +308,8 @@ namespace kagv {
             mymap.ShowCenter = showCrossToolStripMenuItem.Checked;
             mymap.Refresh();
         }
-
+        List<Label> lb_demands = new List<Label>();
+        List<NumericUpDown> nUD_demands = new List<NumericUpDown>();
         private void GetDistances() {
             if (Destinations.Count < 2) {
                 MessageBox.Show("User must place at least 2 destinations.");
@@ -323,6 +324,24 @@ namespace kagv {
             int interval = 0;
 
             for (int i = 0; i < Destinations.Count; i++) {
+                lb_demands.Add(new Label());
+                lb_demands[i].Text = "City " + (i+1) + ": demand = ";
+                lb_demands[i].Location = new Point(
+                    gb_settings.Location.X+5, 
+                    gb_settings.Location.Y+gb_settings.Height+3+(i*30)
+                    );
+                Controls.Add(lb_demands[i]);
+
+                nUD_demands.Add(new NumericUpDown());
+                nUD_demands[i].Minimum = 0;
+                nUD_demands[i].Value = 0;
+                nUD_demands[i].Size = new Size(50, 20);
+                nUD_demands[i].Location = new Point(
+                    lb_demands[i].Location.X + lb_demands[i].Width + 2, 
+                    lb_demands[i].Location.Y-3
+                    );
+                Controls.Add(nUD_demands[i]);
+
 
                 _Distances.Add(new List<double>());
                 _writer.WriteLine("<Destination " + (i + 1) + ">: " + Destinations[i].Lat +" , "+Destinations[i].Lng);
@@ -424,19 +443,33 @@ namespace kagv {
             TargetTheMouseAndChangeCenterToolStripMenuItem.Checked = false;
             TargetTheCenterOfMapToolStripMenuItem.Checked = true;
         }
+        int[] _demands;
+        Button btn_OpenACS = new Button();
 
-        private void btn_getDistances_Click(object sender, EventArgs e) {
-            GetDistances();
-
-            ACSAlgorithm acs = new ACSAlgorithm(Distances, ConvertPointLatLngToList(Destinations));
+        private void Btn_OpenACS_Click(object sender, EventArgs e) {
+            ACSAlgorithm acs = new ACSAlgorithm(Distances, ConvertPointLatLngToList(Destinations),_demands);
             acs.ShowDialog();
             if (acs.Optimal == null)
                 return;
             mymap.Overlays.Clear();
             Optimal = acs.Optimal;
             Visualize(Optimal, Destinations);
-            
+        }
 
+        private void btn_getDistances_Click(object sender, EventArgs e) {
+            GetDistances();
+            btn_OpenACS.Click += Btn_OpenACS_Click;
+            btn_OpenACS.Text = "Run ACS";
+            btn_OpenACS.Location = new Point(lb_demands[lb_demands.Count - 1].Location.X,
+                lb_demands[lb_demands.Count - 1].Location.Y + 30);
+            Controls.Add(btn_OpenACS);
+
+            _demands = new int[Destinations.Count];
+            int _demands_index = 0;
+            foreach (NumericUpDown item in nUD_demands) {
+                _demands[_demands_index] = Convert.ToInt32(item.Value);
+                _demands_index++;
+            }
         }
     }
 }

@@ -74,7 +74,7 @@
             this.gb_settings.Controls.Add(this.gb_provider);
             this.gb_settings.Location = new System.Drawing.Point(895, 12);
             this.gb_settings.Name = "gb_settings";
-            this.gb_settings.Size = new System.Drawing.Size(181, 562);
+            this.gb_settings.Size = new System.Drawing.Size(181, 484);
             this.gb_settings.TabIndex = 4;
             this.gb_settings.TabStop = false;
             this.gb_settings.Text = "Settings";
