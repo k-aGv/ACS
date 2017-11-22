@@ -627,7 +627,7 @@ namespace kagv {
             {
                 count = count + 1;
                 min = 100000000;
-                if (load >= 100)
+                if (load >= Capacity)
                 {
                     NextNode = 0;
                     load = 0;
