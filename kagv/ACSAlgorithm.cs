@@ -496,74 +496,30 @@ namespace kagv {
 
             double[,] h = null;
             double[,] CustomersDistance = _distances;
-            double[,] Customers = _destinations;
             double[,] t = null;
+            double[,] Customers = _destinations;
 
             int SizeCustomers = Customers.GetLength(0);
 
-            try {
+            try
+            {
                 h = new double[SizeCustomers, SizeCustomers];
-                CustomersDistance = new double[SizeCustomers, SizeCustomers];
                 t = new double[SizeCustomers, SizeCustomers];
-            } catch (OutOfMemoryException z) {
-                if (z != null) {
+            }
+            catch (OutOfMemoryException z)
+            {
+                if (z != null)
+                {
                     var totalGBRam = Convert.ToInt32((new Microsoft.VisualBasic.Devices.ComputerInfo().TotalPhysicalMemory / (Math.Pow(1024, 3))) + 0.5);
                     MessageBox.Show("The benchmark file is large for this system.\r\nYour declared arrays cant be declared in " + totalGBRam + " GBs of RAM\r\nOut of memory...Exiting application", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Application.Exit();
                 }
             }
 
-            /*
-            int[] demand = new int[] {0,
-19,
-2,
-12,
-20,
-6,
-17,
-8,
-14,
-2,
-8,
-5,
-7,
-22,
-14,
-17,
-23,
-15,
-21,
-2,
-24,
-10,
-20,
-6,
-21,
-10,
-6,
-13,
-21,
-24,
-11,
-16,
-8,
-11,
-11,
-22,
-17,
-22,
-17,
-8,
-23,
-5,
-3,
-18,
-12};
-            */
 
+            int[] demand = Demand;
 
-
-            int sumdemand = Demand.Sum();
+            int sumdemand = demand.Sum();
             double extratrips = double.NaN;
             double Capacity = 100;
             extratrips = Math.Ceiling(sumdemand / Capacity);
@@ -578,7 +534,8 @@ namespace kagv {
             double[,] save = new double[SizeCustomers, SizeCustomers];
 
             for (int i = 0; i < SizeCustomers; i++)
-                for (int j = 0; j < SizeCustomers; j++) {
+                for (int j = 0; j < SizeCustomers; j++)
+                {
                     h[i, j] = 0;
 
                     if (i == j)
@@ -588,13 +545,15 @@ namespace kagv {
                     h[i, j] = 1 / CustomersDistance[i, j];
                 }
 
-            for (int i = 0; i < SizeCustomers; i++) {
-                for (int j = 0; j < SizeCustomers; j++) {
+            for (int i = 0; i < SizeCustomers; i++)
+            {
+                for (int j = 0; j < SizeCustomers; j++)
+                {
                     save[i, j] = CustomersDistance[i, 0] + CustomersDistance[0, j] - CustomersDistance[i, j];
                 }
             }
 
-            double lamda = 2;
+            double lamda = 5;
 
 
             int NumItsMax = Convert.ToInt32(NumIts.Value);
@@ -621,27 +580,34 @@ namespace kagv {
             Startingnode = RandomNumber.Between(1, SizeCustomers - 1);
             List<int> NBUnvisited = new List<int>();
             BestTour[1] = Startingnode;
-            load = load + Demand[Startingnode];
+            load = load + demand[Startingnode];
             NearNb = NearNb + CustomersDistance[BestTour[0], BestTour[1]];
 
-            for (int l = 0; l < SizeCustomers; l++) {
+            for (int l = 0; l < SizeCustomers; l++)
+            {
                 NBUnvisited.Add(l);
 
             }
             NBUnvisited.Remove(0);
             NBUnvisited.Remove(Startingnode);
 
-            if (load >= 100) {
+            if (load >= 100)
+            {
                 NextNode = 0;
                 load = 0;
-            } else {
-                for (int i = 0; i < NBUnvisited.Count; i++) {
+            }
+            else
+            {
+                for (int i = 0; i < NBUnvisited.Count; i++)
+                {
 
-                    if (min > CustomersDistance[Startingnode, NBUnvisited[i]] && (load + Demand[NBUnvisited[i]]) <= Capacity) {
+                    if (min > CustomersDistance[Startingnode, NBUnvisited[i]] && (load + demand[NBUnvisited[i]]) <= Capacity)
+                    {
                         min = CustomersDistance[Startingnode, NBUnvisited[i]];
                         NextNode = NBUnvisited[i];
                     }
-                    if (NextNode == Startingnode) {
+                    if (NextNode == Startingnode)
+                    {
 
                         NextNode = 0;
                         load = 0;
@@ -649,7 +615,7 @@ namespace kagv {
 
                 }
             }
-            load = load + Demand[NextNode];
+            load = load + demand[NextNode];
             NearNb = NearNb + CustomersDistance[Startingnode, NextNode];
             NBUnvisited.Remove(NextNode);
             BestTour[2] = NextNode;
@@ -657,33 +623,41 @@ namespace kagv {
 
             int count = 2;
             Boolean listempty = false;
-            while (listempty == false) {
+            while (listempty == false)
+            {
                 count = count + 1;
                 min = 100000000;
-                if (load >= 100) {
+                if (load >= 100)
+                {
                     NextNode = 0;
                     load = 0;
-                } else {
-                    for (int i = 0; i < NBUnvisited.Count; i++) {
+                }
+                else
+                {
+                    for (int i = 0; i < NBUnvisited.Count; i++)
+                    {
 
-                        if (min > CustomersDistance[Startingnode, NBUnvisited[i]] && (load + Demand[NBUnvisited[i]]) <= Capacity) {
+                        if (min > CustomersDistance[Startingnode, NBUnvisited[i]] && (load + demand[NBUnvisited[i]]) <= Capacity)
+                        {
                             min = CustomersDistance[Startingnode, NBUnvisited[i]];
                             NextNode = NBUnvisited[i];
                         }
 
                     }
-                    if (NextNode == Startingnode) {
+                    if (NextNode == Startingnode)
+                    {
 
                         NextNode = 0;
                         load = 0;
                     }
                 }
-                load = load + Demand[NextNode];
+                load = load + demand[NextNode];
                 NearNb = NearNb + CustomersDistance[Startingnode, NextNode];
                 NBUnvisited.Remove(NextNode);
                 BestTour[count] = NextNode;
                 Startingnode = NextNode;
-                if (NBUnvisited.Count == 0) {
+                if (NBUnvisited.Count == 0)
+                {
                     listempty = true;
                 }
             }
@@ -691,9 +665,11 @@ namespace kagv {
 
 
 
-            for (int i = 0; i < SizeCustomers; i++) {
+            for (int i = 0; i < SizeCustomers; i++)
+            {
 
-                for (int j = 0; j < SizeCustomers; j++) {
+                for (int j = 0; j < SizeCustomers; j++)
+                {
 
 
                     t0 = (1 / ((NearNb * SizeCustomers)));
@@ -711,14 +687,16 @@ namespace kagv {
 
 
             double[] TotalRandomLength = new double[500];
-            for (int g = 0; g < 500; g++) {
+            for (int g = 0; g < 500; g++)
+            {
                 load = 0;
                 double RandomLength = 0;
                 List<int> RandomUnvisited = new List<int>();
                 int Start = 0;
                 int[] Randomtour = new int[SizeCustomers + vehiclesrequired];
                 Randomtour[0] = Start;
-                for (int l = 0; l < SizeCustomers; l++) {
+                for (int l = 0; l < SizeCustomers; l++)
+                {
                     RandomUnvisited.Add(l);
 
                 }
@@ -726,14 +704,17 @@ namespace kagv {
 
                 bool randomlistempty = false;
                 int countrandom = 1;
-                while (randomlistempty == false) {
+                while (randomlistempty == false)
+                {
                     int foundnode = 0;
-                    for (int i = 0; i < RandomUnvisited.Count; i++) {
+                    for (int i = 0; i < RandomUnvisited.Count; i++)
+                    {
                         int Next = RandomNumber.Between(0, RandomUnvisited.Count - 1);
-                        if (load + Demand[RandomUnvisited[Next]] <= 100) {
+                        if (load + demand[RandomUnvisited[Next]] <= 100)
+                        {
                             foundnode = 1;
                             Randomtour[countrandom] = RandomUnvisited[Next];
-                            load = load + Demand[RandomUnvisited[Next]];
+                            load = load + demand[RandomUnvisited[Next]];
                             RandomUnvisited.Remove(RandomUnvisited[Next]);
                             RandomLength = RandomLength + CustomersDistance[Randomtour[countrandom - 1], Randomtour[countrandom]];
                             countrandom += 1;
@@ -741,7 +722,8 @@ namespace kagv {
                             break;
                         }
                     }
-                    if (foundnode == 0) {
+                    if (foundnode == 0)
+                    {
                         load = 0;
                         Randomtour[countrandom] = 0;
                         RandomLength = RandomLength + CustomersDistance[Randomtour[countrandom - 1], Randomtour[countrandom]];
@@ -760,7 +742,8 @@ namespace kagv {
 
             int meancount = 0;
             double DC = 0;
-            for (int g = 0; g < 499; g++) {
+            for (int g = 0; g < 499; g++)
+            {
                 DC = DC + Math.Abs(TotalRandomLength[g] - TotalRandomLength[g + 1]);
                 meancount += 1;
             }
@@ -768,7 +751,8 @@ namespace kagv {
             DC = DC / meancount;
 
             double SDC = 0;
-            for (int g = 0; g < 499; g++) {
+            for (int g = 0; g < 499; g++)
+            {
                 SDC = SDC + Math.Pow((TotalRandomLength[g] - TotalRandomLength[g + 1]) - DC, 2);
             }
 
@@ -781,13 +765,15 @@ namespace kagv {
             activesolution = BestTour;
             double activeLength = NearNb;
 
-            while (Iteration < NumItsMax) {
+            while (Iteration < NumItsMax)
+            {
                 if (stopped)
                     return;
                 int[] touriteration = new int[SizeCustomers + vehiclesrequired];
                 double LengthIteration = Math.Pow(NearNb, 10);
 
-                for (int k = 1; k < m + 1; k++) {
+                for (int k = 1; k < m + 1; k++)
+                {
 
                     load = 0;
                     int moves = 0;
@@ -795,7 +781,7 @@ namespace kagv {
                     tour[moves] = 0;
                     moves += 1;
                     tour[moves] = RandomNumber.Between(1, SizeCustomers - 1);
-                    load = load + Demand[tour[moves]];
+                    load = load + demand[tour[moves]];
                     List<int> Unvisited = new List<int>();
                     for (int l = 0; l < SizeCustomers; l++)
                         Unvisited.Add(l);
@@ -803,41 +789,53 @@ namespace kagv {
                     Unvisited.Remove(tour[0]);
                     Unvisited.Remove(tour[1]);
 
-                    for (int trip = 1; trip < SizeCustomers + vehiclesrequired - 1; trip++) {
+                    for (int trip = 1; trip < SizeCustomers + vehiclesrequired - 1; trip++)
+                    {
                         int c = tour[trip];
 
                         List<int> PossibleCustomers = new List<int>();
-                        for (int i = 0; i < Unvisited.Count; i++) {
-                            if (load + Demand[Unvisited.ElementAt(i)] <= Capacity)
+                        for (int i = 0; i < Unvisited.Count; i++)
+                        {
+                            if (load + demand[Unvisited.ElementAt(i)] <= Capacity)
                                 PossibleCustomers.Add(Unvisited.ElementAt(i));
                         }
 
-                        if (PossibleCustomers.Count == 0) {
+                        if (PossibleCustomers.Count == 0)
+                        {
                             nextmove = 0;
 
-                        } else if (c == 0) {
+                        }
+                        else if (c == 0)
+                        {
                             nextmove = PossibleCustomers[RandomNumber.Between(0, PossibleCustomers.Count - 1)];
-                        } else {
+                        }
+                        else
+                        {
                             List<double> choice = new List<double>();
 
-                            for (int i = 0; i < PossibleCustomers.Count; i++) {
+                            for (int i = 0; i < PossibleCustomers.Count; i++)
+                            {
                                 int j = PossibleCustomers.ElementAt(i);
                                 choice.Add(Math.Pow(t[c, j], a) * Math.Pow(h[c, j], b) * Math.Pow(save[c, j], lamda));
                             }
                             double random1 = RandomNumber.DoubleBetween(0, 1);
                             if (random1 >= 1)
                                 MessageBox.Show("error1");
-                            if (random1 < q0) {
+                            if (random1 < q0)
+                            {
 
                                 double maxValue = choice.Max();
                                 int maxIndex = choice.IndexOf(maxValue);
                                 nextmove = PossibleCustomers.ElementAt(maxIndex);
 
-                            } else {
+                            }
+                            else
+                            {
                                 List<double> p = new List<double>();
                                 p.Clear();
                                 Sump = 0;
-                                for (int i = 0; i < PossibleCustomers.Count; i++) {
+                                for (int i = 0; i < PossibleCustomers.Count; i++)
+                                {
                                     int j = PossibleCustomers.ElementAt(i);
                                     Sump = Sump + (Math.Pow(t[c, j], a) * Math.Pow(h[c, j], b) * Math.Pow(save[c, j], lamda));
                                     p.Add((Math.Pow(t[c, j], a) * Math.Pow(h[c, j], b) * Math.Pow(save[c, j], lamda)));
@@ -848,30 +846,37 @@ namespace kagv {
                                 double randomnum = RandomNumber.DoubleBetween(0, 1);
                                 if (randomnum >= 1)
                                     MessageBox.Show("error1");
-                                for (int i = 0; i < p.Count; i++) {
+                                for (int i = 0; i < p.Count; i++)
+                                {
                                     p[i] = p[i] / Sump;
                                     p[i] = cumsum + p[i];
                                     cumsum = p[i];
                                 }
-                                for (int j = 0; j < p.Count - 1; j++) {
-                                    if (randomnum >= p[j] && randomnum < p[j + 1]) {
+                                for (int j = 0; j < p.Count - 1; j++)
+                                {
+                                    if (randomnum >= p[j] && randomnum < p[j + 1])
+                                    {
                                         nextmove = PossibleCustomers.ElementAt(j);
                                         break;
                                     }
                                 }
-                                if (nextmove == c) {
+                                if (nextmove == c)
+                                {
                                     nextmove = PossibleCustomers[0];
                                 }
                             }
                         }
 
-                        if (nextmove == 0) {
+                        if (nextmove == 0)
+                        {
                             load = 0;
                             tour[trip + 1] = nextmove;
 
-                        } else {
+                        }
+                        else
+                        {
 
-                            load = load + Demand[nextmove];
+                            load = load + demand[nextmove];
 
                             tour[trip + 1] = nextmove;
                             Unvisited.Remove(tour[trip + 1]);
@@ -887,7 +892,8 @@ namespace kagv {
                     for (int i = 0; i < tour.Length - 1; i++)
                         Length = Length + CustomersDistance[tour[i], tour[i + 1]];
 
-                    if (Length < LengthIteration) {
+                    if (Length < LengthIteration)
+                    {
                         touriteration = tour;
                         LengthIteration = Length;
 
@@ -903,17 +909,21 @@ namespace kagv {
                 int capuntilnow = 0;
 
 
-                for (int i = 1; i < touriteration.Length; i++) {
+                for (int i = 1; i < touriteration.Length; i++)
+                {
 
 
-                    if (touriteration[i] == 0) {
+                    if (touriteration[i] == 0)
+                    {
                         custofveh.Add(custuntilnow);
                         capofveh.Add(capuntilnow);
                         capuntilnow = 0;
                         custuntilnow = 0;
-                    } else {
+                    }
+                    else
+                    {
                         custuntilnow += 1;
-                        capuntilnow = capuntilnow + Demand[touriteration[i]];
+                        capuntilnow = capuntilnow + demand[touriteration[i]];
                     }
 
 
@@ -925,23 +935,29 @@ namespace kagv {
                 vehicletours.Add(new List<int>());
                 vehicletours[0].Add(0);
 
-                for (int i = 1; i < touriteration.Length - 1; i++) {
-                    if (touriteration[i] == 0) {
+                for (int i = 1; i < touriteration.Length - 1; i++)
+                {
+                    if (touriteration[i] == 0)
+                    {
                         vehicletours[veh].Add(0);
                         veh += 1;
                         vehicletours.Add(new List<int>());
                         vehicletours[veh].Add(0);
-                    } else {
+                    }
+                    else
+                    {
                         vehicletours[veh].Add(touriteration[i]);
                     }
                 }
                 vehicletours[vehiclesrequired - 1].Add(0);
 
                 List<int> LoadofVeh = new List<int>();
-                for (int i = 0; i < vehiclesrequired; i++) {
+                for (int i = 0; i < vehiclesrequired; i++)
+                {
                     int loadofvehicle = 0;
-                    for (int j = 0; j < vehicletours[i].Count; j++) {
-                        loadofvehicle = loadofvehicle + Demand[vehicletours[i][j]];
+                    for (int j = 0; j < vehicletours[i].Count; j++)
+                    {
+                        loadofvehicle = loadofvehicle + demand[vehicletours[i][j]];
                     }
                     LoadofVeh.Add(loadofvehicle);
                 }
@@ -951,7 +967,8 @@ namespace kagv {
                 bool foundswap = true;
                 int tries = 0;
 
-                do {
+                do
+                {
 
                     foundswap = false;
                     tries += 1;
@@ -959,7 +976,8 @@ namespace kagv {
 
                     int tour1;
                     int tour2;
-                    do {
+                    do
+                    {
                         tour1 = RandomNumber.Between(0, vehiclesrequired - 1);
                         tour2 = RandomNumber.Between(0, vehiclesrequired - 1);
                     } while (tour1 == tour2);
@@ -968,11 +986,13 @@ namespace kagv {
                     List<int> fromtour = new List<int>();
                     List<int> totour = new List<int>();
 
-                    for (int i = 0; i < vehicletours[tour1].Count; i++) {
+                    for (int i = 0; i < vehicletours[tour1].Count; i++)
+                    {
                         int temp = vehicletours[tour1][i];
                         fromtour.Add(temp);
                     }
-                    for (int i = 0; i < vehicletours[tour2].Count; i++) {
+                    for (int i = 0; i < vehicletours[tour2].Count; i++)
+                    {
                         int temp = vehicletours[tour2][i];
                         totour.Add(temp);
                     }
@@ -980,17 +1000,22 @@ namespace kagv {
                     double lengthtour1 = 0;
                     double lengthtour2 = 0;
 
-                    for (int v = 0; v < fromtour.Count - 1; v++) {
+                    for (int v = 0; v < fromtour.Count - 1; v++)
+                    {
                         lengthtour1 = lengthtour1 + CustomersDistance[fromtour[v], fromtour[v + 1]];
                     }
-                    for (int v = 0; v < totour.Count - 1; v++) {
+                    for (int v = 0; v < totour.Count - 1; v++)
+                    {
                         lengthtour2 = lengthtour2 + CustomersDistance[totour[v], totour[v + 1]];
                     }
 
-                    for (int j = 1; j < vehicletours[tour1].Count - 1; j++) {
-                        for (int l = 1; l < vehicletours[tour2].Count - 1; l++) {
+                    for (int j = 1; j < vehicletours[tour1].Count - 1; j++)
+                    {
+                        for (int l = 1; l < vehicletours[tour2].Count - 1; l++)
+                        {
 
-                            if (LoadofVeh[tour2] - Demand[totour[l]] + Demand[fromtour[j]] <= Capacity && LoadofVeh[tour1] + Demand[totour[l]] - Demand[fromtour[j]] <= Capacity) {
+                            if (LoadofVeh[tour2] - demand[totour[l]] + demand[fromtour[j]] <= Capacity && LoadofVeh[tour1] + demand[totour[l]] - demand[fromtour[j]] <= Capacity)
+                            {
                                 int temp = fromtour[j];
                                 fromtour[j] = totour[l];
                                 totour[l] = temp;
@@ -998,14 +1023,17 @@ namespace kagv {
                                 double newlengthtour1 = 0;
                                 double newlengthtour2 = 0;
 
-                                for (int v = 0; v < fromtour.Count - 1; v++) {
+                                for (int v = 0; v < fromtour.Count - 1; v++)
+                                {
                                     newlengthtour1 = newlengthtour1 + CustomersDistance[fromtour[v], fromtour[v + 1]];
                                 }
-                                for (int v = 0; v < totour.Count - 1; v++) {
+                                for (int v = 0; v < totour.Count - 1; v++)
+                                {
                                     newlengthtour2 = newlengthtour2 + CustomersDistance[totour[v], totour[v + 1]];
                                 }
 
-                                if (newlengthtour1 < lengthtour1 && newlengthtour2 < lengthtour2) {
+                                if (newlengthtour1 < lengthtour1 && newlengthtour2 < lengthtour2)
+                                {
                                     List<int> temptour1 = new List<int>(fromtour);
                                     List<int> temptour2 = new List<int>(totour);
                                     vehicletours[tour1] = temptour1;
@@ -1013,10 +1041,12 @@ namespace kagv {
 
                                     LoadofVeh.Clear();
 
-                                    for (int v = 0; v < vehiclesrequired; v++) {
+                                    for (int v = 0; v < vehiclesrequired; v++)
+                                    {
                                         int loadofvehicle = 0;
-                                        for (int z = 0; z < vehicletours[v].Count; z++) {
-                                            loadofvehicle = loadofvehicle + Demand[vehicletours[v][z]];
+                                        for (int z = 0; z < vehicletours[v].Count; z++)
+                                        {
+                                            loadofvehicle = loadofvehicle + demand[vehicletours[v][z]];
                                         }
                                         LoadofVeh.Add(loadofvehicle);
                                     }
@@ -1029,47 +1059,114 @@ namespace kagv {
                                 fromtour.Clear();
                                 totour.Clear();
 
-                                for (int i = 0; i < vehicletours[tour1].Count; i++) {
+                                for (int i = 0; i < vehicletours[tour1].Count; i++)
+                                {
                                     int temp2 = vehicletours[tour1][i];
                                     fromtour.Add(temp2);
                                 }
-                                for (int i = 0; i < vehicletours[tour2].Count; i++) {
+                                for (int i = 0; i < vehicletours[tour2].Count; i++)
+                                {
                                     int temp2 = vehicletours[tour2][i];
                                     totour.Add(temp2);
                                 }
 
+
+
+                            }
+                            else if (LoadofVeh[tour2] + demand[fromtour[j]] <= Capacity && fromtour.Count > 3)
+                            {
+                                int temp = fromtour[j];
+                                totour.Insert(l, temp);
+                                fromtour.Remove(temp);
+
+                                double newlengthtour1 = 0;
+                                double newlengthtour2 = 0;
+
+                                for (int v = 0; v < fromtour.Count - 1; v++)
+                                {
+                                    newlengthtour1 = newlengthtour1 + CustomersDistance[fromtour[v], fromtour[v + 1]];
+                                }
+                                for (int v = 0; v < totour.Count - 1; v++)
+                                {
+                                    newlengthtour2 = newlengthtour2 + CustomersDistance[totour[v], totour[v + 1]];
+                                }
+
+                                if (newlengthtour1 + newlengthtour2 <= lengthtour1 + lengthtour2)
+                                {
+                                    List<int> temptour1 = new List<int>(fromtour);
+                                    List<int> temptour2 = new List<int>(totour);
+                                    vehicletours[tour1] = temptour1;
+                                    vehicletours[tour2] = temptour2;
+
+                                    LoadofVeh.Clear();
+
+                                    for (int v = 0; v < vehiclesrequired; v++)
+                                    {
+                                        int loadofvehicle = 0;
+                                        for (int z = 0; z < vehicletours[v].Count; z++)
+                                        {
+                                            loadofvehicle = loadofvehicle + demand[vehicletours[v][z]];
+                                        }
+                                        LoadofVeh.Add(loadofvehicle);
+                                    }
+
+                                    foundswap = true;
+                                    tries = 0;
+
+                                }
+                                fromtour.Clear();
+                                totour.Clear();
+
+                                for (int i = 0; i < vehicletours[tour1].Count; i++)
+                                {
+                                    int temp2 = vehicletours[tour1][i];
+                                    fromtour.Add(temp2);
+                                }
+                                for (int i = 0; i < vehicletours[tour2].Count; i++)
+                                {
+                                    int temp2 = vehicletours[tour2][i];
+                                    totour.Add(temp2);
+                                }
+
+
                             }
 
-                            if (foundswap == true) {
+                            if (foundswap == true)
+                            {
                                 break;
                             }
 
                         }
-                        if (foundswap == true) {
+                        if (foundswap == true)
+                        {
                             break;
                         }
                     }
 
 
-                } while (foundswap == true || tries < vehiclesrequired);
+                } while (foundswap == true || tries < vehiclesrequired * 2);
 
 
                 LoadofVeh.Clear();
 
-                for (int v = 0; v < vehiclesrequired; v++) {
+                for (int v = 0; v < vehiclesrequired; v++)
+                {
                     int loadofvehicle = 0;
-                    for (int z = 0; z < vehicletours[v].Count; z++) {
-                        loadofvehicle = loadofvehicle + Demand[vehicletours[v][z]];
+                    for (int z = 0; z < vehicletours[v].Count; z++)
+                    {
+                        loadofvehicle = loadofvehicle + demand[vehicletours[v][z]];
                     }
                     LoadofVeh.Add(loadofvehicle);
                 }
 
 
                 int counttrip = 0;
-                for (int i = 0; i < vehiclesrequired; i++) {
+                for (int i = 0; i < vehiclesrequired; i++)
+                {
                     touriteration[counttrip] = 0;
                     counttrip += 1;
-                    for (int j = 1; j < vehicletours[i].Count - 1; j++) {
+                    for (int j = 1; j < vehicletours[i].Count - 1; j++)
+                    {
                         touriteration[counttrip] = vehicletours[i][j];
 
                         counttrip += 1;
@@ -1079,22 +1176,27 @@ namespace kagv {
                 }
                 LengthIteration = 0;
 
-                for (int i = 0; i < touriteration.Length - 1; i++) {
+                for (int i = 0; i < touriteration.Length - 1; i++)
+                {
                     LengthIteration = LengthIteration + CustomersDistance[touriteration[i], touriteration[i + 1]];
                 }
 
 
 
                 int improve = 0;
-                while (improve <= 500) {
+                while (improve <= 500)
+                {
                     double NewDistance = 0;
                     for (int i = 0; i < touriteration.Length - 1; i++)
                         NewDistance = NewDistance + CustomersDistance[touriteration[i], touriteration[i + 1]];
-                    for (int i = 1; i < touriteration.Length - 2; i++) {
-                        if (touriteration[i] == 0) {
+                    for (int i = 1; i < touriteration.Length - 2; i++)
+                    {
+                        if (touriteration[i] == 0)
+                        {
                             continue;
                         }
-                        for (int v = i + 1; v < touriteration.Length - 1; v++) {
+                        for (int v = i + 1; v < touriteration.Length - 1; v++)
+                        {
                             if (touriteration[v] == 0)
                                 break;
                             int[] newroute = TwoOptSwap.OptSwap(touriteration, i, v);
@@ -1103,19 +1205,21 @@ namespace kagv {
                             for (int l = 0; l < touriteration.Length - 1; l++)
                                 NewLength += CustomersDistance[newroute[l], newroute[l + 1]];
 
-                            if (NewLength < NewDistance) {
+                            if (NewLength < NewDistance)
+                            {
                                 touriteration = newroute;
                                 NewDistance = NewLength;
                                 v = touriteration.Length - 1;
                                 i = touriteration.Length - 2;
                                 improve = 0;
-                            } else {
-                                improve++;
                             }
+
 
 
                         }
                     }
+
+                    improve ++;
 
                 }
 
@@ -1123,25 +1227,30 @@ namespace kagv {
                 for (int i = 0; i < touriteration.Length - 1; i++)
                     LengthIteration = LengthIteration + CustomersDistance[touriteration[i], touriteration[i + 1]];
 
-                if (LengthIteration < BestLength) {
+                if (LengthIteration < BestLength)
+                {
                     BestLength = LengthIteration;
                     BestTour = touriteration;
 
                 }
 
-                if (activeLength > LengthIteration) {
+                if (activeLength > LengthIteration)
+                {
                     activesolution = touriteration;
                     activeLength = LengthIteration;
-                } else {
+                }
+                else
+                {
                     double C = (LengthIteration - activeLength);
 
-                    if (RandomNumber.DoubleBetween(0, 1) < Math.Exp(-C / Temperature)) {
+                    if (RandomNumber.DoubleBetween(0, 1) < Math.Exp(-C / Temperature))
+                    {
                         activesolution = touriteration;
                         activeLength = LengthIteration;
                     }
                 }
 
-                Temperature = Temperature * 0.999;
+                Temperature = Temperature * 0.9999;
 
 
                 for (int i = 0; i < t.GetLength(0); i++)
@@ -1174,8 +1283,10 @@ namespace kagv {
 
             double minimum;
             minimum = Customers[BestTour[0], 2];
-            for (int i = 1; i < BestTour.Length; i++) {
-                if (minimum > Customers[BestTour[i], 2]) {
+            for (int i = 1; i < BestTour.Length; i++)
+            {
+                if (minimum > Customers[BestTour[i], 2])
+                {
                     minimum = Customers[BestTour[i], 2];
                 }
                 chart1.Series["Trip"].Points.AddXY(Customers[BestTour[i], 1], Customers[BestTour[i], 2]);
@@ -1183,9 +1294,12 @@ namespace kagv {
             }
             tb_length.Text = Convert.ToString(BestLength);
             Application.DoEvents();
-            if ((BestTour.Length - vehiclesrequired) != BestTour.Distinct().Count()) {
+            if ((BestTour.Length - vehiclesrequired) != BestTour.Distinct().Count())
+            {
                 tb_error.Text = Convert.ToString("Dublicates found");
-            } else {
+            }
+            else
+            {
                 tb_error.Text = Convert.ToString("No Error found");
             }
 
