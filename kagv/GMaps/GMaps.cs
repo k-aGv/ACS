@@ -60,6 +60,7 @@ namespace kagv {
             mymap.Overlays.Clear();
             Visualize(_optimal, ConvertArraytoPointLatLngList(_destinations));
         }
+        
 
         List<GMapOverlay> _markers_overlay = new List<GMapOverlay>();
 
@@ -69,10 +70,15 @@ namespace kagv {
         public List<List<double>> Distances { get => _Distances; }
         public List<PointLatLng> Destinations { get => _Destinations; }
 
+        Button btn_OpenACS = new Button();
+        List<Label> lb_demands = new List<Label>();
+        List<NumericUpDown> nUD_demands = new List<NumericUpDown>();
+        
         int[] Optimal;
+        int[] _demands;
 
         double _zoomFactor;
-
+        
         private List<PointLatLng> ConvertArraytoPointLatLngList(double[,] Destinations) {
             List<PointLatLng> _converted = new List<PointLatLng>();
 
@@ -308,8 +314,7 @@ namespace kagv {
             mymap.ShowCenter = showCrossToolStripMenuItem.Checked;
             mymap.Refresh();
         }
-        List<Label> lb_demands = new List<Label>();
-        List<NumericUpDown> nUD_demands = new List<NumericUpDown>();
+        
         private void GetDistances() {
             if (Destinations.Count < 2) {
                 MessageBox.Show("User must place at least 2 destinations.");
@@ -324,6 +329,7 @@ namespace kagv {
             int interval = 0;
 
             for (int i = 0; i < Destinations.Count; i++) {
+
                 lb_demands.Add(new Label());
                 lb_demands[i].Text = "City " + (i+1) + ": demand = ";
                 lb_demands[i].Location = new Point(
@@ -443,8 +449,7 @@ namespace kagv {
             TargetTheMouseAndChangeCenterToolStripMenuItem.Checked = false;
             TargetTheCenterOfMapToolStripMenuItem.Checked = true;
         }
-        int[] _demands;
-        Button btn_OpenACS = new Button();
+        
 
         private void Btn_OpenACS_Click(object sender, EventArgs e) {
             ACSAlgorithm acs = new ACSAlgorithm(Distances, ConvertPointLatLngToList(Destinations),_demands);
@@ -458,6 +463,7 @@ namespace kagv {
 
         private void btn_getDistances_Click(object sender, EventArgs e) {
             GetDistances();
+
             btn_OpenACS.Click += Btn_OpenACS_Click;
             btn_OpenACS.Text = "Run ACS";
             btn_OpenACS.Location = new Point(lb_demands[lb_demands.Count - 1].Location.X,
