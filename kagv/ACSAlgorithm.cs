@@ -521,7 +521,7 @@ namespace kagv {
 
             int sumdemand = demand.Sum();
             double extratrips = double.NaN;
-            double Capacity = 100;
+            double Capacity = 300;
             extratrips = Math.Ceiling(sumdemand / Capacity);
             int vehiclesrequired = Convert.ToInt32(extratrips);
 
@@ -710,7 +710,7 @@ namespace kagv {
                     for (int i = 0; i < RandomUnvisited.Count; i++)
                     {
                         int Next = RandomNumber.Between(0, RandomUnvisited.Count - 1);
-                        if (load + demand[RandomUnvisited[Next]] <= 100)
+                        if (load + demand[RandomUnvisited[Next]] <= Capacity)
                         {
                             foundnode = 1;
                             Randomtour[countrandom] = RandomUnvisited[Next];
