@@ -291,6 +291,12 @@
     </Compile>
     <Compile Include="DLL source\GMaps_Forms\GMap.NET.WindowsForms\ToolTips\GMapBaloonToolTip.cs" />
     <Compile Include="DLL source\GMaps_Forms\GMap.NET.WindowsForms\ToolTips\GMapRoundedToolTip.cs" />
+    <Compile Include="FormDemands.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDemands.Designer.cs">
+      <DependentUpon>FormDemands.cs</DependentUpon>
+    </Compile>
     <Compile Include="Functions\ExportLocal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -411,6 +417,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DLL source\GMaps_Forms\GMap.NET.WindowsForms\TilePrefetcher.resx">
       <DependentUpon>TilePrefetcher.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDemands.resx">
+      <DependentUpon>FormDemands.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GMaps\GMaps.resx">
       <DependentUpon>GMaps.cs</DependentUpon>

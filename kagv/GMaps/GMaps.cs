@@ -70,7 +70,8 @@ namespace kagv {
         public List<List<double>> Distances { get => _Distances; }
         public List<PointLatLng> Destinations { get => _Destinations; }
 
-        Button btn_OpenACS = new Button();
+        Button btn_OpenACS;
+        Button btn_demands;
         List<Label> lb_demands = new List<Label>();
         List<NumericUpDown> nUD_demands = new List<NumericUpDown>();
         
@@ -143,7 +144,7 @@ namespace kagv {
 
                     var ret = GMap.NET.MapProviders.GMapProviders.GoogleSatelliteMap.GetPlacemark(_route_overlay.Markers[0].Position, out GeoCoderStatusCode status);
                     if (status == GeoCoderStatusCode.G_GEO_SUCCESS && ret != null) {
-                        _route_overlay.Markers[0].ToolTipText = (i + 1) + " " + ret.Value.Address;
+                        _route_overlay.Markers[0].ToolTipText = (i + 1) + " " + ret.Value.Address+", City: "+(i+1);
                         _route_overlay.Markers[0].ToolTipMode = MarkerTooltipMode.Always;
                     }
 
@@ -234,7 +235,7 @@ namespace kagv {
                 //GoogleSatelliteMap is more accurate while trying to find addresses
                 var ret = GMap.NET.MapProviders.GMapProviders.GoogleSatelliteMap.GetPlacemark(_markers_overlay[_markers_overlay.Count - 1].Markers[0].Position, out GeoCoderStatusCode status);
                 if (status == GeoCoderStatusCode.G_GEO_SUCCESS && ret != null) {
-                    _markers_overlay[_markers_overlay.Count - 1].Markers[0].ToolTipText = ret.Value.Address;
+                    _markers_overlay[_markers_overlay.Count - 1].Markers[0].ToolTipText = ret.Value.Address + ", City: " + (Destinations.Count); ;
                     //_markers_overlay[_markers_overlay.Count - 1].Markers[0].ToolTip.Foreground
                     _markers_overlay[_markers_overlay.Count - 1].Markers[0].ToolTipMode = MarkerTooltipMode.Always;
                 }
@@ -315,10 +316,10 @@ namespace kagv {
             mymap.Refresh();
         }
         
-        private void GetDistances() {
+        private bool GetDistances() {
             if (Destinations.Count < 2) {
                 MessageBox.Show("User must place at least 2 destinations.");
-                return;
+                return false;
             }
 
             _Distances = new List<List<double>>();
@@ -331,22 +332,13 @@ namespace kagv {
             for (int i = 0; i < Destinations.Count; i++) {
 
                 lb_demands.Add(new Label());
-                lb_demands[i].Text = "City " + (i+1) + ": demand = ";
-                lb_demands[i].Location = new Point(
-                    gb_settings.Location.X+5, 
-                    gb_settings.Location.Y+gb_settings.Height+3+(i*30)
-                    );
-                Controls.Add(lb_demands[i]);
+                lb_demands[i].AutoSize = true;
+                lb_demands[i].Text = "City " + (i+1) + ": demand =";
 
                 nUD_demands.Add(new NumericUpDown());
                 nUD_demands[i].Minimum = 0;
                 nUD_demands[i].Value = 0;
-                nUD_demands[i].Size = new Size(50, 20);
-                nUD_demands[i].Location = new Point(
-                    lb_demands[i].Location.X + lb_demands[i].Width + 2, 
-                    lb_demands[i].Location.Y-3
-                    );
-                Controls.Add(nUD_demands[i]);
+                nUD_demands[i].Size = new Size(35, 20);
 
 
                 _Distances.Add(new List<double>());
@@ -373,6 +365,7 @@ namespace kagv {
             _writer.Close();
             pb_calculated.Text = "Completed... " + ((100 * interval) / (Destinations.Count * Destinations.Count)) + "%\nDistances calculated: " + interval + "/" + Destinations.Count * Destinations.Count;
             pb.PerformStep();
+            return true;
 
         }
 
@@ -461,21 +454,39 @@ namespace kagv {
             Visualize(Optimal, Destinations);
         }
 
-        private void btn_getDistances_Click(object sender, EventArgs e) {
-            GetDistances();
+        
+        
+        private void Btn_demands_Click(object sender, EventArgs e) {
+            FormDemands formDemands = new FormDemands(lb_demands, nUD_demands);
+            formDemands.ShowDialog();
 
-            btn_OpenACS.Click += Btn_OpenACS_Click;
+            _demands = formDemands.Demands;
+            formDemands.Dispose();
+
+            btn_OpenACS = new Button();
+            btn_OpenACS.AutoSize = true;
             btn_OpenACS.Text = "Run ACS";
-            btn_OpenACS.Location = new Point(lb_demands[lb_demands.Count - 1].Location.X,
-                lb_demands[lb_demands.Count - 1].Location.Y + 30);
+            btn_OpenACS.Click += Btn_OpenACS_Click;
+            btn_OpenACS.Location = new Point(
+                btn_demands.Location.X,
+                btn_demands.Location.Y+btn_demands.Height
+                );
             Controls.Add(btn_OpenACS);
-
-            _demands = new int[Destinations.Count];
-            int _demands_index = 0;
-            foreach (NumericUpDown item in nUD_demands) {
-                _demands[_demands_index] = Convert.ToInt32(item.Value);
-                _demands_index++;
-            }
         }
+
+        private void btn_getDistances_Click(object sender, EventArgs e) {
+            bool success = GetDistances();
+            if (!success)
+                return;
+            btn_demands = new Button();
+            btn_demands.AutoSize = true;
+            btn_demands.Text = "City demands";
+            btn_demands.Click += Btn_demands_Click;
+            btn_demands.Location = new Point(
+                gb_settings.Location.X, 
+                gb_settings.Location.Y + gb_settings.Height + 5
+                );
+            Controls.Add(btn_demands);
+        } 
     }
 }
