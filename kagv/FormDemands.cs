@@ -28,7 +28,7 @@ namespace kagv {
         
 
         private void SetInterface() {
-            Text = "Destinations demands";
+            Text = "Demands";
             this.FormBorderStyle = FormBorderStyle.Fixed3D;
 
             btn_SetDemands = new Button();
@@ -41,7 +41,7 @@ namespace kagv {
             for(int i=0; i<_lb_Demands.Count;i++) {
 
                 _lb_Demands[i].Location = new Point(
-                    5 + (column * (_lb_Demands[i].Width + _nUD_Demands[i].Width+35)), 
+                    10 + (column * (_lb_Demands[i].Width + _nUD_Demands[i].Width+35)), 
                     5 + (row*25)
                     );
                 
@@ -63,6 +63,7 @@ namespace kagv {
                 Convert.ToInt32(Size.Height - btn_SetDemands.Height)
                 );
             Controls.Add(btn_SetDemands);
+            Width += 10;
         }
 
         private void Btn_SetDemands_Click(object sender, EventArgs e) {
