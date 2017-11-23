@@ -144,7 +144,7 @@ namespace kagv {
 
                     var ret = GMap.NET.MapProviders.GMapProviders.GoogleSatelliteMap.GetPlacemark(_route_overlay.Markers[0].Position, out GeoCoderStatusCode status);
                     if (status == GeoCoderStatusCode.G_GEO_SUCCESS && ret != null) {
-                        _route_overlay.Markers[0].ToolTipText = (i + 1) + " " + ret.Value.Address+", City: "+(i+1);
+                        _route_overlay.Markers[0].ToolTipText = (i + 1) + " " + ret.Value.Address+ ", Destination: " + (i+1);
                         _route_overlay.Markers[0].ToolTipMode = MarkerTooltipMode.Always;
                     }
 
@@ -235,7 +235,7 @@ namespace kagv {
                 //GoogleSatelliteMap is more accurate while trying to find addresses
                 var ret = GMap.NET.MapProviders.GMapProviders.GoogleSatelliteMap.GetPlacemark(_markers_overlay[_markers_overlay.Count - 1].Markers[0].Position, out GeoCoderStatusCode status);
                 if (status == GeoCoderStatusCode.G_GEO_SUCCESS && ret != null) {
-                    _markers_overlay[_markers_overlay.Count - 1].Markers[0].ToolTipText = ret.Value.Address + ", City: " + (Destinations.Count); ;
+                    _markers_overlay[_markers_overlay.Count - 1].Markers[0].ToolTipText = ret.Value.Address + ", Destination: " + (Destinations.Count);
                     //_markers_overlay[_markers_overlay.Count - 1].Markers[0].ToolTip.Foreground
                     _markers_overlay[_markers_overlay.Count - 1].Markers[0].ToolTipMode = MarkerTooltipMode.Always;
                 }
@@ -333,7 +333,7 @@ namespace kagv {
 
                 lb_demands.Add(new Label());
                 lb_demands[i].AutoSize = true;
-                lb_demands[i].Text = "City " + (i+1) + ": demand =";
+                lb_demands[i].Text = "Destination " + (i+1) + ": demand =";
 
                 nUD_demands.Add(new NumericUpDown());
                 nUD_demands[i].Minimum = 0;
@@ -461,7 +461,7 @@ namespace kagv {
             formDemands.ShowDialog();
 
             _demands = formDemands.Demands;
-            formDemands.Dispose();
+            //formDemands.Dispose();
 
             btn_OpenACS = new Button();
             btn_OpenACS.AutoSize = true;
@@ -480,7 +480,7 @@ namespace kagv {
                 return;
             btn_demands = new Button();
             btn_demands.AutoSize = true;
-            btn_demands.Text = "City demands";
+            btn_demands.Text = "Destinations demands";
             btn_demands.Click += Btn_demands_Click;
             btn_demands.Location = new Point(
                 gb_settings.Location.X, 

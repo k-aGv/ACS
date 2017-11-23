@@ -28,12 +28,12 @@ namespace kagv {
         
 
         private void SetInterface() {
-            Text = "City Demands";
+            Text = "Destinations demands";
             this.FormBorderStyle = FormBorderStyle.Fixed3D;
 
             btn_SetDemands = new Button();
             btn_SetDemands.Click += Btn_SetDemands_Click;
-            btn_SetDemands.AutoSize = true;
+            btn_SetDemands.Width = 85;
             btn_SetDemands.Text = "Set Demands";
             
             int column = 0;
@@ -41,25 +41,25 @@ namespace kagv {
             for(int i=0; i<_lb_Demands.Count;i++) {
 
                 _lb_Demands[i].Location = new Point(
-                    5 + (column * (_lb_Demands[i].Width + _nUD_Demands[i].Width+5)), 
+                    5 + (column * (_lb_Demands[i].Width + _nUD_Demands[i].Width+35)), 
                     5 + (row*25)
                     );
                 
 
                 _nUD_Demands[i].Location = new Point(
-                    _lb_Demands[i].Location.X + _lb_Demands[i].Width,
+                    _lb_Demands[i].Location.X + _lb_Demands[i].Width+30,
                     _lb_Demands[i].Location.Y
                     );
                 Controls.Add(_lb_Demands[i]);
                 Controls.Add(_nUD_Demands[i]);
                 column++;
-                if(column>Math.Sqrt(_lb_Demands.Count)) {
+                if(column>Math.Sqrt(_lb_Demands.Count)-1) {
                     column = 0;
                     row++;
                 }
             }
             btn_SetDemands.Location = new Point(
-                Convert.ToInt32((Size.Width / 2) - (btn_SetDemands.Width/2)),
+                Convert.ToInt32((Size.Width / 2) - (btn_SetDemands.Width/2))-7,
                 Convert.ToInt32(Size.Height - btn_SetDemands.Height)
                 );
             Controls.Add(btn_SetDemands);
@@ -72,7 +72,6 @@ namespace kagv {
                 control_index++;
             }
             Close();
-            Dispose();
         }
     }
 }
