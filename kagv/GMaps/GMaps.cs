@@ -58,10 +58,22 @@ namespace kagv {
                 return;
 
             mymap.Overlays.Clear();
+            Optimal = _optimal;
+            Visualize(_optimal, ConvertArraytoPointLatLngList(_destinations));
+
+        }
+
+        public gmaps(int[] _optimal, double[,] _destinations,bool _ShowRouteLabels) {
+            InitializeComponent();
+            if (_optimal == null || _destinations == null)
+                return;
+
+            mymap.Overlays.Clear();
+            Optimal = _optimal;
+            _showRouteLabels = _ShowRouteLabels;
             Visualize(_optimal, ConvertArraytoPointLatLngList(_destinations));
         }
         
-
         List<GMapOverlay> _markers_overlay = new List<GMapOverlay>();
 
         List<PointLatLng> _Destinations = new List<PointLatLng>();
@@ -69,12 +81,16 @@ namespace kagv {
 
         public List<List<double>> Distances { get => _Distances; }
         public List<PointLatLng> Destinations { get => _Destinations; }
-
-        Button btn_OpenACS;
-        Button btn_demands;
-        List<Label> lb_demands = new List<Label>();
-        List<NumericUpDown> nUD_demands = new List<NumericUpDown>();
         
+        private bool _showRouteLabels = false;
+        public bool ShowRouteLabels { get => _showRouteLabels; }
+
+        private Button btn_OpenACS;
+        private Button btn_demands;
+        private List<Label> lb_demands = new List<Label>();
+        private List<NumericUpDown> nUD_demands = new List<NumericUpDown>();
+        private List<Label> RouteLabels = new List<Label>();
+
         int[] Optimal;
         int[] _demands;
 
@@ -114,13 +130,13 @@ namespace kagv {
             gmaps_Load(new object(), new EventArgs());
         }
 
-        private void Visualize(int[] _optimal, List<PointLatLng> _dest) {
+        private void Visualize(int[] Optimal, List<PointLatLng> _dest) {
 
             for (int i = 0; i < _dest.Count; i++) {
                 GMap.NET.MapProviders.GMapProviders.GoogleMap.GetDirections(
                     out GDirections _d,
-                    _dest[_optimal[i]],
-                    _dest[_optimal[i + 1]],
+                    _dest[Optimal[i]],
+                    _dest[Optimal[i + 1]],
                     avoidHighwaysToolStripMenuItem.Checked,
                         avoidTollsToolStripMenuItem.Checked,
                         useWalkingModeToolStripMenuItem.Checked,
@@ -138,13 +154,13 @@ namespace kagv {
 
                     _markers_overlay.Add(new GMapOverlay("Marker" + i));
                     _route_overlay.Markers.Add(new GMap.NET.WindowsForms.Markers.GMarkerGoogle(
-                            _dest[_optimal[i + 1]],
+                            _dest[Optimal[i + 1]],
                             GMap.NET.WindowsForms.Markers.GMarkerGoogleType.green));
 
 
                     var ret = GMap.NET.MapProviders.GMapProviders.GoogleSatelliteMap.GetPlacemark(_route_overlay.Markers[0].Position, out GeoCoderStatusCode status);
                     if (status == GeoCoderStatusCode.G_GEO_SUCCESS && ret != null) {
-                        _route_overlay.Markers[0].ToolTipText = (i + 1) + " " + ret.Value.Address+ ", Destination: " + (i+1);
+                        _route_overlay.Markers[0].ToolTipText = ret.Value.Address+ ", Destination: " + (i+1);
                         _route_overlay.Markers[0].ToolTipMode = MarkerTooltipMode.Always;
                     }
 
@@ -214,6 +230,9 @@ namespace kagv {
             //gb_settings.Size = new Size(gb_settings.Size.Width, mymap.Height);
             //set the label to the bottom
             label1.Location = new Point(10, mymap.Location.Y + mymap.Height + 1);
+
+            if (ShowRouteLabels)
+                RouteLabelsSetUp();
         }
 
         private void mymap_MouseClick(object sender, MouseEventArgs e) {
@@ -454,6 +473,20 @@ namespace kagv {
             Visualize(Optimal, Destinations);
         }
 
+
+        
+        private void RouteLabelsSetUp() {
+            for (int i = 0; i< Optimal.GetLength(0)-1; i++) {
+                RouteLabels.Add(new Label());
+                RouteLabels[i].AutoSize = true;
+                RouteLabels[i].Location = new Point(gb_settings.Location.X, (gb_settings.Location.Y + gb_settings.Height)+(i*RouteLabels[i].Height)+5);
+                if ((i + 2) > Optimal.GetLength(0)-1)
+                    RouteLabels[i].Text = "Route " + (i + 1) + "->1";
+                else
+                    RouteLabels[i].Text = "Route " + (i + 1) + "->" + (i + 2);
+                Controls.Add(RouteLabels[i]);
+            }
+        }
         
         
         private void Btn_demands_Click(object sender, EventArgs e) {
@@ -461,7 +494,6 @@ namespace kagv {
             formDemands.ShowDialog();
 
             _demands = formDemands.Demands;
-            //formDemands.Dispose();
 
             btn_OpenACS = new Button();
             btn_OpenACS.AutoSize = true;

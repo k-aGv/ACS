@@ -102,7 +102,7 @@
             this.btn_getDistances.Name = "btn_getDistances";
             this.btn_getDistances.Size = new System.Drawing.Size(149, 23);
             this.btn_getDistances.TabIndex = 7;
-            this.btn_getDistances.Text = "Calculate all lengths";
+            this.btn_getDistances.Text = "Calculate all distances";
             this.btn_getDistances.UseVisualStyleBackColor = true;
             this.btn_getDistances.Click += new System.EventHandler(this.btn_getDistances_Click);
             // 

@@ -831,7 +831,7 @@ namespace kagv {
             acs.StartPosition = FormStartPosition.CenterParent;
             acs.ShowDialog();
             if(acs.RunForDistances) {
-                gmaps Gmaps = new gmaps(acs.Optimal,acs.Destinations);
+                gmaps Gmaps = new gmaps(acs.Optimal,acs.Destinations,true);
                 Gmaps.ShowDialog();
             }
         }
