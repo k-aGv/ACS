@@ -463,14 +463,17 @@ namespace kagv {
             mymap.Overlays.Clear();
             Optimal = acs.Optimal;
             Visualize(Optimal, Destinations);
+            btn_demands.Visible = false;
+            btn_OpenACS.Visible = false;
+            RouteLabelsSetUp();
         }
 
         private void RouteLabelsSetUp() {
-            for (int i = 0; i < Optimal.GetLength(0) - 1; i++) {
+            for (int i = 0; i < Destinations.Count; i++) {
                 RouteLabels.Add(new Label());
                 RouteLabels[i].AutoSize = true;
                 RouteLabels[i].Location = new Point(gb_settings.Location.X, (gb_settings.Location.Y + gb_settings.Height) + (i * RouteLabels[i].Height) + 5);
-                if ((i + 2) > Optimal.GetLength(0) - 1)
+                if ((i + 2) > Destinations.Count-1)
                     RouteLabels[i].Text = "Route: " + (i + 1) + "->1";
                 else
                     RouteLabels[i].Text = "Route: " + (i + 1) + "->" + (i + 2);
