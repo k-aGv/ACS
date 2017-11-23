@@ -49,7 +49,6 @@ namespace kagv {
             Optimal = _optimal;
             _Destinations = ConvertListToPointLatLng(_destinations);
             Visualize(Optimal, _Destinations);
-
         }
 
         public gmaps(int[] _optimal, double[,] _destinations) {
@@ -60,10 +59,9 @@ namespace kagv {
             mymap.Overlays.Clear();
             Optimal = _optimal;
             Visualize(_optimal, ConvertArraytoPointLatLngList(_destinations));
-
         }
 
-        public gmaps(int[] _optimal, double[,] _destinations,bool _ShowRouteLabels) {
+        public gmaps(int[] _optimal, double[,] _destinations, bool _ShowRouteLabels) {
             InitializeComponent();
             if (_optimal == null || _destinations == null)
                 return;
@@ -100,15 +98,14 @@ namespace kagv {
         private List<PointLatLng> ConvertArraytoPointLatLngList(double[,] Destinations) {
             List<PointLatLng> _converted = new List<PointLatLng>();
 
-            for (int i = 0; i < Destinations.GetLength(0); i++) {
+            for (int i = 0; i < Destinations.GetLength(0); i++)
                 _converted.Add(new PointLatLng(Destinations[i, 1], Destinations[i, 2]));
-            }
             return _converted;
         }
 
         private List<PointLatLng> ConvertListToPointLatLng(List<double[,]> ListDist) {
-
             List<PointLatLng> _converted = new List<PointLatLng>();
+
             for (int i = 0; i < ListDist.Count; i++)
                 _converted.Add(new PointLatLng(ListDist[i][0, 0], ListDist[i][0, 1]));
             return _converted;
@@ -144,6 +141,7 @@ namespace kagv {
                         false,
                         metricToolStripMenuItem.Checked
                     );
+
                 try {
 
                     GMapRoute route = new GMapRoute(_d.Route, "Route " + i);
@@ -158,7 +156,6 @@ namespace kagv {
                             _dest[Optimal[i + 1]],
                             GMap.NET.WindowsForms.Markers.GMarkerGoogleType.green));
 
-
                     var ret = GMap.NET.MapProviders.GMapProviders.GoogleSatelliteMap.GetPlacemark(_route_overlay.Markers[0].Position, out GeoCoderStatusCode status);
                     if (status == GeoCoderStatusCode.G_GEO_SUCCESS && ret != null) {
                         _route_overlay.Markers[0].ToolTipText = ret.Value.Address + ", Destination: " + (i + 1);
@@ -166,11 +163,8 @@ namespace kagv {
                     }
 
                     mymap.UpdateMarkerLocalPosition(_route_overlay.Markers[0]);
-                    
                     mymap.Overlays.Add(_route_overlay);
-                    
 
-                    
                 } catch { MessageBox.Show("An unexpected errorhas occured. Possible internet \nconnection problem."); }
 
             }
@@ -192,10 +186,7 @@ namespace kagv {
             Size = new Size(usableSizeWidth, usableSizeHeight);
             _zoomFactor = 8;
 
-
             gb_settings.Location = new Point(Size.Width - gb_settings.Width - BoardersWidth - margin, gb_settings.Location.Y);
-
-
 
             //map implementation
             //get title's bar size
@@ -464,7 +455,6 @@ namespace kagv {
             TargetTheCenterOfMapToolStripMenuItem.Checked = true;
         }
 
-
         private void Btn_OpenACS_Click(object sender, EventArgs e) {
             ACSAlgorithm acs = new ACSAlgorithm(Distances, ConvertPointLatLngToList(Destinations), _demands);
             acs.ShowDialog();
@@ -475,7 +465,6 @@ namespace kagv {
             Visualize(Optimal, Destinations);
         }
 
-        
         private void RouteLabelsSetUp() {
             for (int i = 0; i < Optimal.GetLength(0) - 1; i++) {
                 RouteLabels.Add(new Label());
@@ -491,17 +480,17 @@ namespace kagv {
             }
             RouteLabels.Add(new Label());
             RouteLabels[RouteLabels.Count - 1].AutoSize = true;
-            RouteLabels[RouteLabels.Count - 1].Location = new Point(gb_settings.Location.X, (gb_settings.Location.Y + gb_settings.Height) + (RouteLabels.Count * RouteLabels[RouteLabels.Count-1].Height));
+            RouteLabels[RouteLabels.Count - 1].Location = new Point(gb_settings.Location.X, (gb_settings.Location.Y + gb_settings.Height) + (RouteLabels.Count * RouteLabels[RouteLabels.Count - 1].Height));
             RouteLabels[RouteLabels.Count - 1].Text = "Whole Route";
             Controls.Add(RouteLabels[RouteLabels.Count - 1]);
             RouteLabels[RouteLabels.Count - 1].MouseHover += Whole_Route_Label_Hover;
             RouteLabels[RouteLabels.Count - 1].MouseLeave += Whole_Route_Label_Leave;
         }
-        
+
         private void Whole_Route_Label_Leave(object sender, EventArgs e) {
             Cursor = Cursors.Arrow;
         }
-        
+
         private void Whole_Route_Label_Hover(object sender, EventArgs e) {
             Cursor = Cursors.Hand;
             Visualize(Optimal, Destinations);
@@ -521,13 +510,12 @@ namespace kagv {
                 );
         }
 
-        private void ShowRouteOnMap(int A, int B)
-        {
+        private void ShowRouteOnMap(int A, int B) {
             mymap.Overlays.Clear();
 
             int Start = A - 1;
             int End = B - 1;
-            
+
             GMap.NET.MapProviders.GMapProviders.GoogleMap.GetDirections(
                 out GDirections _d,
                 Destinations[Start],
@@ -558,10 +546,10 @@ namespace kagv {
                 _route_overlay.Markers.Add(new GMap.NET.WindowsForms.Markers.GMarkerGoogle(
                         Destinations[End],
                         GMap.NET.WindowsForms.Markers.GMarkerGoogleType.green));
-                
+
                 var ret = GMap.NET.MapProviders.GMapProviders.GoogleSatelliteMap.GetPlacemark(_route_overlay.Markers[0].Position, out GeoCoderStatusCode status);
                 if (status == GeoCoderStatusCode.G_GEO_SUCCESS && ret != null) {
-                    _route_overlay.Markers[0].ToolTipText = ret.Value.Address + ", Destination: " + (Start+1);
+                    _route_overlay.Markers[0].ToolTipText = ret.Value.Address + ", Destination: " + (Start + 1);
                     _route_overlay.Markers[0].ToolTipMode = MarkerTooltipMode.Always;
                 }
 
@@ -570,12 +558,12 @@ namespace kagv {
                     _route_overlay.Markers[1].ToolTipText = ret1.Value.Address + ", Destination: " + (End + 1);
                     _route_overlay.Markers[1].ToolTipMode = MarkerTooltipMode.Always;
                 }
-                
+
                 mymap.UpdateMarkerLocalPosition(_route_overlay.Markers[0]);
                 mymap.UpdateMarkerLocalPosition(_route_overlay.Markers[1]);
                 mymap.Overlays.Add(_route_overlay);
 
-                
+
             } catch { MessageBox.Show("An unexpected errorhas occured. Possible internet \nconnection problem."); }
         }
 
@@ -591,7 +579,7 @@ namespace kagv {
             btn_OpenACS.Click += Btn_OpenACS_Click;
             btn_OpenACS.Location = new Point(
                 btn_demands.Location.X,
-                btn_demands.Location.Y+btn_demands.Height
+                btn_demands.Location.Y + btn_demands.Height
                 );
             Controls.Add(btn_OpenACS);
         }
@@ -605,10 +593,10 @@ namespace kagv {
             btn_demands.Text = "Destinations demands";
             btn_demands.Click += Btn_demands_Click;
             btn_demands.Location = new Point(
-                gb_settings.Location.X, 
+                gb_settings.Location.X,
                 gb_settings.Location.Y + gb_settings.Height + 5
                 );
             Controls.Add(btn_demands);
-        } 
+        }
     }
 }
