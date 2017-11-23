@@ -100,8 +100,8 @@ namespace kagv {
 
             for (int i = 0; i < ListDist.Count; i++) {
                 ArrayDist[i, 0] = i;
-                ArrayDist[i, 1] = ListDist[i][0, 0];
-                ArrayDist[i, 2] = ListDist[i][0, 1];
+                ArrayDist[i, 1] = ListDist[i][0, 1];
+                ArrayDist[i, 2] = ListDist[i][0, 2];
             }
 
             return ArrayDist;
