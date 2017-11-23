@@ -505,16 +505,16 @@ namespace kagv {
 
             char[] delim = { ':', '-', '>' };
             ShowRouteOnMap(
-                Convert.ToInt32(sender.ToString().Split(delim, StringSplitOptions.RemoveEmptyEntries)[2].ToString()),
-                Convert.ToInt32(sender.ToString().Split(delim, StringSplitOptions.RemoveEmptyEntries)[3].ToString())
+                Optimal[Convert.ToInt32(sender.ToString().Split(delim, StringSplitOptions.RemoveEmptyEntries)[2].ToString())],
+                Optimal[Convert.ToInt32(sender.ToString().Split(delim, StringSplitOptions.RemoveEmptyEntries)[3].ToString())]
                 );
         }
 
         private void ShowRouteOnMap(int A, int B) {
             mymap.Overlays.Clear();
 
-            int Start = A - 1;
-            int End = B - 1;
+            int Start = A;// - 1;
+            int End = B;// - 1;
 
             GMap.NET.MapProviders.GMapProviders.GoogleMap.GetDirections(
                 out GDirections _d,
@@ -549,13 +549,13 @@ namespace kagv {
 
                 var ret = GMap.NET.MapProviders.GMapProviders.GoogleSatelliteMap.GetPlacemark(_route_overlay.Markers[0].Position, out GeoCoderStatusCode status);
                 if (status == GeoCoderStatusCode.G_GEO_SUCCESS && ret != null) {
-                    _route_overlay.Markers[0].ToolTipText = ret.Value.Address + ", Destination: " + (Start + 1);
+                    _route_overlay.Markers[0].ToolTipText = "Start, "+ret.Value.Address;
                     _route_overlay.Markers[0].ToolTipMode = MarkerTooltipMode.Always;
                 }
 
                 var ret1 = GMap.NET.MapProviders.GMapProviders.GoogleSatelliteMap.GetPlacemark(_route_overlay.Markers[1].Position, out GeoCoderStatusCode status1);
                 if (status1 == GeoCoderStatusCode.G_GEO_SUCCESS && ret != null) {
-                    _route_overlay.Markers[1].ToolTipText = ret1.Value.Address + ", Destination: " + (End + 1);
+                    _route_overlay.Markers[1].ToolTipText = "End, "+ret1.Value.Address;
                     _route_overlay.Markers[1].ToolTipMode = MarkerTooltipMode.Always;
                 }
 
