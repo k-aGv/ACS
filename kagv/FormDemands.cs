@@ -28,6 +28,9 @@ namespace kagv {
         
 
         private void SetInterface() {
+            Text = "City Demands";
+            this.FormBorderStyle = FormBorderStyle.Fixed3D;
+
             btn_SetDemands = new Button();
             btn_SetDemands.Click += Btn_SetDemands_Click;
             btn_SetDemands.AutoSize = true;
@@ -50,7 +53,7 @@ namespace kagv {
                 Controls.Add(_lb_Demands[i]);
                 Controls.Add(_nUD_Demands[i]);
                 column++;
-                if(column>Math.Sqrt(_lb_Demands.Count)-1) {
+                if(column>Math.Sqrt(_lb_Demands.Count)) {
                     column = 0;
                     row++;
                 }
