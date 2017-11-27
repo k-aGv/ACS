@@ -90,6 +90,7 @@
             this.linkLabel3.AutoSize = true;
             this.linkLabel3.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
             this.linkLabel3.LinkArea = new System.Windows.Forms.LinkArea(50, 21);
+            this.linkLabel3.LinkColor = System.Drawing.Color.Blue;
             this.linkLabel3.Location = new System.Drawing.Point(87, 153);
             this.linkLabel3.Name = "linkLabel3";
             this.linkLabel3.Size = new System.Drawing.Size(207, 35);
@@ -134,6 +135,7 @@
             // linkLabel2
             // 
             this.linkLabel2.AutoSize = true;
+            this.linkLabel2.LinkColor = System.Drawing.Color.Blue;
             this.linkLabel2.Location = new System.Drawing.Point(127, 397);
             this.linkLabel2.Name = "linkLabel2";
             this.linkLabel2.Size = new System.Drawing.Size(120, 13);
