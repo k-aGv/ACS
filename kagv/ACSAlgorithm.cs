@@ -2105,7 +2105,11 @@ namespace kagv {
                 Size = new Size(Size.Width, pb.Location.Y + pb.Size.Height + 50);
                 _RunForDistances = true;
                 _RunForBenchmark = false;
-                RunACS();
+                if (Demand == null) {
+                    RunACS();
+                } else {
+                    RunACS(Demand);
+                }
             } else {
                 if (cb_lengths.Checked) {
                     Size = new Size(Size.Width, pb.Location.Y + pb.Size.Height + 50);

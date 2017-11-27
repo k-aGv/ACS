@@ -457,7 +457,11 @@ namespace kagv {
         }
 
         private void Btn_OpenACS_Click(object sender, EventArgs e) {
-            ACSAlgorithm acs = new ACSAlgorithm(Distances, ConvertPointLatLngToList(Destinations), _demands);
+            ACSAlgorithm acs;
+            if (cb_capacitated.Checked)
+                acs = new ACSAlgorithm(Distances, ConvertPointLatLngToList(Destinations), _demands);
+            else
+                acs = new ACSAlgorithm(Distances, ConvertPointLatLngToList(Destinations));
             acs.ShowDialog();
             if (acs.Optimal == null)
                 return;
@@ -469,6 +473,7 @@ namespace kagv {
             if (btn_OpenACS != null)
                 btn_OpenACS.Visible = false;
             RouteLabelsSetUp();
+            acs.Dispose();
         }
 
         private void RouteLabelsSetUp() {
