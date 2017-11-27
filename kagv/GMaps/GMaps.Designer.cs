@@ -74,7 +74,7 @@
             this.gb_settings.Controls.Add(this.gb_provider);
             this.gb_settings.Location = new System.Drawing.Point(895, 27);
             this.gb_settings.Name = "gb_settings";
-            this.gb_settings.Size = new System.Drawing.Size(181, 484);
+            this.gb_settings.Size = new System.Drawing.Size(181, 460);
             this.gb_settings.TabIndex = 4;
             this.gb_settings.TabStop = false;
             this.gb_settings.Text = "Settings";
@@ -82,7 +82,7 @@
             // pb_calculated
             // 
             this.pb_calculated.AutoSize = true;
-            this.pb_calculated.Location = new System.Drawing.Point(7, 425);
+            this.pb_calculated.Location = new System.Drawing.Point(7, 403);
             this.pb_calculated.Name = "pb_calculated";
             this.pb_calculated.Size = new System.Drawing.Size(93, 13);
             this.pb_calculated.TabIndex = 11;
@@ -90,7 +90,7 @@
             // 
             // pb
             // 
-            this.pb.Location = new System.Drawing.Point(8, 455);
+            this.pb.Location = new System.Drawing.Point(8, 433);
             this.pb.Name = "pb";
             this.pb.Size = new System.Drawing.Size(154, 23);
             this.pb.Step = 1;
@@ -98,7 +98,7 @@
             // 
             // btn_getDistances
             // 
-            this.btn_getDistances.Location = new System.Drawing.Point(7, 397);
+            this.btn_getDistances.Location = new System.Drawing.Point(7, 375);
             this.btn_getDistances.Name = "btn_getDistances";
             this.btn_getDistances.Size = new System.Drawing.Size(149, 23);
             this.btn_getDistances.TabIndex = 7;
@@ -242,7 +242,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 544);
+            this.label1.Location = new System.Drawing.Point(12, 639);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 6;

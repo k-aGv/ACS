@@ -335,6 +335,7 @@ namespace kagv {
             }
 
             _Distances = new List<List<double>>();
+            lb_demands = new List<Label>();
             StreamWriter _writer = new StreamWriter("routeDistances.txt");
             _writer.WriteLine("{Distances}");
 
@@ -469,7 +470,7 @@ namespace kagv {
         }
 
         private void RouteLabelsSetUp() {
-            for (int i = 0; i < Destinations.Count; i++) {
+            for (int i = 0; i < Destinations.Count-1; i++) {
                 RouteLabels.Add(new Label());
                 RouteLabels[i].AutoSize = true;
                 RouteLabels[i].Location = new Point(gb_settings.Location.X, (gb_settings.Location.Y + gb_settings.Height) + (i * RouteLabels[i].Height) + 5);
@@ -571,6 +572,7 @@ namespace kagv {
         }
 
         private void Btn_demands_Click(object sender, EventArgs e) {
+            
             FormDemands formDemands = new FormDemands(lb_demands, nUD_demands);
             formDemands.ShowDialog();
 
