@@ -59,6 +59,7 @@
             this.useWalkingModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.metricToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mymap = new GMap.NET.WindowsForms.GMapControl();
+            this.cb_capacitated = new System.Windows.Forms.CheckBox();
             this.gb_settings.SuspendLayout();
             this.gb_coords.SuspendLayout();
             this.gb_provider.SuspendLayout();
@@ -67,6 +68,7 @@
             // 
             // gb_settings
             // 
+            this.gb_settings.Controls.Add(this.cb_capacitated);
             this.gb_settings.Controls.Add(this.pb_calculated);
             this.gb_settings.Controls.Add(this.pb);
             this.gb_settings.Controls.Add(this.btn_getDistances);
@@ -74,7 +76,7 @@
             this.gb_settings.Controls.Add(this.gb_provider);
             this.gb_settings.Location = new System.Drawing.Point(895, 27);
             this.gb_settings.Name = "gb_settings";
-            this.gb_settings.Size = new System.Drawing.Size(181, 460);
+            this.gb_settings.Size = new System.Drawing.Size(181, 486);
             this.gb_settings.TabIndex = 4;
             this.gb_settings.TabStop = false;
             this.gb_settings.Text = "Settings";
@@ -82,7 +84,7 @@
             // pb_calculated
             // 
             this.pb_calculated.AutoSize = true;
-            this.pb_calculated.Location = new System.Drawing.Point(7, 403);
+            this.pb_calculated.Location = new System.Drawing.Point(6, 427);
             this.pb_calculated.Name = "pb_calculated";
             this.pb_calculated.Size = new System.Drawing.Size(93, 13);
             this.pb_calculated.TabIndex = 11;
@@ -90,7 +92,7 @@
             // 
             // pb
             // 
-            this.pb.Location = new System.Drawing.Point(8, 433);
+            this.pb.Location = new System.Drawing.Point(7, 457);
             this.pb.Name = "pb";
             this.pb.Size = new System.Drawing.Size(154, 23);
             this.pb.Step = 1;
@@ -100,7 +102,7 @@
             // 
             this.btn_getDistances.Location = new System.Drawing.Point(7, 375);
             this.btn_getDistances.Name = "btn_getDistances";
-            this.btn_getDistances.Size = new System.Drawing.Size(149, 23);
+            this.btn_getDistances.Size = new System.Drawing.Size(130, 23);
             this.btn_getDistances.TabIndex = 7;
             this.btn_getDistances.Text = "Calculate all distances";
             this.btn_getDistances.UseVisualStyleBackColor = true;
@@ -402,6 +404,16 @@
             this.mymap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.mymap_MouseClick);
             this.mymap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mymap_MouseMove);
             // 
+            // cb_capacitated
+            // 
+            this.cb_capacitated.AutoSize = true;
+            this.cb_capacitated.Location = new System.Drawing.Point(7, 404);
+            this.cb_capacitated.Name = "cb_capacitated";
+            this.cb_capacitated.Size = new System.Drawing.Size(112, 17);
+            this.cb_capacitated.TabIndex = 12;
+            this.cb_capacitated.Text = "Capacitated mode";
+            this.cb_capacitated.UseVisualStyleBackColor = true;
+            // 
             // gmaps
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -465,5 +477,6 @@
         private System.Windows.Forms.ToolStripMenuItem TargetTheMouseAndChangeCenterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem TargetTheMouseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem TargetTheCenterOfMapToolStripMenuItem;
+        private System.Windows.Forms.CheckBox cb_capacitated;
     }
 }

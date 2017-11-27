@@ -464,8 +464,10 @@ namespace kagv {
             mymap.Overlays.Clear();
             Optimal = acs.Optimal;
             Visualize(Optimal, Destinations);
-            btn_demands.Visible = false;
-            btn_OpenACS.Visible = false;
+            if (btn_demands != null)
+                btn_demands.Visible = false;
+            if (btn_OpenACS != null)
+                btn_OpenACS.Visible = false;
             RouteLabelsSetUp();
         }
 
@@ -593,6 +595,18 @@ namespace kagv {
             bool success = GetDistances();
             if (!success)
                 return;
+            if (!cb_capacitated.Checked) {
+                btn_OpenACS = new Button();
+                btn_OpenACS.AutoSize = true;
+                btn_OpenACS.Text = "Run ACS";
+                btn_OpenACS.Click += Btn_OpenACS_Click;
+                btn_OpenACS.Location = new Point(
+                gb_settings.Location.X,
+                gb_settings.Location.Y + gb_settings.Height + 5
+                );
+                Controls.Add(btn_OpenACS);
+                return;
+            }
             btn_demands = new Button();
             btn_demands.AutoSize = true;
             btn_demands.Text = "Destinations demands";
