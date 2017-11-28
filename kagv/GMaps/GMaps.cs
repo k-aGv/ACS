@@ -761,6 +761,14 @@ namespace kagv {
         }
 
         private void btn_getDistances_Click(object sender, EventArgs e) {
+            foreach (var item in RouteLabels) {
+                if (item != null) {
+                    Controls.Remove(item);
+                    item.Dispose();
+                }
+            }
+            RouteLabels = new List<Label>();
+
             bool success = GetDistances();
             if (!success)
                 return;
