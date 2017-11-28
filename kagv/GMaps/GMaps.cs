@@ -481,10 +481,13 @@ namespace kagv {
                 RouteLabels.Add(new Label());
                 RouteLabels[i].AutoSize = true;
                 RouteLabels[i].Location = new Point(gb_settings.Location.X, (gb_settings.Location.Y + gb_settings.Height) + (i * RouteLabels[i].Height) + 5);
-                if ((i + 2) > Destinations.Count-1)
+                if ((i + 2) > Destinations.Count - 1) {
                     RouteLabels[i].Text = "Route: " + (i + 1) + "->1";
-                else
+                    RouteLabels[i].Name = "Route_" + (i + 1) + "_1";
+                } else {
                     RouteLabels[i].Text = "Route: " + (i + 1) + "->" + (i + 2);
+                    RouteLabels[i].Name = "Route_" + (i + 1) + "_" + (i + 2);
+                }
                 Controls.Add(RouteLabels[i]);
                 RouteLabels[i].MouseHover += Small_Route_Label_Hover;
                 RouteLabels[i].MouseLeave += Small_Route_Label_Leave;
@@ -493,6 +496,7 @@ namespace kagv {
             RouteLabels[RouteLabels.Count - 1].AutoSize = true;
             RouteLabels[RouteLabels.Count - 1].Location = new Point(gb_settings.Location.X, (gb_settings.Location.Y + gb_settings.Height) + (RouteLabels.Count * RouteLabels[RouteLabels.Count - 1].Height));
             RouteLabels[RouteLabels.Count - 1].Text = "Whole Route";
+            RouteLabels[RouteLabels.Count - 1].Name = "Whole_Route";
             Controls.Add(RouteLabels[RouteLabels.Count - 1]);
             RouteLabels[RouteLabels.Count - 1].MouseHover += Whole_Route_Label_Hover;
             RouteLabels[RouteLabels.Count - 1].MouseLeave += Whole_Route_Label_Leave;
@@ -500,20 +504,23 @@ namespace kagv {
 
         private void Whole_Route_Label_Leave(object sender, EventArgs e) {
             Cursor = Cursors.Arrow;
+            Controls.Find(((Label)sender).Name, true)[0].ForeColor = ForeColor;
         }
 
         private void Whole_Route_Label_Hover(object sender, EventArgs e) {
             Cursor = Cursors.Hand;
+            Controls.Find(((Label)sender).Name, true)[0].ForeColor = Color.Green;
             Visualize(Optimal, Destinations);
         }
 
         private void Small_Route_Label_Leave(object sender, EventArgs e) {
             Cursor = Cursors.Arrow;
+            Controls.Find(((Label)sender).Name, true)[0].ForeColor = ForeColor;
         }
 
         private void Small_Route_Label_Hover(object sender, EventArgs e) {
             Cursor = Cursors.Hand;
-
+            Controls.Find(((Label)sender).Name, true)[0].ForeColor = Color.Green;
             char[] delim = { ':', '-', '>' };
             ShowRouteOnMap(
                 Optimal[Convert.ToInt32(sender.ToString().Split(delim, StringSplitOptions.RemoveEmptyEntries)[2].ToString())],
