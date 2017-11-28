@@ -48,7 +48,7 @@ namespace kagv {
             _destinations = ConvertListToArray(Customers);
         }
 
-        public ACSAlgorithm(List<List<double>> Distances, List<double[,]> Customers,int[] Demand) {
+        public ACSAlgorithm(List<List<double>> Distances, List<double[,]> Customers, int[] Demand) {
             InitializeComponent();
 
             if (Distances.Count == 0 || Customers.Count == 0) {
@@ -851,7 +851,6 @@ namespace kagv {
 
         }
 
-
         //ACSworking using the date received by its constructor from GMaps -- 1 vehicle version
         private void RunACS() {
 
@@ -864,7 +863,7 @@ namespace kagv {
 
             double[,] h = null;
             double[,] t = null;
-            
+
             double[,] CustomersDistance = _distances;
             double[,] Customers = _destinations;
             if (CustomersDistance == null) {
@@ -1189,7 +1188,7 @@ namespace kagv {
 
                 tmax = (1 / ((1 - r))) * (1 / BestLength);
                 tmin = tmax * (1 - Math.Pow(0.05, 1 / SizeCustomers)) / ((SizeCustomers / 2 - 1) * Math.Pow(0.05, 1 / SizeCustomers));
-                
+
 
                 double minimum = Math.Pow(Customers[BestTour[0], 2], 10);
                 for (int i = 1; i < BestTour.Length; i++) {
@@ -1198,10 +1197,10 @@ namespace kagv {
                     }
                 }
 
-                
+
                 for (int i = 0; i < activesolution.Length - 1; i++)
                     t[activesolution[i], activesolution[i + 1]] = Math.Min(t[activesolution[i], activesolution[i + 1]] + (t[activesolution[i], activesolution[i + 1]] / (tmax + tmin)) * (1 / activeLength), tmax);
-                
+
                 results[Iteration] = BestLength;
                 Iteration = Iteration + 1;
 
@@ -1220,12 +1219,12 @@ namespace kagv {
             ACS.Enabled = true;
 
 
-            
+
             _optimal = BestTour;
 
             Application.DoEvents();
         }
-        
+
         //ASCS working using Benchmarks Data
         private void RunACS(double[,] Customers) {
 
@@ -1354,7 +1353,7 @@ namespace kagv {
             }
 
             BestTour[count + 1] = BestTour[0];
-            NearNb = NearNb + CustomersDistance[BestTour[count], BestTour[count+1]];
+            NearNb = NearNb + CustomersDistance[BestTour[count], BestTour[count + 1]];
 
 
 
@@ -1617,7 +1616,7 @@ namespace kagv {
 
 
         }
-        
+
         //ACS working using Distances between points of interest
         private void RunACS(string DistancesFilename) {
             double BestLength = 0;
@@ -1637,13 +1636,13 @@ namespace kagv {
                 return;
             }
             int SizeCustomers = CustomersDistance.GetLength(0);
-            
+
             h = new double[SizeCustomers, SizeCustomers];
             t = new double[SizeCustomers, SizeCustomers];
             double NearNb = 0;
             double t0 = 0;
             int[] BestTour = new int[SizeCustomers + 1];
-            
+
             for (int i = 0; i < SizeCustomers; i++)
                 for (int j = 0; j < SizeCustomers; j++) {
                     if (i == j)
@@ -1651,7 +1650,7 @@ namespace kagv {
                     h[i, j] = 1 / CustomersDistance[i, j];
                 }
 
-            
+
             int NumItsMax = Convert.ToInt32(NumIts.Value);
             Random rand = new Random();
             double m = Convert.ToDouble(Ants.Value);
@@ -1661,7 +1660,7 @@ namespace kagv {
             double x = Convert.ToDouble(xvalue.Value);
             double a = Convert.ToDouble(avalue.Value);
 
-            
+
             int NextNode = 0;
             double[] results = new double[NumItsMax];
 
@@ -1850,7 +1849,7 @@ namespace kagv {
                         tour[trip + 1] = nextmove;
                         Unvisited.Remove(tour[trip + 1]);
 
-                        
+
                         t[c, tour[trip + 1]] = Math.Max(t[c, tour[trip + 1]] * (1 - x) + x * t0, tmin);
                     }
 
@@ -1927,11 +1926,11 @@ namespace kagv {
                 tmax = (1 / ((1 - r))) * (1 / BestLength);
                 tmin = tmax * (1 - Math.Pow(0.05, 1 / SizeCustomers)) / ((SizeCustomers / 2 - 1) * Math.Pow(0.05, 1 / SizeCustomers));
 
-                
+
                 for (int i = 0; i < activesolution.Length - 1; i++)
                     t[activesolution[i], activesolution[i + 1]] = Math.Min(t[activesolution[i], activesolution[i + 1]] + (t[activesolution[i], activesolution[i + 1]] / (tmax + tmin)) * (1 / activeLength), tmax);
 
-               
+
                 results[Iteration] = BestLength;
                 Iteration = Iteration + 1;
 
@@ -1948,7 +1947,7 @@ namespace kagv {
             pb_calculated.Text = "Calculation completed... " + ((100 * Iteration) / NumItsMax) + "%\nIterations occured: " + Iteration + "/" + NumItsMax;
             calc_stop_BTN.Enabled = false;
             ACS.Enabled = true;
-            
+
             _optimal = BestTour;
 
             Application.DoEvents();
@@ -2045,7 +2044,7 @@ namespace kagv {
         }
 
         private double[,] ReadDistances(string DistancesFilename) {
-            
+
             double[,] _Customers;
             StreamReader streamReader = new StreamReader(DistancesFilename);
             if (!streamReader.ReadLine().Contains("{Distances}")) {
@@ -2076,7 +2075,7 @@ namespace kagv {
                         _destinations[i, 0] = i;
                         _destinations[i, 1] = Convert.ToDouble(_line.Split(delim, StringSplitOptions.RemoveEmptyEntries)[1]);
                         _destinations[i, 2] = Convert.ToDouble(_line.Split(delim, StringSplitOptions.RemoveEmptyEntries)[2]);
-                        
+
                     } else {
                         _info = _line.Split(delim, StringSplitOptions.RemoveEmptyEntries);
                         _Customers[i, j] = Convert.ToDouble(_info[1]);
@@ -2164,7 +2163,7 @@ namespace kagv {
         }
 
         private void Ants_Load(object sender, EventArgs e) {
-            if (_distances == null) 
+            if (_distances == null)
                 cb_fromFile.Checked = true;
 
             foreach (var leg in chart1.Legends)
