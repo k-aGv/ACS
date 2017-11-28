@@ -344,6 +344,7 @@ namespace kagv {
 
             for (int i = 0; i < Destinations.Count; i++) {
 
+
                 lb_demands.Add(new Label());
                 lb_demands[i].AutoSize = true;
                 lb_demands[i].Text = "Destination " + (i + 1) + ": demand =";
@@ -477,11 +478,11 @@ namespace kagv {
         }
 
         private void RouteLabelsSetUp() {
-            for (int i = 0; i < Destinations.Count-1; i++) {
+            for (int i = 0; i < Destinations.Count; i++) {
                 RouteLabels.Add(new Label());
                 RouteLabels[i].AutoSize = true;
                 RouteLabels[i].Location = new Point(gb_settings.Location.X, (gb_settings.Location.Y + gb_settings.Height) + (i * RouteLabels[i].Height) + 5);
-                if ((i + 2) > Destinations.Count - 1) {
+                if ((i + 2) > Destinations.Count) {
                     RouteLabels[i].Text = "Route: " + (i + 1) + "->1";
                     RouteLabels[i].Name = "Route_" + (i + 1) + "_1";
                 } else {
