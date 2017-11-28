@@ -90,6 +90,7 @@ namespace kagv {
         private List<NumericUpDown> nUD_demands = new List<NumericUpDown>();
         private List<Label> RouteLabels = new List<Label>();
 
+        List<List<int>> BestList;
         int[] Optimal;
         int[] _demands;
 
@@ -170,6 +171,49 @@ namespace kagv {
             }
         }
 
+        private void Visualize(List<List<int>> VehicleTour, List<PointLatLng> _dest) {
+            for (int i = 0; i < VehicleTour.Count; i++) {
+                for (int k = 0; k < VehicleTour[i].Count - 1; k++) {
+                    GMap.NET.MapProviders.GMapProviders.GoogleMap.GetDirections(
+                        out GDirections _d,
+                        _dest[VehicleTour[i][k]],
+                        _dest[VehicleTour[i][k + 1]],
+                        avoidHighwaysToolStripMenuItem.Checked,
+                        avoidTollsToolStripMenuItem.Checked,
+                        useWalkingModeToolStripMenuItem.Checked,
+                        false,
+                        metricToolStripMenuItem.Checked
+                        );
+                    try {
+
+                        GMapRoute route = new GMapRoute(_d.Route, "Route " + k);
+                        GMapOverlay _route_overlay = new GMapOverlay("RouteOverlay " + k);
+
+                        _route_overlay.Routes.Add(route);
+                        mymap.UpdateRouteLocalPosition(route);
+                        mymap.Overlays.Add(_route_overlay);
+
+                        _markers_overlay.Add(new GMapOverlay("Marker" + k));
+                        _route_overlay.Markers.Add(new GMap.NET.WindowsForms.Markers.GMarkerGoogle(
+                                _dest[VehicleTour[i][k]],
+                                GMap.NET.WindowsForms.Markers.GMarkerGoogleType.green));
+
+                        var ret = GMap.NET.MapProviders.GMapProviders.GoogleSatelliteMap.GetPlacemark(_route_overlay.Markers[0].Position, out GeoCoderStatusCode status);
+                        if (status == GeoCoderStatusCode.G_GEO_SUCCESS && ret != null) {
+                            _route_overlay.Markers[0].ToolTipText = ret.Value.Address + ", Destination: " + (k + 1);
+                            _route_overlay.Markers[0].ToolTipMode = MarkerTooltipMode.Always;
+                        }
+
+                        mymap.UpdateMarkerLocalPosition(_route_overlay.Markers[0]);
+                        mymap.Overlays.Add(_route_overlay);
+
+                    } catch { MessageBox.Show("An unexpected errorhas occured. Possible internet \nconnection problem."); }
+
+                }
+            }
+        }
+
+
         private void gmaps_Load(object sender, EventArgs e) {
 
             //calculate margin
@@ -225,7 +269,7 @@ namespace kagv {
             label1.Location = new Point(10, mymap.Location.Y + mymap.Height + 1);
 
             if (ShowRouteLabels)
-                RouteLabelsSetUp();
+                RouteLabelsSetUp(false);
         }
 
         private void mymap_MouseClick(object sender, MouseEventArgs e) {
@@ -344,7 +388,7 @@ namespace kagv {
 
             for (int i = 0; i < Destinations.Count; i++) {
 
-
+                
                 lb_demands.Add(new Label());
                 lb_demands[i].AutoSize = true;
                 lb_demands[i].Text = "Destination " + (i + 1) + ": demand =";
@@ -459,48 +503,109 @@ namespace kagv {
 
         private void Btn_OpenACS_Click(object sender, EventArgs e) {
             ACSAlgorithm acs;
-            if (cb_capacitated.Checked)
+            if (cb_capacitated.Checked) {
                 acs = new ACSAlgorithm(Distances, ConvertPointLatLngToList(Destinations), _demands);
-            else
+                acs.ShowDialog();
+
+                if (acs.BestList == null)
+                    return;
+                mymap.Overlays.Clear();
+                BestList = new List<List<int>>(acs.BestList);
+                Visualize(BestList, Destinations);
+                if (btn_demands != null)
+                    btn_demands.Visible = false;
+                if (btn_OpenACS != null)
+                    btn_OpenACS.Visible = false;
+                RouteLabelsSetUp(true);
+                acs.Dispose();
+
+
+            } else { //if not capacitated
                 acs = new ACSAlgorithm(Distances, ConvertPointLatLngToList(Destinations));
-            acs.ShowDialog();
-            if (acs.Optimal == null)
-                return;
-            mymap.Overlays.Clear();
-            Optimal = acs.Optimal;
-            Visualize(Optimal, Destinations);
-            if (btn_demands != null)
-                btn_demands.Visible = false;
-            if (btn_OpenACS != null)
-                btn_OpenACS.Visible = false;
-            RouteLabelsSetUp();
-            acs.Dispose();
+                acs.ShowDialog();
+                if (acs.Optimal == null)
+                    return;
+                mymap.Overlays.Clear();
+                Optimal = acs.Optimal;
+                Visualize(Optimal, Destinations);
+                if (btn_demands != null)
+                    btn_demands.Visible = false;
+                if (btn_OpenACS != null)
+                    btn_OpenACS.Visible = false;
+                RouteLabelsSetUp(false);
+                acs.Dispose();
+            }
         }
 
-        private void RouteLabelsSetUp() {
-            for (int i = 0; i < Destinations.Count; i++) {
-                RouteLabels.Add(new Label());
-                RouteLabels[i].AutoSize = true;
-                RouteLabels[i].Location = new Point(gb_settings.Location.X, (gb_settings.Location.Y + gb_settings.Height) + (i * RouteLabels[i].Height) + 5);
-                if ((i + 2) > Destinations.Count) {
-                    RouteLabels[i].Text = "Route: " + (i + 1) + "->1";
-                    RouteLabels[i].Name = "Route_" + (i + 1) + "_1";
-                } else {
-                    RouteLabels[i].Text = "Route: " + (i + 1) + "->" + (i + 2);
-                    RouteLabels[i].Name = "Route_" + (i + 1) + "_" + (i + 2);
+        private void RouteLabelsSetUp(bool Capacitated) {
+            if (!Capacitated) {
+                for (int i = 0; i < Destinations.Count; i++) {
+                    RouteLabels.Add(new Label());
+                    RouteLabels[i].AutoSize = true;
+                    RouteLabels[i].Location = new Point(gb_settings.Location.X, (gb_settings.Location.Y + gb_settings.Height) + (i * RouteLabels[i].Height) + 5);
+                    if ((i + 2) > Destinations.Count) {
+                        RouteLabels[i].Text = "Route: " + (i + 1) + "->1";
+                        RouteLabels[i].Name = "Route_" + (i + 1) + "_1";
+                    } else {
+                        RouteLabels[i].Text = "Route: " + (i + 1) + "->" + (i + 2);
+                        RouteLabels[i].Name = "Route_" + (i + 1) + "_" + (i + 2);
+                    }
+                    Controls.Add(RouteLabels[i]);
+                    RouteLabels[i].MouseHover += Small_Route_Label_Hover;
+                    RouteLabels[i].MouseLeave += Small_Route_Label_Leave;
                 }
-                Controls.Add(RouteLabels[i]);
-                RouteLabels[i].MouseHover += Small_Route_Label_Hover;
-                RouteLabels[i].MouseLeave += Small_Route_Label_Leave;
+                RouteLabels.Add(new Label());
+                RouteLabels[RouteLabels.Count - 1].AutoSize = true;
+                RouteLabels[RouteLabels.Count - 1].Location = new Point(gb_settings.Location.X, (gb_settings.Location.Y + gb_settings.Height) + (RouteLabels.Count * RouteLabels[RouteLabels.Count - 1].Height));
+                RouteLabels[RouteLabels.Count - 1].Text = "Whole Route";
+                RouteLabels[RouteLabels.Count - 1].Name = "Whole_Route";
+                Controls.Add(RouteLabels[RouteLabels.Count - 1]);
+                RouteLabels[RouteLabels.Count - 1].MouseHover += Whole_Route_Label_Hover;
+                RouteLabels[RouteLabels.Count - 1].MouseLeave += Whole_Route_Label_Leave;
             }
-            RouteLabels.Add(new Label());
-            RouteLabels[RouteLabels.Count - 1].AutoSize = true;
-            RouteLabels[RouteLabels.Count - 1].Location = new Point(gb_settings.Location.X, (gb_settings.Location.Y + gb_settings.Height) + (RouteLabels.Count * RouteLabels[RouteLabels.Count - 1].Height));
-            RouteLabels[RouteLabels.Count - 1].Text = "Whole Route";
-            RouteLabels[RouteLabels.Count - 1].Name = "Whole_Route";
-            Controls.Add(RouteLabels[RouteLabels.Count - 1]);
-            RouteLabels[RouteLabels.Count - 1].MouseHover += Whole_Route_Label_Hover;
-            RouteLabels[RouteLabels.Count - 1].MouseLeave += Whole_Route_Label_Leave;
+            else {
+                for (int i = 0; i < BestList.Count; i++) {
+                    RouteLabels.Add(new Label());
+                    RouteLabels[i].AutoSize = true;
+                    RouteLabels[i].Location = new Point(gb_settings.Location.X, (gb_settings.Location.Y + gb_settings.Height) + (i * RouteLabels[i].Height) + 5);
+                    RouteLabels[i].Text = "Vehicle: " + (i + 1);
+                    RouteLabels[i].Name = "Vehicle_" + (i + 1);
+
+                    Controls.Add(RouteLabels[i]);
+                    RouteLabels[i].MouseHover += Vehicle_Route_Hover;
+                    RouteLabels[i].MouseLeave += Vehicle_Route_Leave;
+                }
+                RouteLabels.Add(new Label());
+                RouteLabels[RouteLabels.Count - 1].AutoSize = true;
+                RouteLabels[RouteLabels.Count - 1].Location = new Point(gb_settings.Location.X, (gb_settings.Location.Y + gb_settings.Height) + (RouteLabels.Count * RouteLabels[RouteLabels.Count - 1].Height));
+                RouteLabels[RouteLabels.Count - 1].Text = "Whole Route";
+                RouteLabels[RouteLabels.Count - 1].Name = "Whole_Route";
+                Controls.Add(RouteLabels[RouteLabels.Count - 1]);
+                RouteLabels[RouteLabels.Count - 1].MouseHover += Capacitated_Whole_Route_Label_Hover;
+                RouteLabels[RouteLabels.Count - 1].MouseLeave += Capacitated_Whole_Route_Label_Leave;
+            }
+        }
+
+        private void Vehicle_Route_Hover(object sender, EventArgs e) {
+            Cursor = Cursors.Hand;
+            Controls.Find(((Label)sender).Name, true)[0].ForeColor = Color.Green;
+
+            char[] delim1 = { ':' };
+            ShowRouteOnMap(Convert.ToInt32(sender.ToString().Split(delim1, StringSplitOptions.RemoveEmptyEntries)[2]));
+
+        }
+        private void Vehicle_Route_Leave(object sender, EventArgs e) {
+            Cursor = Cursors.Arrow;
+            Controls.Find(((Label)sender).Name, true)[0].ForeColor = ForeColor;
+        }
+        private void Capacitated_Whole_Route_Label_Hover(object sender, EventArgs e) {
+            Cursor = Cursors.Hand;
+            Controls.Find(((Label)sender).Name, true)[0].ForeColor = Color.Green;
+            Visualize(BestList, Destinations);
+        }
+        private void Capacitated_Whole_Route_Label_Leave(object sender, EventArgs e) {
+            Cursor = Cursors.Arrow;
+            Controls.Find(((Label)sender).Name, true)[0].ForeColor = ForeColor;
         }
 
         private void Whole_Route_Label_Leave(object sender, EventArgs e) {
@@ -584,6 +689,56 @@ namespace kagv {
 
 
             } catch { MessageBox.Show("An unexpected errorhas occured. Possible internet \nconnection problem."); }
+        }
+
+        private void ShowRouteOnMap(int A) {
+            mymap.Overlays.Clear();
+
+            int Vehicle = A - 1;// - 1;
+            for (int i = 0; i < BestList[Vehicle].Count - 1; i++) {
+                GMap.NET.MapProviders.GMapProviders.GoogleMap.GetDirections(
+                out GDirections _d,
+                Destinations[BestList[Vehicle][i]],
+                Destinations[BestList[Vehicle][i + 1]],
+                avoidHighwaysToolStripMenuItem.Checked,
+                avoidTollsToolStripMenuItem.Checked,
+                useWalkingModeToolStripMenuItem.Checked,
+                false,
+                metricToolStripMenuItem.Checked
+                );
+
+
+                try {
+
+                    GMapRoute route = new GMapRoute(_d.Route, "Route " + i);
+                    GMapOverlay _route_overlay = new GMapOverlay("RouteOverlay " + i);
+
+                    _route_overlay.Routes.Add(route);
+                    mymap.UpdateRouteLocalPosition(route);
+                    mymap.Overlays.Add(_route_overlay);
+
+                    _markers_overlay.Add(new GMapOverlay("Marker" + i));
+                    _markers_overlay.Add(new GMapOverlay("Marker" + i + 1));
+
+                    _route_overlay.Markers.Add(new GMap.NET.WindowsForms.Markers.GMarkerGoogle(
+                            Destinations[BestList[Vehicle][i]],
+                            GMap.NET.WindowsForms.Markers.GMarkerGoogleType.green));
+
+
+                    var ret = GMap.NET.MapProviders.GMapProviders.GoogleSatelliteMap.GetPlacemark(_route_overlay.Markers[0].Position, out GeoCoderStatusCode status);
+                    if (status == GeoCoderStatusCode.G_GEO_SUCCESS && ret != null) {
+                        _route_overlay.Markers[0].ToolTipText = (i + 1) + ", " + ret.Value.Address;
+                        _route_overlay.Markers[0].ToolTipMode = MarkerTooltipMode.Always;
+                    }
+
+
+                    mymap.UpdateMarkerLocalPosition(_route_overlay.Markers[0]);
+                    mymap.Overlays.Add(_route_overlay);
+
+
+                } catch { MessageBox.Show("An unexpected errorhas occured. Possible internet \nconnection problem."); }
+                
+            }
         }
 
         private void Btn_demands_Click(object sender, EventArgs e) {
