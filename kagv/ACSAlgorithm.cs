@@ -83,12 +83,16 @@ namespace kagv {
         bool _RunForDistances = false;
         public bool RunForDistances { get => _RunForDistances; }
 
+        bool _Capacitated = false;
+        public bool Capacitated { get => _Capacitated; }
+
+
         List<List<int>> _bestList;
         public List<List<int>> BestList { get => _bestList; }
 
         int[] _demand;
         public int[] Demand { get => _demand; }
-
+        
         private double[,] ConvertListToArray(List<List<double>> ListDist) {
             double[,] ArrayDist = new double[ListDist.Count, ListDist[0].Count];
 
@@ -2051,16 +2055,20 @@ namespace kagv {
                 MessageBox.Show("Incorrect input file chosen", "Choose file...", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return null;
             }
+
             int SizeCustomers = 0;
             do {
                 if (streamReader.ReadLine().Contains("Distance from"))
                     SizeCustomers++;
+                
             } while (!streamReader.EndOfStream);
 
             streamReader.Close();
+
             SizeCustomers = Convert.ToInt32(Math.Sqrt(SizeCustomers));
             _Customers = new double[SizeCustomers, SizeCustomers];
             _destinations = new double[SizeCustomers, 3];
+            _distances = _Customers;
 
             streamReader = new StreamReader(DistancesFilename);
             char[] delim = { ':', ',' };
@@ -2088,17 +2096,44 @@ namespace kagv {
                     }
                 }
             } while (i < SizeCustomers);
-            /*
-            StreamWriter _writer = new StreamWriter("justfordebugpurposes.txt");
-            for (int p = 0; p < _customerSize; p++)
-            {
-                for (int k = 0; k < _customerSize; k++)
-                    _writer.WriteLine(_Customers[p, k] + "\n");
-                _writer.WriteLine("\n");
+            streamReader.Close();
+            return _Customers;
+        }
+
+        private bool CapacitatedCheck(string DistancesFilename) {
+            StreamReader reader = new StreamReader(DistancesFilename);
+            if (reader.ReadToEnd().Contains("{Demands}")) {
+                _demand = GetDemandsFromFile(DistancesFilename);
+                _distances = ReadDistances(DistancesFilename);
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        private int[] GetDemandsFromFile(string DistancesFilename) {
+            string _c = "";
+            List<String> demands = new List<string>();
+
+            StreamReader streamReader = new StreamReader(DistancesFilename);
+            string _demands_line = streamReader.ReadToEnd();
+            streamReader.Close();
+
+            _demands_line = _demands_line.Remove(0, _demands_line.IndexOf("{Demands}") + 11);
+            foreach (char item in _demands_line) {
+                if (item.ToString() != "\n")
+                    _c += item;
+                else {
+                    demands.Add(_c);
+                    _c = "";
+                }
             }
 
-            _writer.Close();*/
-            return _Customers;
+            int[] _d = new int[demands.Count];
+            for (int i = 0; i < demands.Count; i++)
+                _d[i] = Convert.ToInt32(demands[i].Split(':')[2]);
+            
+            return _d;
         }
 
         private void ACS_Click(object sender, EventArgs e) {
@@ -2148,9 +2183,13 @@ namespace kagv {
             } else {
                 if (cb_lengths.Checked) {
                     Size = new Size(Size.Width, pb.Location.Y + pb.Size.Height + 50);
+                    _Capacitated = CapacitatedCheck(filename);
                     _RunForDistances = true;
                     _RunForBenchmark = false;
-                    RunACS(filename);
+                    if (Capacitated) {
+                        RunACS(Demand);
+                    } else
+                        RunACS(filename);
                 }
                 if (cb_bechmark.Checked) {
                     chart1.Size = new Size(600, (pb.Location.Y + pb.Size.Height) - 25);

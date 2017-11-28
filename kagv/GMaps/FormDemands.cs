@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System;
+using System.IO;
 
 
 namespace kagv {
@@ -67,11 +68,21 @@ namespace kagv {
         }
 
         private void Btn_SetDemands_Click(object sender, EventArgs e) {
+            StreamReader _reader = new StreamReader("routeDistances.txt");
+            string _tmp = _reader.ReadToEnd();
+            _reader.Close();
+
+            StreamWriter _writer = new StreamWriter("routeDistances.txt");
+            _writer.Write(_tmp);
+            _writer.WriteLine("{Demands}");
+
             int control_index = 0;
-            foreach(NumericUpDown nUD in _nUD_Demands) {
+            foreach (NumericUpDown nUD in _nUD_Demands) {
                 _Demands[control_index] = Convert.ToInt32(nUD.Value);
+                _writer.WriteLine("Destination "+control_index+": demand: "+nUD.Value);
                 control_index++;
             }
+            _writer.Close();
             Close();
         }
     }

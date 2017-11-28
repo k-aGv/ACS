@@ -61,7 +61,7 @@ namespace kagv {
             Visualize(_optimal, ConvertArraytoPointLatLngList(_destinations));
         }
 
-        public gmaps(int[] _optimal, double[,] _destinations, bool _ShowRouteLabels) {
+        public gmaps(int[] _optimal, double[,] _destinations, bool _ShowRouteLabels, bool _Capacitated) {
             InitializeComponent();
             if (_optimal == null || _destinations == null)
                 return;
@@ -69,8 +69,22 @@ namespace kagv {
             mymap.Overlays.Clear();
             Optimal = _optimal;
             _showRouteLabels = _ShowRouteLabels;
+            Capacitated = _Capacitated;
             _Destinations = ConvertArraytoPointLatLngList(_destinations);
             Visualize(_optimal, ConvertArraytoPointLatLngList(_destinations));
+        }
+
+        public gmaps(List<List<int>> _BestList, double[,] _destinations, bool _ShowRouteLabels, bool _Capacitated) {
+            InitializeComponent();
+            if (_BestList == null || _destinations == null)
+                return;
+
+            mymap.Overlays.Clear();
+            BestList = _BestList;
+            Capacitated = _Capacitated;
+            _showRouteLabels = _ShowRouteLabels;
+            _Destinations = ConvertArraytoPointLatLngList(_destinations);
+            Visualize(BestList, ConvertArraytoPointLatLngList(_destinations));
         }
 
         List<GMapOverlay> _markers_overlay = new List<GMapOverlay>();
@@ -90,6 +104,7 @@ namespace kagv {
         private List<NumericUpDown> nUD_demands = new List<NumericUpDown>();
         private List<Label> RouteLabels = new List<Label>();
 
+        bool Capacitated = false;
         List<List<int>> BestList;
         int[] Optimal;
         int[] _demands;
@@ -269,7 +284,7 @@ namespace kagv {
             label1.Location = new Point(10, mymap.Location.Y + mymap.Height + 1);
 
             if (ShowRouteLabels)
-                RouteLabelsSetUp(false);
+                RouteLabelsSetUp(Capacitated);
         }
 
         private void mymap_MouseClick(object sender, MouseEventArgs e) {
