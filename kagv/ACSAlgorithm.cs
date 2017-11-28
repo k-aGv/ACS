@@ -2053,7 +2053,7 @@ namespace kagv {
             }
             int SizeCustomers = 0;
             do {
-                if (streamReader.ReadLine() != "")
+                if (streamReader.ReadLine().Contains("Distance from"))
                     SizeCustomers++;
             } while (!streamReader.EndOfStream);
 
