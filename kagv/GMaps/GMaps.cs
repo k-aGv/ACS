@@ -380,6 +380,7 @@ namespace kagv {
 
             _Distances = new List<List<double>>();
             lb_demands = new List<Label>();
+            nUD_demands = new List<NumericUpDown>();
             StreamWriter _writer = new StreamWriter("routeDistances.txt");
             _writer.WriteLine("{Distances}");
 
@@ -388,16 +389,16 @@ namespace kagv {
 
             for (int i = 0; i < Destinations.Count; i++) {
 
-                
-                lb_demands.Add(new Label());
-                lb_demands[i].AutoSize = true;
-                lb_demands[i].Text = "Destination " + (i + 1) + ": demand =";
+                if (cb_capacitated.Checked) {
+                    lb_demands.Add(new Label());
+                    lb_demands[i].AutoSize = true;
+                    lb_demands[i].Text = "Destination " + (i + 1) + ": demand =";
 
-                nUD_demands.Add(new NumericUpDown());
-                nUD_demands[i].Minimum = 0;
-                nUD_demands[i].Value = 0;
-                nUD_demands[i].Size = new Size(35, 20);
-
+                    nUD_demands.Add(new NumericUpDown());
+                    nUD_demands[i].Minimum = 0;
+                    nUD_demands[i].Value = 0;
+                    nUD_demands[i].Size = new Size(35, 20);
+                }
 
                 _Distances.Add(new List<double>());
                 _writer.WriteLine("<Destination " + (i + 1) + ">: " + Destinations[i].Lat + " , " + Destinations[i].Lng);
