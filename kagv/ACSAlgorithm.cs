@@ -783,15 +783,10 @@ namespace kagv {
 
                 tmax = (1 / ((1 - r))) * (1 / BestLength);
                 tmin = tmax * (1 - Math.Pow(0.05, 1 / SizeCustomers)) / ((SizeCustomers / 2 - 1) * Math.Pow(0.05, 1 / SizeCustomers));
-
-                chart1.Series["Trip"].Points.Clear();
-
+                
                 for (int i = 0; i < activesolution.Length - 1; i++)
                     t[activesolution[i], activesolution[i + 1]] = Math.Min(t[activesolution[i], activesolution[i + 1]] + (t[activesolution[i], activesolution[i + 1]] / (tmax + tmin)) * (1 / activeLength), tmax);
-
-                for (int i = 0; i < BestTour.Length; i++)
-                    chart1.Series["Trip"].Points.AddXY(Customers[BestTour[i], 1], Customers[BestTour[i], 2]);
-
+                
                 results[Iteration] = BestLength;
                 Iteration = Iteration + 1;
 
@@ -836,15 +831,7 @@ namespace kagv {
             calc_stop_BTN.Enabled = false;
             ACS.Enabled = true;
 
-            double minimum;
-            minimum = Customers[BestTour[0], 2];
-            for (int i = 1; i < BestTour.Length; i++) {
-                if (minimum > Customers[BestTour[i], 2]) {
-                    minimum = Customers[BestTour[i], 2];
-                }
-                chart1.Series["Trip"].Points.AddXY(Customers[BestTour[i], 1], Customers[BestTour[i], 2]);
-
-            }
+            
             tb_length.Text = Convert.ToString(BestLength);
             Application.DoEvents();
             if ((BestTour.Length - vehiclesrequired) != BestTour.Distinct().Count()) {
