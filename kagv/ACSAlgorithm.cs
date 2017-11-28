@@ -82,7 +82,10 @@ namespace kagv {
 
         bool _RunForDistances = false;
         public bool RunForDistances { get => _RunForDistances; }
-        
+
+        List<List<int>> _bestList;
+        public List<List<int>> BestList { get => _bestList; }
+
         int[] _demand;
         public int[] Demand { get => _demand; }
 
@@ -139,7 +142,7 @@ namespace kagv {
 
             int sumdemand = demand.Sum();
             double extratrips = double.NaN;
-            double Capacity = 300;
+            double Capacity = 250;
             extratrips = Math.Ceiling(sumdemand / Capacity);
             int vehiclesrequired = Convert.ToInt32(extratrips);
 
@@ -205,7 +208,7 @@ namespace kagv {
             NBUnvisited.Remove(0);
             NBUnvisited.Remove(Startingnode);
 
-            if (load >= 100) {
+            if (load >= Capacity) {
                 NextNode = 0;
                 load = 0;
             } else {
@@ -793,6 +796,38 @@ namespace kagv {
                 Application.DoEvents();
             }
 
+
+            List<List<int>> Bestvehicletours = new List<List<int>>();
+            int vehicler = 0;
+            Bestvehicletours.Add(new List<int>());
+            Bestvehicletours[0].Add(0);
+
+            for (int i = 1; i < BestTour.Length - 1; i++) {
+                if (BestTour[i] == 0) {
+                    Bestvehicletours[vehicler].Add(0);
+                    vehicler += 1;
+                    Bestvehicletours.Add(new List<int>());
+                    Bestvehicletours[vehicler].Add(0);
+                } else {
+                    Bestvehicletours[vehicler].Add(BestTour[i]);
+                }
+            }
+            Bestvehicletours[vehiclesrequired - 1].Add(0);
+
+            _bestList = new List<List<int>>(Bestvehicletours);
+
+            List<int> FinalLoadofVeh = new List<int>();
+            for (int i = 0; i < vehiclesrequired; i++) {
+                int loadofvehicle = 0;
+                for (int j = 0; j < Bestvehicletours[i].Count; j++) {
+                    loadofvehicle = loadofvehicle + demand[Bestvehicletours[i][j]];
+                }
+                FinalLoadofVeh.Add(loadofvehicle);
+            }
+
+
+
+
             pb_calculated.Text = "Calculation completed... " + ((100 * Iteration) / NumItsMax) + "%\nIterations occured: " + Iteration + "/" + NumItsMax;
             calc_stop_BTN.Enabled = false;
             ACS.Enabled = true;
@@ -815,7 +850,8 @@ namespace kagv {
             }
 
         }
-        
+
+
         //ACSworking using the date received by its constructor from GMaps -- 1 vehicle version
         private void RunACS() {
 
