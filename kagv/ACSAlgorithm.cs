@@ -86,13 +86,12 @@ namespace kagv {
         bool _Capacitated = false;
         public bool Capacitated { get => _Capacitated; }
 
-
         List<List<int>> _bestList;
         public List<List<int>> BestList { get => _bestList; }
 
         int[] _demand;
         public int[] Demand { get => _demand; }
-        
+
         private double[,] ConvertListToArray(List<List<double>> ListDist) {
             double[,] ArrayDist = new double[ListDist.Count, ListDist[0].Count];
 
@@ -783,10 +782,10 @@ namespace kagv {
 
                 tmax = (1 / ((1 - r))) * (1 / BestLength);
                 tmin = tmax * (1 - Math.Pow(0.05, 1 / SizeCustomers)) / ((SizeCustomers / 2 - 1) * Math.Pow(0.05, 1 / SizeCustomers));
-                
+
                 for (int i = 0; i < activesolution.Length - 1; i++)
                     t[activesolution[i], activesolution[i + 1]] = Math.Min(t[activesolution[i], activesolution[i + 1]] + (t[activesolution[i], activesolution[i + 1]] / (tmax + tmin)) * (1 / activeLength), tmax);
-                
+
                 results[Iteration] = BestLength;
                 Iteration = Iteration + 1;
 
@@ -831,7 +830,7 @@ namespace kagv {
             calc_stop_BTN.Enabled = false;
             ACS.Enabled = true;
 
-            
+
             tb_length.Text = Convert.ToString(BestLength);
             Application.DoEvents();
             if ((BestTour.Length - vehiclesrequired) != BestTour.Distinct().Count()) {
@@ -2047,7 +2046,7 @@ namespace kagv {
             do {
                 if (streamReader.ReadLine().Contains("Distance from"))
                     SizeCustomers++;
-                
+
             } while (!streamReader.EndOfStream);
 
             streamReader.Close();
@@ -2119,7 +2118,7 @@ namespace kagv {
             int[] _d = new int[demands.Count];
             for (int i = 0; i < demands.Count; i++)
                 _d[i] = Convert.ToInt32(demands[i].Split(':')[2]);
-            
+
             return _d;
         }
 

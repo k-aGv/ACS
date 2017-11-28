@@ -228,7 +228,6 @@ namespace kagv {
             }
         }
 
-
         private void gmaps_Load(object sender, EventArgs e) {
 
             //calculate margin
@@ -578,8 +577,7 @@ namespace kagv {
                 Controls.Add(RouteLabels[RouteLabels.Count - 1]);
                 RouteLabels[RouteLabels.Count - 1].MouseHover += Whole_Route_Label_Hover;
                 RouteLabels[RouteLabels.Count - 1].MouseLeave += Whole_Route_Label_Leave;
-            }
-            else {
+            } else {
                 for (int i = 0; i < BestList.Count; i++) {
                     RouteLabels.Add(new Label());
                     RouteLabels[i].AutoSize = true;
@@ -610,15 +608,18 @@ namespace kagv {
             ShowRouteOnMap(Convert.ToInt32(sender.ToString().Split(delim1, StringSplitOptions.RemoveEmptyEntries)[2]));
 
         }
+
         private void Vehicle_Route_Leave(object sender, EventArgs e) {
             Cursor = Cursors.Arrow;
             Controls.Find(((Label)sender).Name, true)[0].ForeColor = ForeColor;
         }
+
         private void Capacitated_Whole_Route_Label_Hover(object sender, EventArgs e) {
             Cursor = Cursors.Hand;
             Controls.Find(((Label)sender).Name, true)[0].ForeColor = Color.Green;
             Visualize(BestList, Destinations);
         }
+
         private void Capacitated_Whole_Route_Label_Leave(object sender, EventArgs e) {
             Cursor = Cursors.Arrow;
             Controls.Find(((Label)sender).Name, true)[0].ForeColor = ForeColor;
@@ -689,13 +690,13 @@ namespace kagv {
 
                 var ret = GMap.NET.MapProviders.GMapProviders.GoogleSatelliteMap.GetPlacemark(_route_overlay.Markers[0].Position, out GeoCoderStatusCode status);
                 if (status == GeoCoderStatusCode.G_GEO_SUCCESS && ret != null) {
-                    _route_overlay.Markers[0].ToolTipText = "Start, "+ret.Value.Address;
+                    _route_overlay.Markers[0].ToolTipText = "Start, " + ret.Value.Address;
                     _route_overlay.Markers[0].ToolTipMode = MarkerTooltipMode.Always;
                 }
 
                 var ret1 = GMap.NET.MapProviders.GMapProviders.GoogleSatelliteMap.GetPlacemark(_route_overlay.Markers[1].Position, out GeoCoderStatusCode status1);
                 if (status1 == GeoCoderStatusCode.G_GEO_SUCCESS && ret != null) {
-                    _route_overlay.Markers[1].ToolTipText = "End, "+ret1.Value.Address;
+                    _route_overlay.Markers[1].ToolTipText = "End, " + ret1.Value.Address;
                     _route_overlay.Markers[1].ToolTipMode = MarkerTooltipMode.Always;
                 }
 
@@ -753,12 +754,12 @@ namespace kagv {
 
 
                 } catch { MessageBox.Show("An unexpected errorhas occured. Possible internet \nconnection problem."); }
-                
+
             }
         }
 
         private void Btn_demands_Click(object sender, EventArgs e) {
-            
+
             FormDemands formDemands = new FormDemands(lb_demands, nUD_demands);
             formDemands.ShowDialog();
 
