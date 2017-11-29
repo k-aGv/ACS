@@ -86,6 +86,7 @@ namespace kagv {
             _Destinations = ConvertArraytoPointLatLngList(_destinations);
             Visualize(BestList, ConvertArraytoPointLatLngList(_destinations));
         }
+
         private List<List<double>> _Distances = new List<List<double>>();
         public List<List<double>> Distances { get => _Distances; }
 
@@ -806,6 +807,31 @@ namespace kagv {
                 gb_settings.Location.Y + gb_settings.Height + 5
                 );
             Controls.Add(btn_demands);
+        }
+
+        private void clearToolStripMenuItem_Click(object sender, EventArgs e) {
+            ClearMap();
+        }
+
+        private void ClearMap() {
+
+            mymap.Overlays.Clear();
+            mymap.ForceUpdateOverlays();
+            btn_demands?.Dispose();
+            btn_OpenACS?.Dispose();
+
+            foreach (var item in RouteLabels)
+                item.Dispose();
+            
+            _Distances = new List<List<double>>();
+            _Destinations = new List<PointLatLng>();
+            RouteLabels = new List<Label>();
+            lb_demands = new List<Label>();
+            nUD_demands = new List<NumericUpDown>();
+            _markers_overlay = new List<GMapOverlay>();
+            
+            pb_calculated.Text = "Current progress...";
+            pb.Value = pb.Minimum;
         }
     }
 }

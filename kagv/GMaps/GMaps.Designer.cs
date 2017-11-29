@@ -25,6 +25,7 @@
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(gmaps));
             this.gb_settings = new System.Windows.Forms.GroupBox();
+            this.cb_capacitated = new System.Windows.Forms.CheckBox();
             this.pb_calculated = new System.Windows.Forms.Label();
             this.pb = new System.Windows.Forms.ProgressBar();
             this.btn_getDistances = new System.Windows.Forms.Button();
@@ -59,7 +60,7 @@
             this.useWalkingModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.metricToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mymap = new GMap.NET.WindowsForms.GMapControl();
-            this.cb_capacitated = new System.Windows.Forms.CheckBox();
+            this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gb_settings.SuspendLayout();
             this.gb_coords.SuspendLayout();
             this.gb_provider.SuspendLayout();
@@ -80,6 +81,16 @@
             this.gb_settings.TabIndex = 4;
             this.gb_settings.TabStop = false;
             this.gb_settings.Text = "Settings";
+            // 
+            // cb_capacitated
+            // 
+            this.cb_capacitated.AutoSize = true;
+            this.cb_capacitated.Location = new System.Drawing.Point(7, 404);
+            this.cb_capacitated.Name = "cb_capacitated";
+            this.cb_capacitated.Size = new System.Drawing.Size(112, 17);
+            this.cb_capacitated.TabIndex = 12;
+            this.cb_capacitated.Text = "Capacitated mode";
+            this.cb_capacitated.UseVisualStyleBackColor = true;
             // 
             // pb_calculated
             // 
@@ -264,7 +275,8 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.getScreenShotToolStripMenuItem});
+            this.getScreenShotToolStripMenuItem,
+            this.clearToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.fileToolStripMenuItem.Text = "Map";
@@ -404,15 +416,12 @@
             this.mymap.MouseClick += new System.Windows.Forms.MouseEventHandler(this.mymap_MouseClick);
             this.mymap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mymap_MouseMove);
             // 
-            // cb_capacitated
+            // clearToolStripMenuItem
             // 
-            this.cb_capacitated.AutoSize = true;
-            this.cb_capacitated.Location = new System.Drawing.Point(7, 404);
-            this.cb_capacitated.Name = "cb_capacitated";
-            this.cb_capacitated.Size = new System.Drawing.Size(112, 17);
-            this.cb_capacitated.TabIndex = 12;
-            this.cb_capacitated.Text = "Capacitated mode";
-            this.cb_capacitated.UseVisualStyleBackColor = true;
+            this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
+            this.clearToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.clearToolStripMenuItem.Text = "Clear";
+            this.clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
             // 
             // gmaps
             // 
@@ -478,5 +487,6 @@
         private System.Windows.Forms.ToolStripMenuItem TargetTheMouseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem TargetTheCenterOfMapToolStripMenuItem;
         private System.Windows.Forms.CheckBox cb_capacitated;
+        private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
     }
 }
