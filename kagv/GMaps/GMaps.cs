@@ -397,7 +397,7 @@ namespace kagv {
             nUD_demands = new List<NumericUpDown>();
             StreamWriter _writer = new StreamWriter("routeDistances.txt");
             _writer.WriteLine("{Distances}");
-
+            pb.Value = 0;
             pb.Maximum = Destinations.Count * Destinations.Count;
             int interval = 0;
 
