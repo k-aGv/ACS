@@ -86,13 +86,10 @@ namespace kagv {
             _Destinations = ConvertArraytoPointLatLngList(_destinations);
             Visualize(BestList, ConvertArraytoPointLatLngList(_destinations));
         }
-
-        List<GMapOverlay> _markers_overlay = new List<GMapOverlay>();
-
-        List<PointLatLng> _Destinations = new List<PointLatLng>();
-        List<List<double>> _Distances = new List<List<double>>();
-
+        private List<List<double>> _Distances = new List<List<double>>();
         public List<List<double>> Distances { get => _Distances; }
+
+        private List<PointLatLng> _Destinations = new List<PointLatLng>();
         public List<PointLatLng> Destinations { get => _Destinations; }
 
         private bool _showRouteLabels = false;
@@ -100,16 +97,16 @@ namespace kagv {
 
         private Button btn_OpenACS;
         private Button btn_demands;
+        private List<Label> RouteLabels = new List<Label>();
         private List<Label> lb_demands = new List<Label>();
         private List<NumericUpDown> nUD_demands = new List<NumericUpDown>();
-        private List<Label> RouteLabels = new List<Label>();
+        private List<GMapOverlay> _markers_overlay = new List<GMapOverlay>();
 
-        bool Capacitated = false;
-        List<List<int>> BestList;
-        int[] Optimal;
-        int[] _demands;
-
-        double _zoomFactor;
+        private bool Capacitated = false;
+        private List<List<int>> BestList;
+        private int[] Optimal;
+        private int[] _demands;
+        private double _zoomFactor;
 
         private List<PointLatLng> ConvertArraytoPointLatLngList(double[,] Destinations) {
             List<PointLatLng> _converted = new List<PointLatLng>();
